@@ -8,9 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		E8E030DA25DECC5B0028B4DD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E030D925DECC5B0028B4DD /* AppDelegate.swift */; };
-		E8E030DC25DECC5B0028B4DD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E030DB25DECC5B0028B4DD /* SceneDelegate.swift */; };
 		E8E030DE25DECC5B0028B4DD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E030DD25DECC5B0028B4DD /* ViewController.swift */; };
-		E8E030E125DECC5B0028B4DD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E8E030DF25DECC5B0028B4DD /* Main.storyboard */; };
 		E8E030E425DECC5B0028B4DD /* ChatApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E8E030E225DECC5B0028B4DD /* ChatApp.xcdatamodeld */; };
 		E8E030E625DECC5D0028B4DD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E8E030E525DECC5D0028B4DD /* Assets.xcassets */; };
 		E8E030E925DECC5D0028B4DD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E8E030E725DECC5D0028B4DD /* LaunchScreen.storyboard */; };
@@ -38,9 +36,7 @@
 /* Begin PBXFileReference section */
 		E8E030D625DECC5B0028B4DD /* ChatApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChatApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8E030D925DECC5B0028B4DD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		E8E030DB25DECC5B0028B4DD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		E8E030DD25DECC5B0028B4DD /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		E8E030E025DECC5B0028B4DD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E8E030E325DECC5B0028B4DD /* ChatApp.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ChatApp.xcdatamodel; sourceTree = "<group>"; };
 		E8E030E525DECC5D0028B4DD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E8E030E825DECC5D0028B4DD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -102,9 +98,7 @@
 			isa = PBXGroup;
 			children = (
 				E8E030D925DECC5B0028B4DD /* AppDelegate.swift */,
-				E8E030DB25DECC5B0028B4DD /* SceneDelegate.swift */,
 				E8E030DD25DECC5B0028B4DD /* ViewController.swift */,
-				E8E030DF25DECC5B0028B4DD /* Main.storyboard */,
 				E8E030E525DECC5D0028B4DD /* Assets.xcassets */,
 				E8E030E725DECC5D0028B4DD /* LaunchScreen.storyboard */,
 				E8E030EA25DECC5D0028B4DD /* Info.plist */,
@@ -236,7 +230,6 @@
 			files = (
 				E8E030E925DECC5D0028B4DD /* LaunchScreen.storyboard in Resources */,
 				E8E030E625DECC5D0028B4DD /* Assets.xcassets in Resources */,
-				E8E030E125DECC5B0028B4DD /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -264,7 +257,6 @@
 				E8E030DE25DECC5B0028B4DD /* ViewController.swift in Sources */,
 				E8E030E425DECC5B0028B4DD /* ChatApp.xcdatamodeld in Sources */,
 				E8E030DA25DECC5B0028B4DD /* AppDelegate.swift in Sources */,
-				E8E030DC25DECC5B0028B4DD /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -300,14 +292,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		E8E030DF25DECC5B0028B4DD /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				E8E030E025DECC5B0028B4DD /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		E8E030E725DECC5D0028B4DD /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -443,6 +427,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = AC7SNZV8BM;
 				INFOPLIST_FILE = ChatApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -462,6 +447,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = AC7SNZV8BM;
 				INFOPLIST_FILE = ChatApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
