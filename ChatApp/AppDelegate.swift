@@ -15,11 +15,51 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
+        Logger.defineState(of: .application,
+                           oldState: UIApplication.State.inactive.description,
+                           newState: application.applicationState.description,
+                           method: #function)
+        
         window = UIWindow()
         window?.rootViewController = ViewController()
         window?.makeKeyAndVisible()
         
         return true
+    }
+    
+    func applicationWillResignActive(_ application: UIApplication) {
+        Logger.defineState(of: .application,
+                           oldState: application.applicationState.description,
+                           newState: UIApplication.State.inactive.description,
+                           method: #function)
+    }
+    
+    func applicationDidEnterBackground(_ application: UIApplication) {
+        Logger.defineState(of: .application,
+                           oldState: UIApplication.State.inactive.description,
+                           newState: application.applicationState.description,
+                           method: #function)
+    }
+    
+    func applicationWillEnterForeground(_ application: UIApplication) {
+        Logger.defineState(of: .application,
+                           oldState: application.applicationState.description,
+                           newState: UIApplication.State.inactive.description,
+                           method: #function)
+    }
+    
+    func applicationDidBecomeActive(_ application: UIApplication) {
+        Logger.defineState(of: .application,
+                           oldState: UIApplication.State.inactive.description,
+                           newState: application.applicationState.description,
+                           method: #function)
+    }
+    
+    func applicationWillTerminate(_ application: UIApplication) {
+        Logger.defineState(of: .application,
+                           oldState: application.applicationState.description,
+                           newState: "Not running",
+                           method: #function)
     }
 
 

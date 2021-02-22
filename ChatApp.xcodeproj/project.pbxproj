@@ -14,6 +14,9 @@
 		E8E030E925DECC5D0028B4DD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E8E030E725DECC5D0028B4DD /* LaunchScreen.storyboard */; };
 		E8E030F425DECC5E0028B4DD /* ChatAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E030F325DECC5E0028B4DD /* ChatAppTests.swift */; };
 		E8E030FF25DECC5E0028B4DD /* ChatAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E030FE25DECC5E0028B4DD /* ChatAppUITests.swift */; };
+		E8E0311A25DECF950028B4DD /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E0311925DECF950028B4DD /* Logger.swift */; };
+		E8E0312625DEDD4A0028B4DD /* UIApplicationState+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E0312525DEDD4A0028B4DD /* UIApplicationState+Ext.swift */; };
+		E8E0312F25DF09940028B4DD /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E0312E25DF09940028B4DD /* Constants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +50,9 @@
 		E8E030FA25DECC5E0028B4DD /* ChatAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ChatAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8E030FE25DECC5E0028B4DD /* ChatAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatAppUITests.swift; sourceTree = "<group>"; };
 		E8E0310025DECC5E0028B4DD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E8E0311925DECF950028B4DD /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
+		E8E0312525DEDD4A0028B4DD /* UIApplicationState+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplicationState+Ext.swift"; sourceTree = "<group>"; };
+		E8E0312E25DF09940028B4DD /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,12 +103,11 @@
 		E8E030D825DECC5B0028B4DD /* ChatApp */ = {
 			isa = PBXGroup;
 			children = (
+				E8E0311825DECF830028B4DD /* Utilities */,
+				E8E0311725DECF5A0028B4DD /* Controllers */,
+				E8E0311625DECEE80028B4DD /* CoreData */,
+				E8E0311525DECECD0028B4DD /* Resources */,
 				E8E030D925DECC5B0028B4DD /* AppDelegate.swift */,
-				E8E030DD25DECC5B0028B4DD /* ViewController.swift */,
-				E8E030E525DECC5D0028B4DD /* Assets.xcassets */,
-				E8E030E725DECC5D0028B4DD /* LaunchScreen.storyboard */,
-				E8E030EA25DECC5D0028B4DD /* Info.plist */,
-				E8E030E225DECC5B0028B4DD /* ChatApp.xcdatamodeld */,
 			);
 			path = ChatApp;
 			sourceTree = "<group>";
@@ -123,6 +128,58 @@
 				E8E0310025DECC5E0028B4DD /* Info.plist */,
 			);
 			path = ChatAppUITests;
+			sourceTree = "<group>";
+		};
+		E8E0311525DECECD0028B4DD /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				E8E030E525DECC5D0028B4DD /* Assets.xcassets */,
+				E8E030E725DECC5D0028B4DD /* LaunchScreen.storyboard */,
+				E8E030EA25DECC5D0028B4DD /* Info.plist */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		E8E0311625DECEE80028B4DD /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				E8E030E225DECC5B0028B4DD /* ChatApp.xcdatamodeld */,
+			);
+			path = CoreData;
+			sourceTree = "<group>";
+		};
+		E8E0311725DECF5A0028B4DD /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				E8E030DD25DECC5B0028B4DD /* ViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		E8E0311825DECF830028B4DD /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				E8E0312D25DF09820028B4DD /* Constants */,
+				E8E0312425DEDD1D0028B4DD /* Extensions */,
+				E8E0311925DECF950028B4DD /* Logger.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		E8E0312425DEDD1D0028B4DD /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				E8E0312525DEDD4A0028B4DD /* UIApplicationState+Ext.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		E8E0312D25DF09820028B4DD /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				E8E0312E25DF09940028B4DD /* Constants.swift */,
+			);
+			path = Constants;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -256,7 +313,10 @@
 			files = (
 				E8E030DE25DECC5B0028B4DD /* ViewController.swift in Sources */,
 				E8E030E425DECC5B0028B4DD /* ChatApp.xcdatamodeld in Sources */,
+				E8E0312625DEDD4A0028B4DD /* UIApplicationState+Ext.swift in Sources */,
 				E8E030DA25DECC5B0028B4DD /* AppDelegate.swift in Sources */,
+				E8E0311A25DECF950028B4DD /* Logger.swift in Sources */,
+				E8E0312F25DF09940028B4DD /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -426,7 +486,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = AC7SNZV8BM;
-				INFOPLIST_FILE = ChatApp/Info.plist;
+				INFOPLIST_FILE = ChatApp/Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -446,7 +506,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = AC7SNZV8BM;
-				INFOPLIST_FILE = ChatApp/Info.plist;
+				INFOPLIST_FILE = ChatApp/Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
