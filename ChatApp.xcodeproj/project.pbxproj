@@ -7,6 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E830324625E1D7D800D772B9 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E830324525E1D7D800D772B9 /* ProfileViewController.swift */; };
+		E830324D25E1D9C500D772B9 /* ActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E830324C25E1D9C500D772B9 /* ActionButton.swift */; };
+		E830325525E1E82600D772B9 /* UIColor+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = E830325425E1E82600D772B9 /* UIColor+Ext.swift */; };
+		E830325A25E28BD100D772B9 /* ProfileLogoImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E830325925E28BD100D772B9 /* ProfileLogoImageView.swift */; };
+		E830326225E2939300D772B9 /* HapticFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = E830326125E2939300D772B9 /* HapticFeedback.swift */; };
+		E830326C25E2961900D772B9 /* UIAlertViewController+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = E830326B25E2961900D772B9 /* UIAlertViewController+Ext.swift */; };
+		E830329C25E50A5D00D772B9 /* ImagePickerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E830329B25E50A5D00D772B9 /* ImagePickerManager.swift */; };
+		E83032A125E5131D00D772B9 /* CameraAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E83032A025E5131D00D772B9 /* CameraAlertController.swift */; };
+		E83032A625E514EE00D772B9 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E83032A525E514EE00D772B9 /* Colors.swift */; };
+		E83032AC25E539FB00D772B9 /* TextAccessTo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E83032AB25E539FB00D772B9 /* TextAccessTo.swift */; };
+		E83032CC25E697BC00D772B9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E83032CB25E697BC00D772B9 /* Main.storyboard */; };
+		E830331C25E69ED000D772B9 /* ProfileViewControllerSB.swift in Sources */ = {isa = PBXBuildFile; fileRef = E830331B25E69ED000D772B9 /* ProfileViewControllerSB.swift */; };
 		E8E030DA25DECC5B0028B4DD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E030D925DECC5B0028B4DD /* AppDelegate.swift */; };
 		E8E030DE25DECC5B0028B4DD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E030DD25DECC5B0028B4DD /* ViewController.swift */; };
 		E8E030E425DECC5B0028B4DD /* ChatApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E8E030E225DECC5B0028B4DD /* ChatApp.xcdatamodeld */; };
@@ -37,6 +49,18 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E830324525E1D7D800D772B9 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		E830324C25E1D9C500D772B9 /* ActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionButton.swift; sourceTree = "<group>"; };
+		E830325425E1E82600D772B9 /* UIColor+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Ext.swift"; sourceTree = "<group>"; };
+		E830325925E28BD100D772B9 /* ProfileLogoImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileLogoImageView.swift; sourceTree = "<group>"; };
+		E830326125E2939300D772B9 /* HapticFeedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticFeedback.swift; sourceTree = "<group>"; };
+		E830326B25E2961900D772B9 /* UIAlertViewController+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertViewController+Ext.swift"; sourceTree = "<group>"; };
+		E830329B25E50A5D00D772B9 /* ImagePickerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerManager.swift; sourceTree = "<group>"; };
+		E83032A025E5131D00D772B9 /* CameraAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraAlertController.swift; sourceTree = "<group>"; };
+		E83032A525E514EE00D772B9 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		E83032AB25E539FB00D772B9 /* TextAccessTo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextAccessTo.swift; sourceTree = "<group>"; };
+		E83032CB25E697BC00D772B9 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		E830331B25E69ED000D772B9 /* ProfileViewControllerSB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewControllerSB.swift; sourceTree = "<group>"; };
 		E8E030D625DECC5B0028B4DD /* ChatApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChatApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8E030D925DECC5B0028B4DD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E8E030DD25DECC5B0028B4DD /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -80,6 +104,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E830324B25E1D86E00D772B9 /* CustomViews */ = {
+			isa = PBXGroup;
+			children = (
+				E830324C25E1D9C500D772B9 /* ActionButton.swift */,
+				E830325925E28BD100D772B9 /* ProfileLogoImageView.swift */,
+			);
+			path = CustomViews;
+			sourceTree = "<group>";
+		};
+		E83032AA25E519AF00D772B9 /* ImagePickerManager */ = {
+			isa = PBXGroup;
+			children = (
+				E830329B25E50A5D00D772B9 /* ImagePickerManager.swift */,
+				E83032A025E5131D00D772B9 /* CameraAlertController.swift */,
+			);
+			path = ImagePickerManager;
+			sourceTree = "<group>";
+		};
 		E8E030CD25DECC5B0028B4DD = {
 			isa = PBXGroup;
 			children = (
@@ -103,11 +145,13 @@
 		E8E030D825DECC5B0028B4DD /* ChatApp */ = {
 			isa = PBXGroup;
 			children = (
+				E830324B25E1D86E00D772B9 /* CustomViews */,
 				E8E0311825DECF830028B4DD /* Utilities */,
 				E8E0311725DECF5A0028B4DD /* Controllers */,
 				E8E0311625DECEE80028B4DD /* CoreData */,
 				E8E0311525DECECD0028B4DD /* Resources */,
 				E8E030D925DECC5B0028B4DD /* AppDelegate.swift */,
+				E83032CB25E697BC00D772B9 /* Main.storyboard */,
 			);
 			path = ChatApp;
 			sourceTree = "<group>";
@@ -152,6 +196,8 @@
 			isa = PBXGroup;
 			children = (
 				E8E030DD25DECC5B0028B4DD /* ViewController.swift */,
+				E830324525E1D7D800D772B9 /* ProfileViewController.swift */,
+				E830331B25E69ED000D772B9 /* ProfileViewControllerSB.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -159,9 +205,11 @@
 		E8E0311825DECF830028B4DD /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				E83032AA25E519AF00D772B9 /* ImagePickerManager */,
 				E8E0312D25DF09820028B4DD /* Constants */,
 				E8E0312425DEDD1D0028B4DD /* Extensions */,
 				E8E0311925DECF950028B4DD /* Logger.swift */,
+				E830326125E2939300D772B9 /* HapticFeedback.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -170,6 +218,8 @@
 			isa = PBXGroup;
 			children = (
 				E8E0312525DEDD4A0028B4DD /* UIApplicationState+Ext.swift */,
+				E830325425E1E82600D772B9 /* UIColor+Ext.swift */,
+				E830326B25E2961900D772B9 /* UIAlertViewController+Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -178,6 +228,8 @@
 			isa = PBXGroup;
 			children = (
 				E8E0312E25DF09940028B4DD /* Constants.swift */,
+				E83032A525E514EE00D772B9 /* Colors.swift */,
+				E83032AB25E539FB00D772B9 /* TextAccessTo.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -285,6 +337,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E83032CC25E697BC00D772B9 /* Main.storyboard in Resources */,
 				E8E030E925DECC5D0028B4DD /* LaunchScreen.storyboard in Resources */,
 				E8E030E625DECC5D0028B4DD /* Assets.xcassets in Resources */,
 			);
@@ -311,12 +364,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E830329C25E50A5D00D772B9 /* ImagePickerManager.swift in Sources */,
+				E830331C25E69ED000D772B9 /* ProfileViewControllerSB.swift in Sources */,
 				E8E030DE25DECC5B0028B4DD /* ViewController.swift in Sources */,
+				E830325A25E28BD100D772B9 /* ProfileLogoImageView.swift in Sources */,
+				E83032A625E514EE00D772B9 /* Colors.swift in Sources */,
+				E830326225E2939300D772B9 /* HapticFeedback.swift in Sources */,
+				E83032AC25E539FB00D772B9 /* TextAccessTo.swift in Sources */,
 				E8E030E425DECC5B0028B4DD /* ChatApp.xcdatamodeld in Sources */,
 				E8E0312625DEDD4A0028B4DD /* UIApplicationState+Ext.swift in Sources */,
 				E8E030DA25DECC5B0028B4DD /* AppDelegate.swift in Sources */,
+				E830324625E1D7D800D772B9 /* ProfileViewController.swift in Sources */,
 				E8E0311A25DECF950028B4DD /* Logger.swift in Sources */,
+				E830326C25E2961900D772B9 /* UIAlertViewController+Ext.swift in Sources */,
+				E83032A125E5131D00D772B9 /* CameraAlertController.swift in Sources */,
+				E830325525E1E82600D772B9 /* UIColor+Ext.swift in Sources */,
 				E8E0312F25DF09940028B4DD /* Constants.swift in Sources */,
+				E830324D25E1D9C500D772B9 /* ActionButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
