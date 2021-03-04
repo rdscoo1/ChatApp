@@ -67,22 +67,22 @@ extension CameraAlertController {
     }
     
     private func addRemoveAction() {
-        let removeAction = UIAlertAction(title: "Удалить фото", style: .destructive) { _ in
+        let removeAction = UIAlertAction(title: Constants.LocalizationKey.deletePhoto.string, style: .destructive) { _ in
             self.didTapOnRemove?()
         }
         addAction(removeAction)
     }
     
     private func addMainActions() {
-        let cameraAction = UIAlertAction(title: "Сделать фотографию", style: .default) { _ in
+        let cameraAction = UIAlertAction(title: Constants.LocalizationKey.makePhoto.string, style: .default) { _ in
             self.didTapOnCamera?()
         }
         
-        let libraryAction = UIAlertAction(title: "Выбрать из галереи", style: .default) { _ in
+        let libraryAction = UIAlertAction(title: Constants.LocalizationKey.selectFromGallery.string, style: .default) { _ in
             self.didTapOnPhotoLibrary?()
         }
         
-        let cancelAction = UIAlertAction(title: "Отменить", style: .cancel, handler: nil)
+        let cancelAction = UIAlertAction(title: Constants.LocalizationKey.cancel.string, style: .cancel, handler: nil)
         
         addAction(cameraAction)
         addAction(libraryAction)

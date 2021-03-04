@@ -21,6 +21,21 @@ extension Constants {
             }
         }
         
+        
+        static var alertText: UIColor {
+            if #available(iOS 13.0, *) {
+                return UIColor { (traits) -> UIColor in
+                    return traits.userInterfaceStyle == .dark ?
+                        UIColor(hex: "#FFFFFF") :
+                        UIColor(hex: "#001424")
+                }
+            } else {
+                return UIColor(hex: "#001424")
+            }
+        }
+        
+        // MARK: - Profile ViewController
+        
         static var buttonBackground: UIColor {
             if #available(iOS 13.0, *) {
                 return UIColor { (traits) -> UIColor in
@@ -57,15 +72,31 @@ extension Constants {
             }
         }
         
-        static var alertText: UIColor {
+        // MARK: - Message bubbles
+        
+        static let outgoingMessageBubble = UIColor(hex: "#2A87FF")
+        
+        static var incomingMessageBubble: UIColor {
             if #available(iOS 13.0, *) {
                 return UIColor { (traits) -> UIColor in
                     return traits.userInterfaceStyle == .dark ?
-                        UIColor(hex: "#FFFFFF") :
-                        UIColor(hex: "#001424")
+                        UIColor(hex: "#19191B") :
+                        UIColor(hex: "#E9E9EB")
                 }
             } else {
-                return UIColor(hex: "#001424")
+                return UIColor(hex: "#E9E9EB")
+            }
+        }
+        
+        static var incomingMessageText: UIColor {
+            if #available(iOS 13.0, *) {
+                return UIColor { (traits) -> UIColor in
+                    return traits.userInterfaceStyle == .dark ?
+                        .white :
+                        .black
+                }
+            } else {
+                return .black
             }
         }
     }

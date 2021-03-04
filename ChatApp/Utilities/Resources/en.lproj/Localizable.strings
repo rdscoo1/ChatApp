@@ -1,0 +1,19 @@
+/* 
+  Localizable.strings
+  ChatApp
+
+  Created by Roman Khodukin on 3/4/21.
+  
+*/
+
+"Chat" = "Chat";
+"My profile" = "My profile";
+"Go to settings" = "Go to settings";
+"Cancel" = "Cancel";
+"Error" = "Error";
+"No access to camera" = "No access to camera";
+"Okay" = "Okay";
+"Delete photo" = "Delete photo";
+"Make photo" = "Make photo";
+"Select from gallery" = "Select from gallery";
+"To add photo give access to camera in device settings" = "To add photo give access to camera in device settings";
