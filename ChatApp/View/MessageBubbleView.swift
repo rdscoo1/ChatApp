@@ -1,5 +1,5 @@
 //
-//  BubbleView.swift
+//  MessageBubbleView.swift
 //  ChatApp
 //
 //  Created by Roman Khodukin on 3/2/21.
@@ -12,13 +12,15 @@ enum MessageType {
     case outgoing
 }
 
-class MessageView: UIView {
+class MessageBubbleView: UIView {
     
     var type: MessageType? {
         didSet {
             setNeedsDisplay()
         }
     }
+    
+    var fillColor: UIColor?
     
     // MARK: - Initializers
     
@@ -39,7 +41,6 @@ class MessageView: UIView {
         let width = rect.width
         let height = rect.height
         
-        let fillColor: UIColor?
         let bezierPath = UIBezierPath()
         if type == .incoming {
             bezierPath.move(to: CGPoint(x: 20, y: height))

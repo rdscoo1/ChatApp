@@ -40,7 +40,7 @@ class ProfileViewController: UIViewController {
         return label
     }()
     
-    private let editButton = ActionButton(title: "Save")
+    private let editButton = ActionButton(title: Constants.LocalizationKey.save.string)
     
     private let offset: CGFloat = 16
         
@@ -55,9 +55,10 @@ class ProfileViewController: UIViewController {
         profileLogoImageView.delegate = self
         profileLogoImageView.setPlaceholderLetters(fullName: profileNameLabel.text)
         
-        navigationItem.rightBarButtonItem = .init(barButtonSystemItem: .cancel,
-                                                  target: self,
-                                                  action: #selector(dismissVC))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: Constants.LocalizationKey.close.string,
+                                                            style: .done,
+                                                            target: self,
+                                                            action: #selector(dismissVC))
         navigationItem.title = Constants.LocalizationKey.myProfile.string
     }
     

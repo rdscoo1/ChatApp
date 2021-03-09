@@ -99,5 +99,21 @@ extension Constants {
                 return .black
             }
         }
+        
+        static let themeIsSelected = UIColor(hex: "#007AFF")
+        static let themeNotSelected = UIColor(hex: "#979797")
+        
+        static let themesBackground = UIColor(hex: "#193661")
+        
+        // MARK: - App Theme Message Bubbles
+        
+        static let incomingBubbleClassic = UIColor(hex: "#DFDFDF")
+        static let outgoingBubbleClassic = UIColor(hex: "#DCF7C5")
+        
+        static let incomingBubbleDay = UIColor(hex: "#EAEBED")
+        static let outgoingBubbleDay = UIColor(hex: "#4389F9")
+        
+        static let incomingBubbleNight = UIColor(hex: "#2E2E2E")
+        static let outgoingBubbleNight = UIColor(hex: "#5C5C5C")
     }
 }

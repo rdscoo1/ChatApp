@@ -6,14 +6,34 @@
   
 */
 
+// MARK: - Navigation Title
+
 "Chat" = "Чат";
 "My profile" = "Мой профиль";
+"Settings" = "Настройки";
+
+// MARK: - Selecting Photo Alert
+
 "Go to settings" = "Перейти в настройки";
 "Cancel" = "Отменить";
+"Okay" = "Окей";
 "Error" = "Ошибка";
 "No access to camera" = "Нет доступа к камере";
-"Okay" = "Окей";
+"To add photo give access to camera in device settings" = "Чтобы добавить фото в профиль, разрешите доступ к камере в настройках устройства";
+
+// MARK: - Camera Alert Actions
+
 "Delete photo" = "Удалить фото";
 "Make photo" = "Сделать фото";
 "Select from gallery" = "Выбрать из галереи";
-"To add photo give access to camera in device settings" = "Чтобы добавить фото в профиль, разрешите доступ к камере в настройках устройства";
+
+// MARK: - Actions
+
+"Close" = "Свернуть";
+"Save" = "Сохранить";
+
+// MARK: - App Theme
+
+"Classic" = "Классическая";
+"Day" = "Дневная";
+"Night" = "Ночная";

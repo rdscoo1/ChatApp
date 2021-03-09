@@ -13,6 +13,7 @@ extension Constants {
         // Titles
         case chat = "Chat"
         case myProfile = "My profile"
+        case settings = "Settings"
         
         // ImagePicker
         case giveAccessToCamera = "To add photo give access to camera in device settings"
@@ -24,7 +25,14 @@ extension Constants {
         case makePhoto = "Make photo"
         case selectFromGallery = "Select from gallery"
         
+        // App theme title
+        case classic = "Classic"
+        case day = "Day"
+        case night = "Night"
+        
         // Basic
+        case save = "Save"
+        case close = "Close"
         case cancel = "Cancel"
         case error = "Error"
         case okay = "Okay"

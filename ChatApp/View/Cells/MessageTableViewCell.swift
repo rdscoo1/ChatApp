@@ -13,7 +13,7 @@ class MessageTableViewCell: UITableViewCell {
     
     // MARK: - Private Properties
     
-    private let messageView = MessageView()
+    private let messageView = MessageBubbleView()
     
     private lazy var messageLabel: UILabel = {
         let label = UILabel()

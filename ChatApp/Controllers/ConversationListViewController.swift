@@ -62,8 +62,13 @@ class ConversationListViewController: UIViewController {
     }
     
     private func configureNavBarLeftButton() {
-        let leftBarButton = UIBarButtonItem(image: .settingsIcon, style: .plain, target: nil, action: nil)
-        navigationItem.leftBarButtonItem = leftBarButton
+        let settingsBarButton = UIBarButtonItem(image: .settingsIcon, style: .plain, target: self, action: #selector(goToThemesTapped))
+        navigationItem.leftBarButtonItem = settingsBarButton
+    }
+    
+    @objc private func goToThemesTapped() {
+        let themeViewController = ThemesViewController()
+        navigationController?.pushViewController(themeViewController, animated: true)
     }
     
     private func configureNavBarRightButton() {
