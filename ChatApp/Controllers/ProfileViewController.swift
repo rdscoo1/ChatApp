@@ -18,7 +18,7 @@ class ProfileViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .center
         label.font = .systemFont(ofSize: 20, weight: .bold)
-        label.text = "Marina Dudarenko"
+        label.text = "Roman Khodukin"
         return label
     }()
     
@@ -27,7 +27,7 @@ class ProfileViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .center
         label.font = .systemFont(ofSize: 16, weight: .regular)
-        label.text = "UX/UI designer, web-designer"
+        label.text = "UX/UI designer, iOS-developer"
         return label
     }()
     
@@ -40,21 +40,11 @@ class ProfileViewController: UIViewController {
         return label
     }()
     
-    private let editButton = ActionButton(title: "Edit")
+    private let editButton = ActionButton(title: "Save")
     
     private let offset: CGFloat = 16
         
-    // MARK: - LifeCycle
-    
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        print("Frame кнопки Edit \(profileGeoLabel.frame) в методе \(#function)")
-    }
-    
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        print("Frame кнопки Edit \(profileGeoLabel.frame) в методе \(#function)")
-    }
+    // MARK: - LifeCycle 
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,15 +53,16 @@ class ProfileViewController: UIViewController {
         configureConstraints()
         
         profileLogoImageView.delegate = self
-        profileLogoImageView.setPlaceholderLetters(name: profileNameLabel.text)
+        profileLogoImageView.setPlaceholderLetters(fullName: profileNameLabel.text)
         
-        print("Frame кнопки Edit \(profileGeoLabel.frame) в методе \(#function)")
+        navigationItem.rightBarButtonItem = .init(barButtonSystemItem: .cancel,
+                                                  target: self,
+                                                  action: #selector(dismissVC))
+        navigationItem.title = Constants.LocalizationKey.myProfile.string
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        print("Frame кнопки Edit \(profileGeoLabel.frame) в методе \(#function)")
+    @objc private func dismissVC() {
+        dismiss(animated: true)
     }
     
     
@@ -116,8 +107,8 @@ class ProfileViewController: UIViewController {
 extension ProfileViewController: ProfileLogoImageViewDelegate {
     func tappedProfileLogoImageView() {
         ImagePickerManager().pickImage(self) { image in
-            self.profileLogoImageView.image = image
-            self.profileLogoImageView.hidePlaceholderLetters()
+            guard let image = image else { return }
+            self.profileLogoImageView.setLogo(image: image)
         }
     }
 }

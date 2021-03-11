@@ -15,11 +15,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-//        window = UIWindow()
-//        window?.rootViewController = ProfileViewController()
-//        window?.makeKeyAndVisible()
+        window = UIWindow()
+        window?.rootViewController = createChatNavigationController()
+        window?.makeKeyAndVisible()
         
         return true
+    }
+    
+    private func createChatNavigationController() -> UINavigationController {
+        let chatViewController = ConversationListViewController()
+        chatViewController.title = Constants.LocalizationKey.chat.string
+        chatViewController.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: ProfileLogoImageView())
+
+        let navController = UINavigationController(rootViewController: chatViewController)
+        navController.navigationBar.prefersLargeTitles = true
+        return navController
     }
 
 

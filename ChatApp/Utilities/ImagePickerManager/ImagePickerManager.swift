@@ -45,7 +45,7 @@ class ImagePickerManager: NSObject, UINavigationControllerDelegate {
             alertController?.popoverPresentationController?.sourceRect = presentationController!.view.bounds
             alertController?.popoverPresentationController?.permittedArrowDirections = [.down, .up]
         }
-        viewController.present(alertController ?? UIAlertController(title: "hi", message: "by", preferredStyle: .alert), animated: true)
+        viewController.present(alertController ?? UIAlertController(title: nil, message: nil, preferredStyle: .alert), animated: true)
     }
     
     // MARK: - Private Methods
@@ -72,31 +72,31 @@ class ImagePickerManager: NSObject, UINavigationControllerDelegate {
                 if granted {
                     self.openImagePickerOfType(.camera)
                 } else {
-                    self.displayAlertPushToAppSettings(for: .cameraProfile)
+                    self.displayAlertPushToAppSettings(for: .giveAccessToCamera)
                 }
             }
         case .denied, .restricted:
-            self.displayAlertPushToAppSettings(for: .cameraProfile)
+            self.displayAlertPushToAppSettings(for: .giveAccessToCamera)
         default:
-            displayAlertPushToAppSettings(for: .cameraProfile)
+            displayAlertPushToAppSettings(for: .giveAccessToCamera)
         }
     }
     
-    private func displayAlertPushToAppSettings(for typeMessage: Constants.TextAccessTo, onCancel: (() -> Void)? = nil) {
+    private func displayAlertPushToAppSettings(for typeMessage: Constants.LocalizationKey, onCancel: (() -> Void)? = nil) {
         let alertController = UIAlertController(
             title: nil,
             message: typeMessage.rawValue,
             preferredStyle: .alert
         )
         
-        let openSettingsAction = UIAlertAction(title: "Перейти в настройки", style: .default) { _ in
+        let openSettingsAction = UIAlertAction(title: Constants.LocalizationKey.goToSettings.string, style: .default) { _ in
             guard let url = URL(string: UIApplication.openSettingsURLString) else {
                 return
             }
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
         
-        let cancelAction = UIAlertAction(title: "Отмена", style: .default) { _ in
+        let cancelAction = UIAlertAction(title: Constants.LocalizationKey.cancel.string, style: .default) { _ in
             self.presentationController?.dismiss(animated: true)
             onCancel?()
         }
@@ -110,8 +110,10 @@ class ImagePickerManager: NSObject, UINavigationControllerDelegate {
     
     private func presentCameraErrorAlert() {
         let haptic: HapticFeedback = .error
-        let alertVC = UIAlertController(title: "Ошибка", message: "Нет доступа к камере", preferredStyle: .alert)
-        let dismissAction = UIAlertAction(title: "Окей", style: .cancel) { _ in }
+        let alertVC = UIAlertController(title: Constants.LocalizationKey.error.string,
+                                        message: Constants.LocalizationKey.noAccessToCamera.string,
+                                        preferredStyle: .alert)
+        let dismissAction = UIAlertAction(title: Constants.LocalizationKey.okay.string, style: .cancel) { _ in }
         alertVC.addAction(dismissAction)
         alertVC.modalPresentationStyle = .overFullScreen
         alertVC.modalTransitionStyle = .crossDissolve
