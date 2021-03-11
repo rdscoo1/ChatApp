@@ -17,22 +17,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window = UIWindow()
         window?.rootViewController = createChatNavigationController()
+        Themes.loadApplicationTheme()
         window?.makeKeyAndVisible()
         
         return true
     }
-    
-//    func loadSavedTheme() {
-//        guard let theme = UserDefaults.standard.color(forKey: "theme") else { return }
-//        UINavigationBar.appearance().backgroundColor = theme
-//    }
     
     private func createChatNavigationController() -> UINavigationController {
         let chatViewController = ConversationListViewController()
         chatViewController.title = Constants.LocalizationKey.chat.string
         chatViewController.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: ProfileLogoImageView())
         
-        let navController = UINavigationController(rootViewController: chatViewController)
+        let navController = RootNavigationController(rootViewController: chatViewController)
         navController.navigationBar.prefersLargeTitles = true
         return navController
     }

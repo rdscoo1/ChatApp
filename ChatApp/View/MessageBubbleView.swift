@@ -56,7 +56,6 @@ class MessageBubbleView: UIView {
             bezierPath.addCurve(to: CGPoint(x: 12, y: height - 4), controlPoint1: CGPoint(x: 4, y: height + 1), controlPoint2: CGPoint(x: 8, y: height - 1))
             bezierPath.addCurve(to: CGPoint(x: 20, y: height), controlPoint1: CGPoint(x: 15, y: height), controlPoint2: CGPoint(x: 20, y: height))
             
-            fillColor = Constants.Colors.incomingMessageBubble
         } else {
             bezierPath.move(to: CGPoint(x: width - 20, y: height))
             bezierPath.addLine(to: CGPoint(x: 15, y: height))
@@ -75,7 +74,6 @@ class MessageBubbleView: UIView {
             bezierPath.addCurve(to: CGPoint(x: width - 12, y: height - 4), controlPoint1: CGPoint(x: width - 4, y: height + 1), controlPoint2: CGPoint(x: width - 8, y: height - 1))
             bezierPath.addCurve(to: CGPoint(x: width - 20, y: height), controlPoint1: CGPoint(x: width - 15, y: height), controlPoint2: CGPoint(x: width - 20, y: height))
             
-            fillColor = Constants.Colors.outgoingMessageBubble
         }
         
         // fill

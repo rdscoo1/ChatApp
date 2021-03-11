@@ -51,16 +51,20 @@ class MessageTableViewCell: UITableViewCell {
     // MARK: - Public Methods
     
     func configure(with model: MessageCellModel) {
+        let themeColors = Themes.current.colors.conversation.cell
+        let directionTheme = model.direction == .incoming ? themeColors.incoming : themeColors.outgoing
+        messageLabel.textColor = directionTheme.text
+        messageView.fillColor = directionTheme.background
+        
         messageLabel.text = model.text
-        if model.isIncoming {
+        
+        if model.direction == .incoming {
             messageLeadingConstraint.constant = offset + 6
-            messageLabel.textColor = Constants.Colors.incomingMessageText
             messageView.type = .incoming
             outgoingMessageConstraint.isActive = false
             incomingMessageConstraint.isActive = true
         } else {
             messageLeadingConstraint.constant = offset
-            messageLabel.textColor = .white
             messageView.type = .outgoing
             incomingMessageConstraint.isActive = false
             outgoingMessageConstraint.isActive = true
@@ -70,6 +74,7 @@ class MessageTableViewCell: UITableViewCell {
     // MARK: - Private Methods
     
     private func setupLayout() {
+        backgroundColor = .clear
         contentView.transform = CGAffineTransform(scaleX: 1, y: -1)
         
         messageView.addSubview(messageLabel)

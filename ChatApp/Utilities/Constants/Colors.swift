@@ -36,18 +36,18 @@ extension Constants {
         
         // MARK: - Profile ViewController
         
-        static var buttonBackground: UIColor {
-            if #available(iOS 13.0, *) {
-                return UIColor { (traits) -> UIColor in
-                    return traits.userInterfaceStyle == .dark ?
-                        UIColor(hex: "#FFFFFF", alpha: 0.2) :
-                        UIColor(hex: "#F6F6F6")
-                }
-            } else {
-                return UIColor(hex: "#F6F6F6")
-            }
-        }
-        
+//        static var buttonBackground: UIColor {
+//            if #available(iOS 13.0, *) {
+//                return UIColor { (traits) -> UIColor in
+//                    return traits.userInterfaceStyle == .dark ?
+//                        UIColor(hex: "#FFFFFF", alpha: 0.2) :
+//                        UIColor(hex: "#F6F6F6")
+//                }
+//            } else {
+//                return UIColor(hex: "#F6F6F6")
+//            }
+//        }
+//
         static var buttonText: UIColor {
             if #available(iOS 13.0, *) {
                 return UIColor { (traits) -> UIColor in
@@ -100,20 +100,49 @@ extension Constants {
             }
         }
         
-        static let themeIsSelected = UIColor(hex: "#007AFF")
-        static let themeNotSelected = UIColor(hex: "#979797")
         
-        static let themesBackground = UIColor(hex: "#193661")
+        // MARK: - App Theme basic
         
-        // MARK: - App Theme Message Bubbles
+        static let settingsIconGray = UIColor(hex: "#545458")
         
-        static let incomingBubbleClassic = UIColor(hex: "#DFDFDF")
-        static let outgoingBubbleClassic = UIColor(hex: "#DCF7C5")
+        static let navigationBarBackgroundNight = UIColor(hex: "#1E1E1E")
         
-        static let incomingBubbleDay = UIColor(hex: "#EAEBED")
-        static let outgoingBubbleDay = UIColor(hex: "#4389F9")
+        static let titleTextLight = UIColor.black
+        static let titleTextDark = UIColor.white
+        static let subtitleTextLight = UIColor(hex: "#3C3C43")
+        static let subtitleTextDark = UIColor(hex: "#8D8D93")
         
-        static let incomingBubbleNight = UIColor(hex: "#2E2E2E")
-        static let outgoingBubbleNight = UIColor(hex: "#5C5C5C")
+        static let yellowLight = UIColor(hex: "#FEFCD8")
+        static let yellowDark = UIColor(hex: "#191709")
+        
+        static let lightGray = UIColor(hex: "#F6F6F6")
+        static let darkGray = UIColor(hex: "#363738")
+        
+        static let themeViewIsSelected = UIColor(hex: "#007AFF")
+        static let themeViewNotSelected = UIColor(hex: "#979797")
+        
+        static let themesVCBackground = UIColor(hex: "#193661")
+        
+        // MARK: - Message Bubbles
+        
+        static let incomingBubbleBackgroundClassic = UIColor(hex: "#DFDFDF")
+        static let outgoingBubbleBackgroundClassic = UIColor(hex: "#DCF7C5")
+        
+        static let incomingBubbleBackgroundDay = UIColor(hex: "#EAEBED")
+        static let outgoingBubbleBackgroundDay = UIColor.white
+        
+        static let incomingBubbleBackgroundNight = UIColor(hex: "#2E2E2E")
+        static let outgoingBubbleBackgroundNight = UIColor(hex: "#5C5C5C")
+        
+        static let bubbleTextClassic = UIColor.black
+        static let bubbleOutgoingTextDay = UIColor.white
+        static let bubbleIncomingTextDay = UIColor(hex: "#060606")
+        static let bubbleTextNight = UIColor.white
+        
+        
+        // MARK: - Profile
+        
+        static let buttonBackgroundLight = UIColor(hex: "#F6F6F6")
+        static let buttonBackgroundDark = UIColor(hex: "#1B1B1B")
     }
 }

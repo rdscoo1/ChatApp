@@ -8,13 +8,15 @@
 import UIKit
 
 protocol ThemeViewDelegate: AnyObject {
-    func themeSelected()
+    func themeSelected(_ view: ThemeView, withOption themeOption: ThemeOptions)
 }
 
 class ThemeView: UIView {
 
     // MARK: - Private Properties
         
+    private(set) var themeOption: ThemeOptions = .classic
+    
     private let containerView = UIView()
     private let incomingBubbleImageView = UIImageView()
     private let outgoingBubbleImageView = UIImageView()
@@ -34,10 +36,10 @@ class ThemeView: UIView {
     var isSelected: Bool = false {
         didSet {
             if isSelected {
-                containerView.layer.borderColor = Constants.Colors.themeIsSelected.cgColor
+                containerView.layer.borderColor = Constants.Colors.themeViewIsSelected.cgColor
                 containerView.layer.borderWidth = 3
             } else {
-                containerView.layer.borderColor = Constants.Colors.themeNotSelected.cgColor
+                containerView.layer.borderColor = Constants.Colors.themeViewNotSelected.cgColor
                 containerView.layer.borderWidth = 1
             }
         }
@@ -45,14 +47,19 @@ class ThemeView: UIView {
     
     // Handle tap
     
-    var didTapOnThemeView: (() -> Void)?
+    /*
+        Если не делать поле делегата weak, это может стать причиной memory leak,
+        например ссылка на объект этого класса хранится в поле объекта делегата,
+        а этот объект захватывает сильную ссылку на делегат.
+    */
     weak var delegate: ThemeViewDelegate?
     
     // MARK: - Initializers
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(themeOption: ThemeOptions) {
+        super.init(frame: .zero)
         
+        self.themeOption = themeOption
         setupUI()
         setupLayout()
     }
@@ -69,26 +76,22 @@ class ThemeView: UIView {
         containerView.layer.cornerRadius = 14
     }
     
-    // MARK: - Public Methods
-    
-//    func configure() {
-//        themeTitle.text =
-//    }
-    
     // MARK: - Private Methods
     
     private func setupUI() {
-        containerView.backgroundColor = .white
+        let theme = themeOption.theme
         
-        incomingBubbleImageView.image = UIImage(named: "incomingBubble")
-        outgoingBubbleImageView.image = UIImage(named: "outgoingBubble")
+        containerView.backgroundColor = theme.colors.primaryBackground
         
-        incomingBubbleImageView.tintColor = Constants.Colors.incomingBubbleClassic
-        outgoingBubbleImageView.tintColor = Constants.Colors.outgoingBubbleClassic
+        incomingBubbleImageView.image = .incomingBubble
+        outgoingBubbleImageView.image = .outgoingBubble
         
-        themeTitle.text = Constants.LocalizationKey.classic.string
+        incomingBubbleImageView.tintColor = theme.colors.conversation.cell.incoming.background
+        outgoingBubbleImageView.tintColor = theme.colors.conversation.cell.outgoing.background
+        
+        themeTitle.text = theme.name
         themeTitle.textAlignment = .center
-        themeTitle.textColor = .white
+        themeTitle.textColor = theme.colors.themes.text
         stackView.axis = .vertical
         stackView.spacing = verticalSpacing
     
@@ -96,14 +99,13 @@ class ThemeView: UIView {
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
         
-        containerView.isUserInteractionEnabled = true
-        containerView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(themeIsSelected)))
+        stackView.isUserInteractionEnabled = true
+        stackView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(themeIsSelected)))
     }
     
     @objc private func themeIsSelected() {
-        print("Theme selected")
         isSelected = true
-        delegate?.themeSelected()
+        delegate?.themeSelected(self, withOption: themeOption)
     }
     
     private func setupLayout() {
@@ -130,7 +132,5 @@ class ThemeView: UIView {
             stackView.trailingAnchor.constraint(equalTo: trailingAnchor),
             stackView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
-        
     }
-
 }

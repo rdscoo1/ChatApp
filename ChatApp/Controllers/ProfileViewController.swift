@@ -40,7 +40,7 @@ class ProfileViewController: UIViewController {
         return label
     }()
     
-    private let editButton = ActionButton(title: Constants.LocalizationKey.save.string)
+    private let saveButton = ActionButton(title: Constants.LocalizationKey.save.string)
     
     private let offset: CGFloat = 16
         
@@ -48,18 +48,18 @@ class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = Constants.Colors.appTheme
-        
-        configureConstraints()
-        
-        profileLogoImageView.delegate = self
-        profileLogoImageView.setPlaceholderLetters(fullName: profileNameLabel.text)
-        
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: Constants.LocalizationKey.close.string,
                                                             style: .done,
                                                             target: self,
                                                             action: #selector(dismissVC))
         navigationItem.title = Constants.LocalizationKey.myProfile.string
+        
+        
+        profileLogoImageView.delegate = self
+        profileLogoImageView.setPlaceholderLetters(fullName: profileNameLabel.text)
+        
+        setupTheme()
+        configureConstraints()
     }
     
     @objc private func dismissVC() {
@@ -69,12 +69,21 @@ class ProfileViewController: UIViewController {
     
     // MARK: - Private Methods
     
+    private func setupTheme() {
+        let theme = Themes.current
+        view.backgroundColor = theme.colors.primaryBackground
+        profileNameLabel.textColor = theme.colors.profile.name
+        profileCareerLabel.textColor = theme.colors.profile.description
+        profileCareerLabel.textColor = theme.colors.profile.description
+        saveButton.backgroundColor = theme.colors.profile.saveButtonBackground
+    }
+    
     private func configureConstraints() {
         view.addSubview(profileLogoImageView)
         view.addSubview(profileNameLabel)
         view.addSubview(profileCareerLabel)
         view.addSubview(profileGeoLabel)
-        view.addSubview(editButton)
+        view.addSubview(saveButton)
         
         NSLayoutConstraint.activate([
             profileLogoImageView.widthAnchor.constraint(equalToConstant: offset * 15),
@@ -94,10 +103,10 @@ class ProfileViewController: UIViewController {
             profileGeoLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: offset),
             profileGeoLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -offset),
             
-            editButton.heightAnchor.constraint(equalToConstant: offset * 3),
-            editButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: offset * 3),
-            editButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -offset * 3),
-            editButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -offset * 2)
+            saveButton.heightAnchor.constraint(equalToConstant: offset * 3),
+            saveButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: offset * 3),
+            saveButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -offset * 3),
+            saveButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -offset * 2)
         ])
     }
     
