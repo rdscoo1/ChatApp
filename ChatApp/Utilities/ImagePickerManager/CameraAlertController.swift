@@ -84,9 +84,9 @@ extension CameraAlertController {
         
         let cancelAction = UIAlertAction(title: Constants.LocalizationKey.cancel.string, style: .cancel, handler: nil)
         
-        addAction(cameraAction)
-        addAction(libraryAction)
-        addAction(cancelAction)
+        [cameraAction, libraryAction, cancelAction].forEach {
+            addAction($0)
+        }
     }
     
 }

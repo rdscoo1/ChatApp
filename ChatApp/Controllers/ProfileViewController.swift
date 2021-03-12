@@ -43,6 +43,10 @@ class ProfileViewController: UIViewController {
     private let saveButton = ActionButton(title: Constants.LocalizationKey.save.string)
     
     private let offset: CGFloat = 16
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        Themes.current.statusBarStyle
+    }
         
     // MARK: - LifeCycle 
     
@@ -76,6 +80,25 @@ class ProfileViewController: UIViewController {
         profileCareerLabel.textColor = theme.colors.profile.description
         profileCareerLabel.textColor = theme.colors.profile.description
         saveButton.backgroundColor = theme.colors.profile.saveButtonBackground
+        
+        if #available(iOS 13.0, *) {
+            let navBarAppearance = UINavigationBarAppearance()
+            navBarAppearance.configureWithOpaqueBackground()
+            navBarAppearance.titleTextAttributes = [.foregroundColor: theme.colors.navigationBar.title]
+            navBarAppearance.largeTitleTextAttributes = [.foregroundColor:theme.colors.navigationBar.title]
+            navBarAppearance.backgroundColor = theme.colors.navigationBar.background
+            navigationController?.navigationBar.standardAppearance = navBarAppearance
+            navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
+        } else {
+            UINavigationBar.appearance().isTranslucent = false
+            UINavigationBar.appearance().barTintColor = theme.colors.navigationBar.background
+            UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: theme.colors.navigationBar.title]
+            UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: theme.colors.navigationBar.title]
+        }
+       
+        navigationController?.isNavigationBarHidden = true
+        navigationController?.isNavigationBarHidden = false
+        setNeedsStatusBarAppearanceUpdate()
     }
     
     private func configureConstraints() {

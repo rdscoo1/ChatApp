@@ -41,10 +41,7 @@ struct ClassicTheme: AppTheme {
         profile: .init(
             name: .black,
             description: .black,
-            saveButtonBackground: Constants.Colors.buttonBackgroundLight,
-            actionSheet: .init(
-                text: .black,
-                background: .white)),
+            saveButtonBackground: Constants.Colors.buttonBackgroundLight),
         themes: .init(
             text: .black,
             background: Constants.Colors.outgoingBubbleBackgroundClassic)

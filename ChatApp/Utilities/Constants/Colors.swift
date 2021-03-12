@@ -116,7 +116,7 @@ extension Constants {
         static let yellowDark = UIColor(hex: "#191709")
         
         static let lightGray = UIColor(hex: "#F6F6F6")
-        static let darkGray = UIColor(hex: "#363738")
+        static let darkGray = UIColor(hex: "#1E1E1E")
         
         static let themeViewIsSelected = UIColor(hex: "#007AFF")
         static let themeViewNotSelected = UIColor(hex: "#979797")
@@ -129,7 +129,7 @@ extension Constants {
         static let outgoingBubbleBackgroundClassic = UIColor(hex: "#DCF7C5")
         
         static let incomingBubbleBackgroundDay = UIColor(hex: "#EAEBED")
-        static let outgoingBubbleBackgroundDay = UIColor.white
+        static let outgoingBubbleBackgroundDay = UIColor(hex: "#4389F9")
         
         static let incomingBubbleBackgroundNight = UIColor(hex: "#2E2E2E")
         static let outgoingBubbleBackgroundNight = UIColor(hex: "#5C5C5C")

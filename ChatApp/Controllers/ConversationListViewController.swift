@@ -46,11 +46,10 @@ class ConversationListViewController: UIViewController {
         super.viewDidLoad()
         navigationItem.backButtonTitle = ""
         navigationController?.navigationBar.prefersLargeTitles = true
-        
-        view.backgroundColor = Themes.current.colors.primaryBackground
-        
+                
         setupLayout()
         configureNavBarButtons()
+        setupTheme()
     }
     
     // MARK: - Private Methods
@@ -68,7 +67,7 @@ class ConversationListViewController: UIViewController {
     
     private func setupTheme() {
         let theme = Themes.current
-        view.backgroundColor = theme.colors.primaryBackground
+        tableView.backgroundColor = theme.colors.navigationBar.background
         if #available(iOS 13.0, *) {
             let navBarAppearance = UINavigationBarAppearance()
             navBarAppearance.configureWithOpaqueBackground()
@@ -83,7 +82,7 @@ class ConversationListViewController: UIViewController {
             UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: theme.colors.navigationBar.title]
             UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: theme.colors.navigationBar.title]
         }
-       
+        
         navigationController?.isNavigationBarHidden = true
         navigationController?.isNavigationBarHidden = false
         setNeedsStatusBarAppearanceUpdate()
@@ -107,6 +106,7 @@ class ConversationListViewController: UIViewController {
     
     private func configureNavBarButtons() {
         settingsBarButton = UIBarButtonItem(image: .settingsIcon, style: .plain, target: self, action: #selector(goToThemesTapped))
+        settingsBarButton?.tintColor = Themes.current.colors.navigationBar.tint
         navigationItem.leftBarButtonItem = settingsBarButton
         
         let profileLogoImageView = ProfileLogoImageView()
@@ -116,7 +116,7 @@ class ConversationListViewController: UIViewController {
         let rightBarButtonView = UIView()
         rightBarButtonView.addSubview(profileLogoImageView)
         profileLogoImageView.translatesAutoresizingMaskIntoConstraints = false
-
+        
         
         NSLayoutConstraint.activate([
             profileLogoImageView.leadingAnchor.constraint(equalTo: rightBarButtonView.leadingAnchor),
@@ -172,6 +172,19 @@ extension ConversationListViewController: UITableViewDataSource {
 
 extension ConversationListViewController: UITableViewDelegate {
     
+    func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
+        if let cell = tableView.cellForRow(at: indexPath) {
+            cell.contentView.backgroundColor = Themes.current.colors.conversationList.cell.cellSelected
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
+        if let cell = tableView.cellForRow(at: indexPath) {
+            let item = sections[indexPath.section].items[indexPath.row]
+            cell.contentView.backgroundColor = item.isOnline ? Themes.current.colors.conversationList.cell.background : .clear
+        }
+    }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let selectedIndex = tableView.indexPathForSelectedRow else {
             return
@@ -199,7 +212,7 @@ extension ConversationListViewController: UITableViewDelegate {
 extension ConversationListViewController: ThemesPickerDelegate {
     
     func themeDidChange(on themeOption: ThemeOptions) {
-//        Themes.saveApplicationTheme(themeOption)
+        //        Themes.saveApplicationTheme(themeOption)
         //        setupTheme()
         //        tableView.reloadData()
     }
