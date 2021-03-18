@@ -22,6 +22,8 @@ class ConversationListViewController: UIViewController {
         return tableView
     }()
     
+    private var settingsBarButton: UIBarButtonItem?
+    
     private let dataProvider = DataProvider()
     private lazy var items: [ConversationCellModel] = dataProvider.getConversations()
     
@@ -34,18 +36,21 @@ class ConversationListViewController: UIViewController {
                                         .sorted(by: { ($0.date ?? Date(timeIntervalSince1970: 0) > $1.date ?? Date(timeIntervalSince1970: 0))  }))
     ]
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        Themes.current.statusBarStyle
+    }
+    
     // MARK: - LifeCycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        navigationItem.backButtonTitle = ""
         navigationController?.navigationBar.prefersLargeTitles = true
         
-        view.backgroundColor = Constants.Colors.appTheme
+        view.backgroundColor = Themes.current.colors.primaryBackground
         
         setupLayout()
-        configureNavBarRightButton()
-        configureNavBarLeftButton()
+        configureNavBarButtons()
     }
     
     // MARK: - Private Methods
@@ -55,18 +60,55 @@ class ConversationListViewController: UIViewController {
         
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.topAnchor),
-            tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
     
-    private func configureNavBarLeftButton() {
-        let leftBarButton = UIBarButtonItem(image: .settingsIcon, style: .plain, target: nil, action: nil)
-        navigationItem.leftBarButtonItem = leftBarButton
+    private func setupTheme() {
+        let theme = Themes.current
+        view.backgroundColor = theme.colors.primaryBackground
+        if #available(iOS 13.0, *) {
+            let navBarAppearance = UINavigationBarAppearance()
+            navBarAppearance.configureWithOpaqueBackground()
+            navBarAppearance.titleTextAttributes = [.foregroundColor: theme.colors.navigationBar.title]
+            navBarAppearance.largeTitleTextAttributes = [.foregroundColor:theme.colors.navigationBar.title]
+            navBarAppearance.backgroundColor = theme.colors.navigationBar.background
+            navigationController?.navigationBar.standardAppearance = navBarAppearance
+            navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
+        } else {
+            UINavigationBar.appearance().isTranslucent = false
+            UINavigationBar.appearance().barTintColor = theme.colors.navigationBar.background
+            UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: theme.colors.navigationBar.title]
+            UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: theme.colors.navigationBar.title]
+        }
+       
+        navigationController?.isNavigationBarHidden = true
+        navigationController?.isNavigationBarHidden = false
+        setNeedsStatusBarAppearanceUpdate()
+        tableView.separatorColor = Themes.current.colors.conversationList.table.separator
+        settingsBarButton?.tintColor = theme.colors.navigationBar.tint
     }
     
-    private func configureNavBarRightButton() {
+    @objc private func goToThemesTapped() {
+        let themesViewController = ThemesViewController()
+        
+        themesViewController.delegate = self
+        
+        themesViewController.didTapOnThemeView = { [weak self] themeOption in
+            Themes.saveApplicationTheme(themeOption)
+            self?.setupTheme()
+            self?.tableView.reloadData()
+        }
+        
+        navigationController?.pushViewController(themesViewController, animated: true)
+    }
+    
+    private func configureNavBarButtons() {
+        settingsBarButton = UIBarButtonItem(image: .settingsIcon, style: .plain, target: self, action: #selector(goToThemesTapped))
+        navigationItem.leftBarButtonItem = settingsBarButton
+        
         let profileLogoImageView = ProfileLogoImageView()
         profileLogoImageView.setPlaceholderLetters(fullName: dataProvider.getMainUser().fullName)
         profileLogoImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(profileViewTapped)))
@@ -95,6 +137,7 @@ class ConversationListViewController: UIViewController {
     
 }
 
+
 // MARK: - UITableViewDataSource
 
 extension ConversationListViewController: UITableViewDataSource {
@@ -117,15 +160,17 @@ extension ConversationListViewController: UITableViewDataSource {
         
         return cell
     }
-}
-
-// MARK: - UITableViewDelegate
-
-extension ConversationListViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return sections[section].sectionName
     }
+    
+}
+
+
+// MARK: - UITableViewDelegate
+
+extension ConversationListViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let selectedIndex = tableView.indexPathForSelectedRow else {
@@ -134,9 +179,29 @@ extension ConversationListViewController: UITableViewDelegate {
         
         let conversationVC = ConversationViewController()
         conversationVC.conversationTitle = sections[selectedIndex.section].items[selectedIndex.row].name
-        
         navigationController?.pushViewController(conversationVC, animated: true)
         
         tableView.deselectRow(at: indexPath, animated: true)
     }
+    
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        guard let headerView = view as? UITableViewHeaderFooterView else { return }
+        headerView.contentView.backgroundColor = Themes.current.colors.conversationList.table.sectionHeaderBackground
+        headerView.textLabel?.textColor = Themes.current.colors.conversationList.table.sectionHeaderTitle
+        
+    }
+    
+}
+
+
+// MARK: - ThemesPickerDelegate Conformance
+
+extension ConversationListViewController: ThemesPickerDelegate {
+    
+    func themeDidChange(on themeOption: ThemeOptions) {
+//        Themes.saveApplicationTheme(themeOption)
+        //        setupTheme()
+        //        tableView.reloadData()
+    }
+    
 }

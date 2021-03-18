@@ -6,14 +6,34 @@
   
 */
 
+// MARK: - Navigation Title
+
 "Chat" = "Chat";
 "My profile" = "My profile";
+"Settings" = "Settings";
+
+// MARK: - Selecting Photo Alert
+
 "Go to settings" = "Go to settings";
 "Cancel" = "Cancel";
+"Okay" = "Okay";
 "Error" = "Error";
 "No access to camera" = "No access to camera";
-"Okay" = "Okay";
+"To add photo give access to camera in device settings" = "To add photo give access to camera in device settings";
+
+// MARK: - Camera Alert Actions
+
 "Delete photo" = "Delete photo";
 "Make photo" = "Make photo";
 "Select from gallery" = "Select from gallery";
-"To add photo give access to camera in device settings" = "To add photo give access to camera in device settings";
+
+// MARK: - Actions
+
+"Close" = "Close";
+"Save" = "Save";
+
+// MARK: - App Theme
+
+"Classic" = "Classic";
+"Day" = "Day";
+"Night" = "Night";

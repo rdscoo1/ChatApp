@@ -39,7 +39,6 @@ class ConversationTableViewCell: UITableViewCell {
         return label
     }()
     
-    
     private let offset: CGFloat = 8
     
     // MARK: - Initializers
@@ -68,14 +67,14 @@ class ConversationTableViewCell: UITableViewCell {
     // MARK: - Public Methods
     
     func configure(with model: ConversationCellModel) {
+        let theme = Themes.current
+        
         if model.photo == nil {
             interlocutorPhotoImageView.setPlaceholderLetters(fullName: model.name)
         } else {
             interlocutorPhotoImageView.setLogo(image: model.photo!)
         }
-        
-//        interlocutorPhotoImageView.set(image: model.photo)
-        
+            
         interlocutorNameLabel.text = model.name
         
         if let date = model.date,
@@ -108,12 +107,20 @@ class ConversationTableViewCell: UITableViewCell {
             backgroundColor = UIColor.yellow.withAlphaComponent(0.1)
         }
         
+        contentView.backgroundColor = model.isOnline ? theme.colors.conversationList.cell.background : .clear
+        
+        interlocutorNameLabel.textColor = theme.colors.conversationList.cell.interlocutorName
+        messageLabel.textColor = theme.colors.conversationList.cell.message
+        messageDateLabel.textColor = theme.colors.conversationList.cell.receivedDate
+        
+        let selectedBackgroundView = UIView()
+        selectedBackgroundView.backgroundColor = theme.colors.conversationList.cell.cellSelected
+        self.selectedBackgroundView = selectedBackgroundView
     }
     
     // MARK: - Private Methods
     
     private func setupLayout() {
-        self.accessoryType = .disclosureIndicator
         
         contentView.addSubview(interlocutorPhotoImageView)
         contentView.addSubview(interlocutorNameLabel)
@@ -135,7 +142,7 @@ class ConversationTableViewCell: UITableViewCell {
             
             messageLabel.topAnchor.constraint(equalTo: interlocutorNameLabel.bottomAnchor, constant: 2),
             messageLabel.leadingAnchor.constraint(equalTo: interlocutorNameLabel.leadingAnchor),
-            messageLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -offset)
+            messageLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -offset),
         ])
     }
 }

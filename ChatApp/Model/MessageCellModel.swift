@@ -9,5 +9,10 @@ import Foundation
 
 struct MessageCellModel {
     let text: String
-    let isIncoming: Bool
+    let direction: MessageDirection
+}
+
+enum MessageDirection {
+    case incoming
+    case outgoing
 }

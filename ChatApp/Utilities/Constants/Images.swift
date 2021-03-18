@@ -10,5 +10,7 @@ import UIKit
 extension UIImage {
     
     static let settingsIcon = UIImage(imageLiteralResourceName: "SettingsIcon")
-    
+    static let incomingBubble = UIImage(imageLiteralResourceName: "incomingBubble")
+    static let outgoingBubble = UIImage(imageLiteralResourceName: "outgoingBubble")
+    static let disclosureRight = UIImage(imageLiteralResourceName: "disclosure_right")
 }

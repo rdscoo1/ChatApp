@@ -37,6 +37,5 @@ class ActionButton: UIButton {
         clipsToBounds = true
         setTitleColor(Constants.Colors.buttonText, for: .normal)
         titleLabel?.font = .systemFont(ofSize: 16, weight: .bold)
-        backgroundColor = Constants.Colors.buttonBackground
     }
 }

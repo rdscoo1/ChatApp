@@ -38,16 +38,20 @@ class ConversationViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.largeTitleDisplayMode = .never
-
         title = conversationTitle
-        view.backgroundColor = .white
         
+        setupTheme()
         setupLayout()
     }
     
     // MARK: - Private Methods
     
+    private func setupTheme() {
+        view.backgroundColor = Themes.current.colors.primaryBackground
+    }
+    
     private func setupLayout() {
+        tableView.backgroundColor = .clear
         view.addSubview(tableView)
         
         NSLayoutConstraint.activate([
