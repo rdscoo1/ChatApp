@@ -13,6 +13,12 @@ protocol ProfileLogoImageViewDelegate: AnyObject {
 
 class ProfileLogoImageView: UIView {
     
+    // MARK: - Public properties
+    
+    var profileImage: UIImage? {
+        logoImageView.image
+    }
+    
     // MARK: - Private Properties
     
     private lazy var logoImageView: UIImageView = {
@@ -97,7 +103,7 @@ class ProfileLogoImageView: UIView {
         addGestureRecognizer(tap)
     }
     
-    private func setupLayout() {
+    private func setupLayout() {        
         translatesAutoresizingMaskIntoConstraints = false
         clipsToBounds = true
         addSubview(logoImageView)

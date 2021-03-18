@@ -7,15 +7,8 @@
 
 import UIKit
 
-struct User {
-    var firstName: String
-    var secondName: String?
-    var profileImage: UIImage?
-    
-    var fullName: String {
-        guard let secondName = secondName else {
-            return "\(firstName)"
-        }
-        return "\(firstName) \(secondName)"
-    }
+struct User: Codable {
+    var fullName: String
+    let description: String?
+    let profileImageUrl: URL?
 }

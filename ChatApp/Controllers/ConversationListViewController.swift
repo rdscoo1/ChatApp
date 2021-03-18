@@ -36,23 +36,45 @@ class ConversationListViewController: UIViewController {
                                         .sorted(by: { ($0.date ?? Date(timeIntervalSince1970: 0) > $1.date ?? Date(timeIntervalSince1970: 0))  }))
     ]
     
+    private let profileLogoImageView = ProfileLogoImageView()
+    
+    private var user: UserViewModel? {
+        didSet {
+            if let user = self.user {
+                DispatchQueue.main.async { [weak self] in
+                    self?.profileLogoImageView.setPlaceholderLetters(fullName: user.fullName)
+                }
+            }
+        }
+    }
+    
+    
+    // MARK: - LifeCycle
+    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         Themes.current.statusBarStyle
     }
-    
-    // MARK: - LifeCycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.backButtonTitle = ""
         navigationController?.navigationBar.prefersLargeTitles = true
                 
+        loadData()
         setupLayout()
         configureNavBarButtons()
         setupTheme()
     }
     
     // MARK: - Private Methods
+    
+    func loadData() {
+        let dataManager = OperationDataManager()
+        
+        dataManager.loadUserData { [weak self] user in
+            self?.user = user
+        }
+    }
     
     private func setupLayout() {
         view.addSubview(tableView)
@@ -109,8 +131,7 @@ class ConversationListViewController: UIViewController {
         settingsBarButton?.tintColor = Themes.current.colors.navigationBar.tint
         navigationItem.leftBarButtonItem = settingsBarButton
         
-        let profileLogoImageView = ProfileLogoImageView()
-        profileLogoImageView.setPlaceholderLetters(fullName: dataProvider.getMainUser().fullName)
+//        profileLogoImageView.setPlaceholderLetters(fullName: "Roman Khodukin")
         profileLogoImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(profileViewTapped)))
         
         let rightBarButtonView = UIView()
@@ -132,6 +153,9 @@ class ConversationListViewController: UIViewController {
     @objc private func profileViewTapped() {
         let profileViewController = ProfileViewController()
         let navController = UINavigationController(rootViewController: profileViewController)
+        profileViewController.profileDataUpdatedHandler = { [weak self] in
+            self?.loadData()
+        }
         navigationController?.present(navController, animated: true)
     }
     
