@@ -67,12 +67,6 @@ struct ProfileVC {
     let name: UIColor
     let description: UIColor
     let saveButtonBackground: UIColor
-    let actionSheet: ActionSheetColors
-    
-    struct ActionSheetColors {
-        let text: UIColor
-        let background: UIColor
-    }
 }
 
 struct ThemesVC {

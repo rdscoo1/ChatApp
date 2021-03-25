@@ -18,4 +18,7 @@ struct Constants {
         case disappeared = "Disappeared"
     }
     
+    static let userDataFileName = "userData.json"
+    static let userImageFileName = "userImage.png"
+    
 }

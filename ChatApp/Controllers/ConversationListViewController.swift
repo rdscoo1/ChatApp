@@ -36,24 +36,45 @@ class ConversationListViewController: UIViewController {
                                         .sorted(by: { ($0.date ?? Date(timeIntervalSince1970: 0) > $1.date ?? Date(timeIntervalSince1970: 0))  }))
     ]
     
+    private let profileLogoImageView = ProfileLogoImageView()
+    
+    private var user: UserViewModel? {
+        didSet {
+            if let user = self.user {
+                DispatchQueue.main.async { [weak self] in
+                    self?.profileLogoImageView.setPlaceholderLetters(fullName: user.fullName)
+                }
+            }
+        }
+    }
+    
+    
+    // MARK: - LifeCycle
+    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         Themes.current.statusBarStyle
     }
-    
-    // MARK: - LifeCycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.backButtonTitle = ""
         navigationController?.navigationBar.prefersLargeTitles = true
-        
-        view.backgroundColor = Themes.current.colors.primaryBackground
-        
+                
+        loadData()
         setupLayout()
         configureNavBarButtons()
+        setupTheme()
     }
     
     // MARK: - Private Methods
+    
+    func loadData() {
+        let dataManager = OperationDataManager()
+        
+        dataManager.loadUserData { [weak self] user in
+            self?.user = user
+        }
+    }
     
     private func setupLayout() {
         view.addSubview(tableView)
@@ -68,7 +89,7 @@ class ConversationListViewController: UIViewController {
     
     private func setupTheme() {
         let theme = Themes.current
-        view.backgroundColor = theme.colors.primaryBackground
+        tableView.backgroundColor = theme.colors.navigationBar.background
         if #available(iOS 13.0, *) {
             let navBarAppearance = UINavigationBarAppearance()
             navBarAppearance.configureWithOpaqueBackground()
@@ -83,7 +104,7 @@ class ConversationListViewController: UIViewController {
             UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: theme.colors.navigationBar.title]
             UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: theme.colors.navigationBar.title]
         }
-       
+        
         navigationController?.isNavigationBarHidden = true
         navigationController?.isNavigationBarHidden = false
         setNeedsStatusBarAppearanceUpdate()
@@ -107,16 +128,16 @@ class ConversationListViewController: UIViewController {
     
     private func configureNavBarButtons() {
         settingsBarButton = UIBarButtonItem(image: .settingsIcon, style: .plain, target: self, action: #selector(goToThemesTapped))
+        settingsBarButton?.tintColor = Themes.current.colors.navigationBar.tint
         navigationItem.leftBarButtonItem = settingsBarButton
         
-        let profileLogoImageView = ProfileLogoImageView()
-        profileLogoImageView.setPlaceholderLetters(fullName: dataProvider.getMainUser().fullName)
+//        profileLogoImageView.setPlaceholderLetters(fullName: "Roman Khodukin")
         profileLogoImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(profileViewTapped)))
         
         let rightBarButtonView = UIView()
         rightBarButtonView.addSubview(profileLogoImageView)
         profileLogoImageView.translatesAutoresizingMaskIntoConstraints = false
-
+        
         
         NSLayoutConstraint.activate([
             profileLogoImageView.leadingAnchor.constraint(equalTo: rightBarButtonView.leadingAnchor),
@@ -132,6 +153,9 @@ class ConversationListViewController: UIViewController {
     @objc private func profileViewTapped() {
         let profileViewController = ProfileViewController()
         let navController = UINavigationController(rootViewController: profileViewController)
+        profileViewController.profileDataUpdatedHandler = { [weak self] in
+            self?.loadData()
+        }
         navigationController?.present(navController, animated: true)
     }
     
@@ -172,6 +196,19 @@ extension ConversationListViewController: UITableViewDataSource {
 
 extension ConversationListViewController: UITableViewDelegate {
     
+    func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
+        if let cell = tableView.cellForRow(at: indexPath) {
+            cell.contentView.backgroundColor = Themes.current.colors.conversationList.cell.cellSelected
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
+        if let cell = tableView.cellForRow(at: indexPath) {
+            let item = sections[indexPath.section].items[indexPath.row]
+            cell.contentView.backgroundColor = item.isOnline ? Themes.current.colors.conversationList.cell.background : .clear
+        }
+    }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let selectedIndex = tableView.indexPathForSelectedRow else {
             return
@@ -199,7 +236,7 @@ extension ConversationListViewController: UITableViewDelegate {
 extension ConversationListViewController: ThemesPickerDelegate {
     
     func themeDidChange(on themeOption: ThemeOptions) {
-//        Themes.saveApplicationTheme(themeOption)
+        //        Themes.saveApplicationTheme(themeOption)
         //        setupTheme()
         //        tableView.reloadData()
     }

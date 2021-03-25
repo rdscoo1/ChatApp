@@ -22,7 +22,6 @@ class ActionButton: UIButton {
         super.init(coder: coder)
         configure()
     }
-
     
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -36,6 +35,10 @@ class ActionButton: UIButton {
         translatesAutoresizingMaskIntoConstraints = false
         clipsToBounds = true
         setTitleColor(Constants.Colors.buttonText, for: .normal)
+        setTitleColor(UIColor.lightGray, for: .disabled)
+        titleLabel?.adjustsFontSizeToFitWidth = true
+        titleLabel?.numberOfLines = 1
+        titleLabel?.lineBreakMode = .byClipping
         titleLabel?.font = .systemFont(ofSize: 16, weight: .bold)
     }
 }

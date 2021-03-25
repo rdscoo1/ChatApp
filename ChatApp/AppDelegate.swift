@@ -19,20 +19,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.rootViewController = createChatNavigationController()
         Themes.loadApplicationTheme()
         window?.makeKeyAndVisible()
-        
+                
         return true
     }
     
     private func createChatNavigationController() -> UINavigationController {
-        let chatViewController = ConversationListViewController()
-        chatViewController.title = Constants.LocalizationKey.chat.string
-        chatViewController.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: ProfileLogoImageView())
+        let conversationViewController = ConversationListViewController()
+        setUserData(vc: conversationViewController)
+        conversationViewController.title = Constants.LocalizationKey.chat.string
+        conversationViewController.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: ProfileLogoImageView())
         
-        let navController = RootNavigationController(rootViewController: chatViewController)
+        let navController = RootNavigationController(rootViewController: conversationViewController)
         navController.navigationBar.prefersLargeTitles = true
         return navController
     }
     
+    // MARK: - Private methods
+    
+    private func setUserData(vc: ConversationListViewController) {
+        let dataManager = GCDDataManager()
+        //let dataManager = OperationDataManager()
+        
+        dataManager.loadUserData { userViewModel in
+            if userViewModel == nil {
+                dataManager.saveUserData(.init(fullName: "Roman Khodukin",
+                                               description: "iOS developer\nMoscow, Russia",
+                                               profileImage: nil)) { _ in vc.loadData() }
+            }
+        }
+    }
     
     // MARK: - Core Data stack
     

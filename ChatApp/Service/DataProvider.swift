@@ -8,11 +8,7 @@
 import UIKit
 
 class DataProvider {
-    
-    func getMainUser() -> User {
-        .init(firstName: "Roman", secondName: "Khodukin", profileImage: nil)
-    }
-    
+
     func getConversations() -> [ConversationCellModel] {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd-MM-yyyy HH:mm"

@@ -9,107 +9,384 @@ import UIKit
 
 class ProfileViewController: UIViewController {
     
-    // MARK: - Private Properties
+    // MARK: - Public properties
+    
+    var profileDataUpdatedHandler: (() -> ())?
+    
+    // MARK: - UI
     
     private let profileLogoImageView = ProfileLogoImageView()
     
-    private lazy var profileNameLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.textAlignment = .center
-        label.font = .systemFont(ofSize: 20, weight: .bold)
-        label.text = "Roman Khodukin"
-        return label
+    private lazy var profileNameTextView: UITextView = {
+        let textView = UITextView()
+        textView.text = "Roman Khodukin"
+        textView.font = .systemFont(ofSize: 18, weight: .regular)
+        textView.textAlignment = .center
+        textView.bouncesZoom = true
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        return textView
     }()
     
-    private lazy var profileCareerLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.textAlignment = .center
-        label.font = .systemFont(ofSize: 16, weight: .regular)
-        label.text = "UX/UI designer, iOS-developer"
-        return label
+    private lazy var profileDescriptionTextView: UITextView = {
+        let textView = UITextView()
+        textView.text = "iOS Developer\nMoscow, Russia"
+        textView.font = .systemFont(ofSize: 16, weight: .regular)
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        return textView
     }()
     
-    private lazy var profileGeoLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.textAlignment = .center
-        label.font = .systemFont(ofSize: 16, weight: .regular)
-        label.text = "Moscow, Russia"
-        return label
+    private let editButton = ActionButton(title: "Edit")
+    
+    private lazy var concurrencySaveButtonsStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.distribution = .fillEqually
+        stackView.axis = .horizontal
+        stackView.spacing = 16
+        return stackView
     }()
     
-    private let saveButton = ActionButton(title: Constants.LocalizationKey.save.string)
+    private let gcdSaveButton = ActionButton(title: "Save GCD")
+    private let operationsSaveButton = ActionButton(title: "Save Operations")
+    
+    private lazy var activityIndicator = UIActivityIndicatorView()
+    
+    // MARK: - Private Properties
+    
+    private let gcdDataManager: DataManager = GCDDataManager()
+    private let operationDataManager: DataManager = OperationDataManager()
+    
+    private var user: UserViewModel?
+    private var userModel: UserViewModel {
+        .init(fullName: profileNameTextView.text,
+              description: profileDescriptionTextView.text,
+              profileImage: user?.profileImage)
+    }
     
     private let offset: CGFloat = 16
-        
+    
+    private var profileNameBottomConstraint: NSLayoutConstraint!
+    private var profileDescriptionBottomConstraint: NSLayoutConstraint!
+    
+    private var originalUserImage: UIImage?
+    private var nameChanged = false
+    private var descriptionChanged = false
+    
+    // MARK: - TextView Delegates
+    
+    private lazy var nameTextViewDelegate = TextViewDelegate(textViewType: .nameTextView) { [weak self] in
+        var textChanged = self?.user?.fullName != self?.profileNameTextView.text
+        self?.nameChanged = textChanged
+        self?.setSaveButtonsEnabled(textChanged || self?.descriptionChanged ?? true)
+    }
+    private lazy var descriptionTextViewDelegate = TextViewDelegate(textViewType: .descriptionTextView) { [weak self] in
+        var textChanged = self?.user?.description != self?.profileDescriptionTextView.text
+        self?.descriptionChanged = textChanged
+        self?.setSaveButtonsEnabled(textChanged || self?.nameChanged ?? true)
+    }
+    
+    // MARK: - Deinit
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
     // MARK: - LifeCycle 
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        Themes.current.statusBarStyle
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: Constants.LocalizationKey.close.string,
-                                                            style: .done,
-                                                            target: self,
-                                                            action: #selector(dismissVC))
-        navigationItem.title = Constants.LocalizationKey.myProfile.string
-        
+        setupNavigationBar()
         
         profileLogoImageView.delegate = self
-        profileLogoImageView.setPlaceholderLetters(fullName: profileNameLabel.text)
+        profileLogoImageView.setPlaceholderLetters(fullName: profileNameTextView.text)
         
         setupTheme()
         configureConstraints()
+        setupUI()
+        loadData()
+    }
+    
+    
+    
+    // MARK: - Private Methods
+    
+    private func loadData() {
+        activityIndicator.startAnimating()
+        let dataManager = gcdDataManager
+        //let dataManager = operationDataManager
+        
+        dataManager.loadUserData { [weak self] userViewModel in
+            guard let user = userViewModel else {
+                self?.showAlert(title: "Error", message: "Failed to load data", additionalActions:
+                                    [.init(title: "Try again", style: .default) { [weak self] _ in
+                                        self?.loadData()
+                                    }]) { [weak self] _ in
+                    self?.dismissVC()
+                }
+                return
+            }
+            
+            self?.user = user
+            self?.originalUserImage = user.profileImage
+            
+            DispatchQueue.main.async {
+                self?.activityIndicator.stopAnimating()
+                self?.setupTextViews()
+                //                self?.setProfileImage(image: user.profileImage)
+                self?.view.layoutIfNeeded()
+            }
+        }
+    }
+    
+    private func exitEditMode() {
+        if (profileNameTextView.isUserInteractionEnabled) {
+            toggleEditMode()
+        }
+        setSaveButtonsEnabled(false)
+    }
+    
+    private func setSaveButtonsEnabled(_ isEnabled: Bool) {
+        gcdSaveButton.isEnabled = isEnabled
+        operationsSaveButton.isEnabled = isEnabled
+    }
+    
+    private func saveButtonPressed(dataManager: DataManager) {
+        exitEditMode()
+        activityIndicator.startAnimating()
+        dataManager.saveUserData(userModel) { [weak self] (isSuccessful: Bool) in
+            DispatchQueue.main.async {
+                self?.activityIndicator.stopAnimating()
+            }
+            if isSuccessful {
+                if let profileDataUpdatedHandler = self?.profileDataUpdatedHandler {
+                    profileDataUpdatedHandler()
+                }
+                
+                DispatchQueue.main.async {
+                    if self?.profileLogoImageView == nil {
+                        self?.profileLogoImageView.setPlaceholderLetters(fullName: self?.profileNameTextView.text)
+                    }
+                    self?.originalUserImage = self?.user?.profileImage
+                    self?.nameChanged = false
+                    self?.descriptionChanged = false
+                    self?.showAlert(title: "Success", message: "Data saved successfully")
+                }
+            } else {
+                self?.showAlert(title: "Error", message: "Failed to save data", additionalActions: [
+                                    .init(title: "Try again", style: .default) { [weak self] _ in
+                                        self?.saveButtonPressed(dataManager: dataManager)
+                                    }]) { [weak self] _ in
+                    self?.setSaveButtonsEnabled(true)
+                }
+            }
+        }
+    }
+    
+    private func setupTextViews() {
+        profileNameTextView.text = user?.fullName
+        profileDescriptionTextView.text = user?.description
+        profileNameTextView.delegate = nameTextViewDelegate
+        profileDescriptionTextView.delegate = descriptionTextViewDelegate
+        
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(
+            target: self,
+            action: #selector(dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    // MARK: - Setup Theme
+    
+    private func setupTheme() {
+        let theme = Themes.current
+        view.backgroundColor = theme.colors.primaryBackground
+        activityIndicator.backgroundColor = theme.colors.primaryBackground
+        profileNameTextView.textColor = theme.colors.profile.name
+        profileDescriptionTextView.textColor = theme.colors.profile.description
+        editButton.backgroundColor = theme.colors.profile.saveButtonBackground
+        gcdSaveButton.backgroundColor = theme.colors.profile.saveButtonBackground
+        operationsSaveButton.backgroundColor = theme.colors.profile.saveButtonBackground
+        
+        if #available(iOS 13.0, *) {
+            let navBarAppearance = UINavigationBarAppearance()
+            navBarAppearance.configureWithOpaqueBackground()
+            navBarAppearance.titleTextAttributes = [.foregroundColor: theme.colors.navigationBar.title]
+            navBarAppearance.largeTitleTextAttributes = [.foregroundColor:theme.colors.navigationBar.title]
+            navBarAppearance.backgroundColor = theme.colors.navigationBar.background
+            navigationController?.navigationBar.standardAppearance = navBarAppearance
+            navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
+        } else {
+            UINavigationBar.appearance().isTranslucent = false
+            UINavigationBar.appearance().barTintColor = theme.colors.navigationBar.background
+            UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: theme.colors.navigationBar.title]
+            UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: theme.colors.navigationBar.title]
+        }
+        
+        navigationController?.isNavigationBarHidden = true
+        navigationController?.isNavigationBarHidden = false
+        setNeedsStatusBarAppearanceUpdate()
+    }
+    
+    // MARK: - Setting up UI
+    
+    private func setupNavigationBar() {
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: Constants.LocalizationKey.close.string,
+                                                           style: .done,
+                                                           target: self,
+                                                           action: #selector(dismissVC))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .edit,
+                                                            target: self,
+                                                            action: #selector(toggleEditMode))
+        navigationItem.title = Constants.LocalizationKey.myProfile.string
+    }
+    
+    
+    
+    private func setupUI() {        
+        view.addSubview(activityIndicator)
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            activityIndicator.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            activityIndicator.topAnchor.constraint(equalTo: view.topAnchor),
+            activityIndicator.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            activityIndicator.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
+        
+        gcdSaveButton.isEnabled = false
+        operationsSaveButton.isEnabled = false
+        
+        editButton.addTarget(self, action: #selector(toggleEditMode), for: .touchUpInside)
+        gcdSaveButton.addTarget(self, action: #selector(gcdSaveButtonPressed), for: .touchUpInside)
+        operationsSaveButton.addTarget(self, action: #selector(operationsButtonPressed), for: .touchUpInside)
+    }
+    
+    private func configureConstraints() {
+        concurrencySaveButtonsStackView.addArrangedSubview(gcdSaveButton)
+        concurrencySaveButtonsStackView.addArrangedSubview(operationsSaveButton)
+        
+        view.addSubview(profileLogoImageView)
+        view.addSubview(profileNameTextView)
+        view.addSubview(profileDescriptionTextView)
+        view.addSubview(editButton)
+        view.addSubview(concurrencySaveButtonsStackView)
+        
+        profileNameBottomConstraint = profileNameTextView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0)
+        profileDescriptionBottomConstraint = profileDescriptionTextView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0)
+        
+        NSLayoutConstraint.activate([
+            profileLogoImageView.widthAnchor.constraint(equalToConstant: offset * 15),
+            profileLogoImageView.heightAnchor.constraint(equalToConstant: offset * 15),
+            profileLogoImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: offset * 3),
+            profileLogoImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            
+            profileNameTextView.heightAnchor.constraint(equalToConstant: offset * 5),
+            profileNameTextView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            profileNameTextView.topAnchor.constraint(equalTo: profileLogoImageView.bottomAnchor, constant: offset * 2),
+            profileNameTextView.leadingAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leadingAnchor, constant: offset),
+            profileNameTextView.trailingAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -offset),
+            
+            profileDescriptionTextView.heightAnchor.constraint(equalToConstant: offset * 5),
+            profileDescriptionTextView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            profileDescriptionTextView.topAnchor.constraint(equalTo: profileNameTextView.bottomAnchor, constant: offset * 2),
+            profileDescriptionTextView.leadingAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leadingAnchor, constant: offset),
+            profileDescriptionTextView.trailingAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -offset),
+            
+            editButton.heightAnchor.constraint(equalToConstant: offset * 3),
+            editButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: offset * 2),
+            editButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -offset * 2),
+            editButton.topAnchor.constraint(greaterThanOrEqualTo: profileDescriptionTextView.bottomAnchor, constant: offset * 2),
+            editButton.bottomAnchor.constraint(equalTo: concurrencySaveButtonsStackView.topAnchor, constant: -offset),
+            
+            concurrencySaveButtonsStackView.heightAnchor.constraint(equalToConstant: offset * 3),
+            concurrencySaveButtonsStackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -offset),
+            concurrencySaveButtonsStackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: offset * 2),
+            concurrencySaveButtonsStackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -offset * 2),
+        ])
+    }
+    
+    private func showAlert(title: String =  Constants.LocalizationKey.error.string,
+                           message: String = "This action is not allowed",
+                           additionalActions: [UIAlertAction] = [],
+                           primaryHandler: ((UIAlertAction) -> Void)? = nil) {
+        DispatchQueue.main.async {
+            let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            alertController.addAction(.init(title: "OK", style: .cancel, handler: primaryHandler))
+            additionalActions.forEach { alertController.addAction($0) }
+            self.present(alertController, animated: true)
+        }
+    }
+    
+    // MARK: - Actions
+    
+    @objc private func gcdSaveButtonPressed() {
+        saveButtonPressed(dataManager: gcdDataManager)
+    }
+    
+    @objc private func operationsButtonPressed() {
+        saveButtonPressed(dataManager: operationDataManager)
+    }
+    
+    @objc private func toggleEditMode() {
+        let backgroundColor = profileNameTextView.isUserInteractionEnabled ? nil : UIColor.lightGray
+        let editButtonTitle = profileNameTextView.isUserInteractionEnabled ? "Edit" : "Cancel"
+        UIView.animate(withDuration: 0.3) {
+            self.editButton.setTitle(editButtonTitle, for: .normal)
+            self.profileNameTextView.backgroundColor = backgroundColor
+            self.profileDescriptionTextView.backgroundColor = backgroundColor
+        }
+        profileNameTextView.isUserInteractionEnabled.toggle()
+        profileDescriptionTextView.isUserInteractionEnabled.toggle()
     }
     
     @objc private func dismissVC() {
         dismiss(animated: true)
     }
     
+    // MARK: - Keyboard Actions
     
-    // MARK: - Private Methods
-    
-    private func setupTheme() {
-        let theme = Themes.current
-        view.backgroundColor = theme.colors.primaryBackground
-        profileNameLabel.textColor = theme.colors.profile.name
-        profileCareerLabel.textColor = theme.colors.profile.description
-        profileCareerLabel.textColor = theme.colors.profile.description
-        saveButton.backgroundColor = theme.colors.profile.saveButtonBackground
+    @objc private func keyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue,
+           keyboardSize.height > 0
+        {
+            if profileNameTextView.isFirstResponder {
+                profileNameBottomConstraint.constant = keyboardSize.height
+                profileNameBottomConstraint.priority = .required
+                profileDescriptionBottomConstraint.constant = 0
+                profileDescriptionBottomConstraint.priority = UILayoutPriority(rawValue: 249)
+            } else if profileDescriptionTextView.isFirstResponder {
+                profileDescriptionBottomConstraint.constant = keyboardSize.height
+                profileDescriptionBottomConstraint.priority = .required
+                profileNameBottomConstraint.constant = 0
+                profileNameBottomConstraint.priority = UILayoutPriority(rawValue: 249)
+            }
+            
+            UIView.animate(withDuration: 0.3) {
+                self.view.layoutIfNeeded()
+            }
+        }
     }
     
-    private func configureConstraints() {
-        view.addSubview(profileLogoImageView)
-        view.addSubview(profileNameLabel)
-        view.addSubview(profileCareerLabel)
-        view.addSubview(profileGeoLabel)
-        view.addSubview(saveButton)
+    @objc private func keyboardWillHide(notification: NSNotification) {
+        profileNameBottomConstraint.constant = 0
+        profileNameBottomConstraint.priority = UILayoutPriority(rawValue: 249)
+        profileDescriptionBottomConstraint.constant = 0
+        profileDescriptionBottomConstraint.priority = UILayoutPriority(rawValue: 249)
         
-        NSLayoutConstraint.activate([
-            profileLogoImageView.widthAnchor.constraint(equalToConstant: offset * 15),
-            profileLogoImageView.heightAnchor.constraint(equalTo: profileLogoImageView.widthAnchor),
-            profileLogoImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: offset * 3),
-            profileLogoImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            
-            profileNameLabel.topAnchor.constraint(equalTo: profileLogoImageView.bottomAnchor, constant: offset * 2),
-            profileNameLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: offset),
-            profileNameLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -offset),
-            
-            profileCareerLabel.topAnchor.constraint(equalTo: profileNameLabel.bottomAnchor, constant: offset * 2),
-            profileCareerLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: offset),
-            profileCareerLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -offset),
-            
-            profileGeoLabel.topAnchor.constraint(equalTo: profileCareerLabel.bottomAnchor, constant: offset / 4),
-            profileGeoLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: offset),
-            profileGeoLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -offset),
-            
-            saveButton.heightAnchor.constraint(equalToConstant: offset * 3),
-            saveButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: offset * 3),
-            saveButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -offset * 3),
-            saveButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -offset * 2)
-        ])
+        UIView.animate(withDuration: 0.3) {
+            self.view.layoutIfNeeded()
+        }
     }
     
+    @objc private func dismissKeyboard() {
+        view.endEditing(false)
+    }
 }
 
 // MARK: - ProfileLogoImageViewDelegate Conformance
@@ -117,6 +394,7 @@ class ProfileViewController: UIViewController {
 extension ProfileViewController: ProfileLogoImageViewDelegate {
     func tappedProfileLogoImageView() {
         ImagePickerManager().pickImage(self) { image in
+            self.setSaveButtonsEnabled(self.nameChanged || self.descriptionChanged)
             guard let image = image else { return }
             self.profileLogoImageView.setLogo(image: image)
         }

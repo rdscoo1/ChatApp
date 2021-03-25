@@ -41,10 +41,7 @@ struct NightTheme: AppTheme {
         profile: .init(
             name: .white,
             description: .white,
-            saveButtonBackground: Constants.Colors.buttonBackgroundDark,
-            actionSheet: .init(
-                text: UIColor.black.withAlphaComponent(0.5),
-                background: .white)),
+            saveButtonBackground: Constants.Colors.buttonBackgroundDark),
         themes: .init(
             text: .white,
             background: Constants.Colors.outgoingBubbleBackgroundNight)

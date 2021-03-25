@@ -19,7 +19,7 @@ class ConversationTableViewCell: UITableViewCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .systemFont(ofSize: 17, weight: .semibold)
-        label.setContentHuggingPriority(.defaultLow, for: .horizontal)
+//        label.setContentHuggingPriority(.defaultLow, for: .horizontal)
         return label
     }()
     
@@ -38,6 +38,8 @@ class ConversationTableViewCell: UITableViewCell {
         label.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         return label
     }()
+    
+    private let disclosureRight = UIImageView()
     
     private let offset: CGFloat = 8
     
@@ -103,15 +105,12 @@ class ConversationTableViewCell: UITableViewCell {
             messageDateLabel.text = nil
         }
         
-        if model.isOnline {
-            backgroundColor = UIColor.yellow.withAlphaComponent(0.1)
-        }
-        
         contentView.backgroundColor = model.isOnline ? theme.colors.conversationList.cell.background : .clear
         
         interlocutorNameLabel.textColor = theme.colors.conversationList.cell.interlocutorName
         messageLabel.textColor = theme.colors.conversationList.cell.message
         messageDateLabel.textColor = theme.colors.conversationList.cell.receivedDate
+        disclosureRight.tintColor = theme.colors.conversationList.cell.receivedDate
         
         let selectedBackgroundView = UIView()
         selectedBackgroundView.backgroundColor = theme.colors.conversationList.cell.cellSelected
@@ -121,7 +120,10 @@ class ConversationTableViewCell: UITableViewCell {
     // MARK: - Private Methods
     
     private func setupLayout() {
+        disclosureRight.image = .disclosureRight
+        disclosureRight.translatesAutoresizingMaskIntoConstraints = false
         
+        contentView.addSubview(disclosureRight)
         contentView.addSubview(interlocutorPhotoImageView)
         contentView.addSubview(interlocutorNameLabel)
         contentView.addSubview(messageLabel)
@@ -138,7 +140,14 @@ class ConversationTableViewCell: UITableViewCell {
             interlocutorNameLabel.trailingAnchor.constraint(equalTo: messageDateLabel.leadingAnchor, constant: -offset),
             
             messageDateLabel.centerYAnchor.constraint(equalTo: interlocutorNameLabel.centerYAnchor),
-            messageDateLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -offset),
+            messageDateLabel.leadingAnchor.constraint(equalTo: interlocutorNameLabel.trailingAnchor, constant: offset),
+            messageDateLabel.trailingAnchor.constraint(equalTo: disclosureRight.leadingAnchor, constant: -offset),
+            
+            disclosureRight.heightAnchor.constraint(equalToConstant: 10),
+            disclosureRight.widthAnchor.constraint(equalToConstant: 7),
+            disclosureRight.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -offset * 2),
+            disclosureRight.leadingAnchor.constraint(equalTo: messageDateLabel.trailingAnchor, constant: offset),
+            disclosureRight.centerYAnchor.constraint(equalTo: messageDateLabel.centerYAnchor, constant: -1),
             
             messageLabel.topAnchor.constraint(equalTo: interlocutorNameLabel.bottomAnchor, constant: 2),
             messageLabel.leadingAnchor.constraint(equalTo: interlocutorNameLabel.leadingAnchor),
