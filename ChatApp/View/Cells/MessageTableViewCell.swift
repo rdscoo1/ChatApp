@@ -8,7 +8,7 @@
 import UIKit
 
 class MessageTableViewCell: UITableViewCell {
-
+    
     static let reuseId = String(describing: self)
     
     // MARK: - Private Properties
@@ -21,7 +21,12 @@ class MessageTableViewCell: UITableViewCell {
         label.font = .systemFont(ofSize: 14)
         label.textColor = .white
         label.numberOfLines = 0
-        label.text = "An arbitrary text which we use to demonstrate how our label sizes' calculation works.An arbitrary text which we use to demonstrate how our label sizes' calculation worksAn arbitrary text which we use to demonstrate how our label sizes' calculation works"
+        label.text = """
+        An arbitrary text which we use to demonstrate how our label sizes'\
+        calculation works.An arbitrary text which we use to demonstrate how our label sizes'\
+        calculation worksAn arbitrary text which we use to demonstrate how our label sizes'\
+        calculation works
+        """
         return label
     }()
     
@@ -33,7 +38,6 @@ class MessageTableViewCell: UITableViewCell {
     private lazy var incomingMessageConstraint = messageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8)
     private lazy var outgoingMessageConstraint = messageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8)
     private lazy var messageLeadingConstraint = messageLabel.leadingAnchor.constraint(equalTo: messageView.leadingAnchor, constant: offset)
-
     
     // MARK: - Initializers
     
@@ -46,19 +50,18 @@ class MessageTableViewCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
     
     // MARK: - Public Methods
     
-    func configure(with model: MessageCellModel) {
+    func configure(with model: Message) {
         let themeColors = Themes.current.colors.conversation.cell
-        let directionTheme = model.direction == .incoming ? themeColors.incoming : themeColors.outgoing
+        let directionTheme = model.isMyMessage ? themeColors.incoming : themeColors.outgoing
         messageLabel.textColor = directionTheme.text
         messageView.fillColor = directionTheme.background
         
-        messageLabel.text = model.text
+        messageLabel.text = model.content
         
-        if model.direction == .incoming {
+        if !model.isMyMessage {
             messageLeadingConstraint.constant = offset + 6
             messageView.type = .incoming
             outgoingMessageConstraint.isActive = false
@@ -92,5 +95,5 @@ class MessageTableViewCell: UITableViewCell {
             messageLabel.bottomAnchor.constraint(equalTo: messageView.bottomAnchor, constant: -8)
         ])
     }
-
+    
 }

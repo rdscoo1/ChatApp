@@ -13,7 +13,6 @@ protocol AppTheme {
     var colors: ThemeColors { get }
 }
 
-
 struct ThemeColors {
     let primaryBackground: UIColor
     let navigationBar: NavigationBar

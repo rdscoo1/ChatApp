@@ -7,7 +7,7 @@
 
 import UIKit
 
-class OperationAsyncManager: DataManager {
+class OperationAsyncManager: AsyncManager {
     
     // MARK: - Private properties
     
@@ -17,7 +17,7 @@ class OperationAsyncManager: DataManager {
         return queue
     }()
     
-    // MARK: - DataManager methods
+    // MARK: - AsyncManager methods
     
     func loadUserData(completion: @escaping (UserViewModel?) -> Void) {
         let operation = LoadUserDataOperation(completion: completion)

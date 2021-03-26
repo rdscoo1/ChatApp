@@ -175,7 +175,7 @@ class DataProvider {
                   direction: .incoming),
             .init(text: "Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac",
                   direction: .incoming),
-            .init(text: "Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id.",
+            .init(text: "Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus.",
                   direction: .outgoing),
             .init(text: "Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc",
                   direction: .incoming),
@@ -184,7 +184,7 @@ class DataProvider {
             .init(text: "Cras dapibus.",
                   direction: .outgoing),
             .init(text: "Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus.",
-                  direction: .incoming),
+                  direction: .incoming)
         ]
     }
     

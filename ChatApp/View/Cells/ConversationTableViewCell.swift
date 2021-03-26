@@ -12,9 +12,7 @@ class ConversationTableViewCell: UITableViewCell {
     static let reuseId = String(describing: self)
     
     // MARK: - Private Properties
-    
-    private let interlocutorPhotoImageView = ProfileLogoImageView()
-    
+
     private lazy var interlocutorNameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -59,54 +57,45 @@ class ConversationTableViewCell: UITableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        
-        interlocutorPhotoImageView.setLogo(image: nil)
-        interlocutorPhotoImageView.setPlaceholderLetters(fullName: nil)
         backgroundColor = nil
         messageLabel.font = .systemFont(ofSize: 15, weight: .regular)
     }
     
     // MARK: - Public Methods
     
-    func configure(with model: ConversationCellModel) {
-        let theme = Themes.current
-        
-        if model.photo == nil {
-            interlocutorPhotoImageView.setPlaceholderLetters(fullName: model.name)
-        } else {
-            interlocutorPhotoImageView.setLogo(image: model.photo!)
+    func configure(with model: Channel) {
+        guard let name = model.name else {
+            return
         }
-            
-        interlocutorNameLabel.text = model.name
-        
-        if let date = model.date,
-           let message = model.message {
-                    
-            if model.hasUnreadMessages {
-                messageLabel.font = .systemFont(ofSize: 15, weight: .semibold)
-            }
-            
+
+        let theme = Themes.current
+
+        interlocutorNameLabel.text = name
+
+        if let message = model.lastMessage {
             if message.isEmpty {
                 messageLabel.text = "No messages yet"
                 messageLabel.font = .italicSystemFont(ofSize: 14)
                 messageDateLabel.text = nil
             } else {
-                messageLabel.text = model.message
-            }
-            
-            if date.isDateInToday {
-                messageDateLabel.text = model.date?.formatted(with: "HH:mm")
-            } else {
-                messageDateLabel.text = model.date?.formatted(with: "dd MMM")
+                messageLabel.text = message
             }
         } else {
             messageLabel.text = "No messages yet"
             messageLabel.font = .italicSystemFont(ofSize: 14)
             messageDateLabel.text = nil
         }
-        
-        contentView.backgroundColor = model.isOnline ? theme.colors.conversationList.cell.background : .clear
-        
+
+        if let lastActivityDate = model.lastActivity {
+            if lastActivityDate.isDateInToday {
+                messageDateLabel.text = model.lastActivity?.formatted(with: "HH:mm")
+            } else {
+                messageDateLabel.text = model.lastActivity?.formatted(with: "dd MMM")
+            }
+        } else {
+            messageDateLabel.text = ""
+        }
+
         interlocutorNameLabel.textColor = theme.colors.conversationList.cell.interlocutorName
         messageLabel.textColor = theme.colors.conversationList.cell.message
         messageDateLabel.textColor = theme.colors.conversationList.cell.receivedDate
@@ -120,23 +109,18 @@ class ConversationTableViewCell: UITableViewCell {
     // MARK: - Private Methods
     
     private func setupLayout() {
+        messageLabel.numberOfLines = 1
         disclosureRight.image = .disclosureRight
         disclosureRight.translatesAutoresizingMaskIntoConstraints = false
-        
+
         contentView.addSubview(disclosureRight)
-        contentView.addSubview(interlocutorPhotoImageView)
         contentView.addSubview(interlocutorNameLabel)
         contentView.addSubview(messageLabel)
         contentView.addSubview(messageDateLabel)
         
         NSLayoutConstraint.activate([
-            interlocutorPhotoImageView.heightAnchor.constraint(equalToConstant: 60),
-            interlocutorPhotoImageView.widthAnchor.constraint(equalToConstant: 60),
-            interlocutorPhotoImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            interlocutorPhotoImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: offset * 2),
-            
             interlocutorNameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: offset),
-            interlocutorNameLabel.leadingAnchor.constraint(equalTo: interlocutorPhotoImageView.trailingAnchor, constant: offset),
+            interlocutorNameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: offset * 2),
             interlocutorNameLabel.trailingAnchor.constraint(equalTo: messageDateLabel.leadingAnchor, constant: -offset),
             
             messageDateLabel.centerYAnchor.constraint(equalTo: interlocutorNameLabel.centerYAnchor),
@@ -151,7 +135,7 @@ class ConversationTableViewCell: UITableViewCell {
             
             messageLabel.topAnchor.constraint(equalTo: interlocutorNameLabel.bottomAnchor, constant: 2),
             messageLabel.leadingAnchor.constraint(equalTo: interlocutorNameLabel.leadingAnchor),
-            messageLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -offset),
+            messageLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -offset)
         ])
     }
 }

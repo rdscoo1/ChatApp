@@ -10,7 +10,7 @@ import UIKit
 class ConversationListViewController: UIViewController {
     
     // MARK: - Private Properties
-    
+
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -21,21 +21,14 @@ class ConversationListViewController: UIViewController {
         tableView.dataSource = self
         return tableView
     }()
+
+    private let createChannelButton = UIButton()
     
     private var settingsBarButton: UIBarButtonItem?
-    
-    private let dataProvider = DataProvider()
-    private lazy var items: [ConversationCellModel] = dataProvider.getConversations()
-    
-    private lazy var sections = [
-        ConversationListSectionModel(sectionName: "Online", backgroundColor: UIColor.yellow.withAlphaComponent(0.5), items: items
-                                        .filter { $0.isOnline }
-                                        .sorted(by: { ($0.date ?? Date(timeIntervalSince1970: 0) > $1.date ?? Date(timeIntervalSince1970: 0))  })),
-        ConversationListSectionModel(sectionName: "History", backgroundColor: nil, items: items
-                                        .filter { $0.isOnline == false && $0.message != "" }
-                                        .sorted(by: { ($0.date ?? Date(timeIntervalSince1970: 0) > $1.date ?? Date(timeIntervalSince1970: 0))  }))
-    ]
-    
+
+    private var channels = [Channel]()
+    lazy var firestoreService = FirestoreService()
+
     private let profileLogoImageView = ProfileLogoImageView()
     
     private var user: UserViewModel? {
@@ -47,8 +40,7 @@ class ConversationListViewController: UIViewController {
             }
         }
     }
-    
-    
+
     // MARK: - LifeCycle
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -64,12 +56,27 @@ class ConversationListViewController: UIViewController {
         setupLayout()
         configureNavBarButtons()
         setupTheme()
+        loadChannels()
     }
     
     // MARK: - Private Methods
-    
+
+    private func loadChannels() {
+        firestoreService.subscribeOnChannels { [weak self] (result) in
+            switch result {
+            case .success(let channels):
+                DispatchQueue.main.async {
+                    self?.channels = channels
+                    self?.tableView.reloadData()
+                }
+            case .failure(let error):
+               print("Error during update channels: \(error.localizedDescription)")
+            }
+        }
+    }
+
     func loadData() {
-        let dataManager = OperationDataManager()
+        let dataManager = OperationAsyncManager()
         
         dataManager.loadUserData { [weak self] user in
             self?.user = user
@@ -77,14 +84,57 @@ class ConversationListViewController: UIViewController {
     }
     
     private func setupLayout() {
+        createChannelButton.translatesAutoresizingMaskIntoConstraints = false
+        createChannelButton.layer.cornerRadius = 32
+        createChannelButton.layer.masksToBounds = true
+        createChannelButton.backgroundColor = Constants.Colors.outgoingBubbleBackgroundDay
+        let startChannelIconImage = UIImage.startChannelIcon.tinted(color: .white)
+        createChannelButton.setImage(startChannelIconImage, for: .normal)
+        createChannelButton.addTarget(self, action: #selector(createChannelButtonDidTap), for: .touchUpInside)
+
         view.addSubview(tableView)
+        view.addSubview(createChannelButton)
         
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.topAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+
+            createChannelButton.heightAnchor.constraint(equalToConstant: 64),
+            createChannelButton.widthAnchor.constraint(equalToConstant: 64),
+            createChannelButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -32),
+            createChannelButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32)
         ])
+    }
+
+    @objc private func createChannelButtonDidTap() {
+        let alert = UIAlertController(title: "Create new channel", message: "", preferredStyle: .alert)
+
+        alert.addTextField { (textField) in
+            textField.placeholder = "Enter channel name here..."
+        }
+
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Create", style: .default, handler: { [weak self] _ in
+            if let name = alert.textFields?.first?.text,
+               !name.isEmpty {
+                self?.firestoreService.createChannel(withName: name) { (result) in
+                    if case Result.failure(_) = result {
+                        self?.showErrorAlert(message: "Error occurred during creating new channel, try later.")
+                    }
+                }
+            } else {
+                self?.showErrorAlert(message: "Channel name can't be empty.")
+            }
+        }))
+        present(alert, animated: true)
+    }
+
+    private func showErrorAlert(message: String) {
+        let alert = UIAlertController(title: "Error occurred", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Okay", style: .default, handler: nil))
+        present(alert, animated: true, completion: nil)
     }
     
     private func setupTheme() {
@@ -94,7 +144,7 @@ class ConversationListViewController: UIViewController {
             let navBarAppearance = UINavigationBarAppearance()
             navBarAppearance.configureWithOpaqueBackground()
             navBarAppearance.titleTextAttributes = [.foregroundColor: theme.colors.navigationBar.title]
-            navBarAppearance.largeTitleTextAttributes = [.foregroundColor:theme.colors.navigationBar.title]
+            navBarAppearance.largeTitleTextAttributes = [.foregroundColor: theme.colors.navigationBar.title]
             navBarAppearance.backgroundColor = theme.colors.navigationBar.background
             navigationController?.navigationBar.standardAppearance = navBarAppearance
             navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
@@ -137,8 +187,7 @@ class ConversationListViewController: UIViewController {
         let rightBarButtonView = UIView()
         rightBarButtonView.addSubview(profileLogoImageView)
         profileLogoImageView.translatesAutoresizingMaskIntoConstraints = false
-        
-        
+
         NSLayoutConstraint.activate([
             profileLogoImageView.leadingAnchor.constraint(equalTo: rightBarButtonView.leadingAnchor),
             profileLogoImageView.topAnchor.constraint(equalTo: rightBarButtonView.topAnchor),
@@ -161,36 +210,24 @@ class ConversationListViewController: UIViewController {
     
 }
 
-
 // MARK: - UITableViewDataSource
 
 extension ConversationListViewController: UITableViewDataSource {
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return sections.count
-    }
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return sections[section].items.count
+        return channels.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: ConversationTableViewCell.reuseId, for: indexPath) as? ConversationTableViewCell else {
             return UITableViewCell()
         }
-        
-        let item = sections[indexPath.section].items[indexPath.row]
-        cell.configure(with: item)
+
+        let channel = channels[indexPath.row]
+        cell.configure(with: channel)
         
         return cell
     }
-    
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return sections[section].sectionName
-    }
-    
 }
-
 
 // MARK: - UITableViewDelegate
 
@@ -204,8 +241,7 @@ extension ConversationListViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
         if let cell = tableView.cellForRow(at: indexPath) {
-            let item = sections[indexPath.section].items[indexPath.row]
-            cell.contentView.backgroundColor = item.isOnline ? Themes.current.colors.conversationList.cell.background : .clear
+            cell.contentView.backgroundColor = .clear
         }
     }
     
@@ -215,7 +251,11 @@ extension ConversationListViewController: UITableViewDelegate {
         }
         
         let conversationVC = ConversationViewController()
-        conversationVC.conversationTitle = sections[selectedIndex.section].items[selectedIndex.row].name
+        let channel = channels[selectedIndex.row]
+        conversationVC.conversationTitle = channel.name
+        conversationVC.channelId = channel.identifier
+        print(channel.identifier)
+
         navigationController?.pushViewController(conversationVC, animated: true)
         
         tableView.deselectRow(at: indexPath, animated: true)
@@ -229,7 +269,6 @@ extension ConversationListViewController: UITableViewDelegate {
     }
     
 }
-
 
 // MARK: - ThemesPickerDelegate Conformance
 

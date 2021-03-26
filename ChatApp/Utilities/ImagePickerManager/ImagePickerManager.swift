@@ -15,11 +15,11 @@ class ImagePickerManager: NSObject, UINavigationControllerDelegate {
     private let picker = UIImagePickerController()
     private var alertController: CameraAlertController?
     private var presentationController: UIViewController?
-    private var pickImageCallback: ((UIImage?) -> ())?
+    private var pickImageCallback: ((UIImage?) -> Void)?
     
     // MARK: - Initialization
     
-    override init(){
+    override init() {
         super.init()
         
         alertController = CameraAlertController(
@@ -36,7 +36,7 @@ class ImagePickerManager: NSObject, UINavigationControllerDelegate {
     
     // MARK: - Public Method
     
-    func pickImage(_ viewController: UIViewController, _ callback: @escaping ((UIImage?) -> ())) {
+    func pickImage(_ viewController: UIViewController, _ callback: @escaping ((UIImage?) -> Void)) {
         pickImageCallback = callback
         presentationController = viewController
         
@@ -52,7 +52,7 @@ class ImagePickerManager: NSObject, UINavigationControllerDelegate {
     
     private func openImagePickerOfType(_ sourceType: UIImagePickerController.SourceType) {
         alertController?.dismiss(animated: true, completion: nil)
-        if(UIImagePickerController.isSourceTypeAvailable(sourceType)) {
+        if UIImagePickerController.isSourceTypeAvailable(sourceType) {
             picker.sourceType = sourceType
             if sourceType == .camera {
                 picker.cameraDevice = .front
@@ -129,7 +129,7 @@ extension ImagePickerManager: UIImagePickerControllerDelegate {
     }
     
     func imagePickerController(_ picker: UIImagePickerController,
-                               didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+                               didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         
         if let originalImage = info[.originalImage] as? UIImage {
             pickImageCallback?(originalImage)

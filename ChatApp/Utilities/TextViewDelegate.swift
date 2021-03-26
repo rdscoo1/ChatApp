@@ -18,7 +18,7 @@ class TextViewDelegate: NSObject {
     
     var textViewType: TextViewType?
     
-    let textChangedHandler: () -> ()
+    let textChangedHandler: () -> Void
     
     // MARK: - Public properties
     
@@ -44,7 +44,7 @@ class TextViewDelegate: NSObject {
 
     // MARK: - Initializer
     
-    init(textViewType: TextViewType? = nil, textChangedHandler: @escaping () -> ()) {
+    init(textViewType: TextViewType? = nil, textChangedHandler: @escaping () -> Void) {
         self.textChangedHandler = textChangedHandler
         self.textViewType = textViewType
     }
