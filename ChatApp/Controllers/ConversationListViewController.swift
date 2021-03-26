@@ -16,7 +16,7 @@ class ConversationListViewController: UIViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.register(ConversationTableViewCell.self,
                            forCellReuseIdentifier: ConversationTableViewCell.reuseId)
-        tableView.rowHeight = 72
+        tableView.rowHeight = UITableView.automaticDimension
         tableView.delegate = self
         tableView.dataSource = self
         return tableView
@@ -254,7 +254,6 @@ extension ConversationListViewController: UITableViewDelegate {
         let channel = channels[selectedIndex.row]
         conversationVC.conversationTitle = channel.name
         conversationVC.channelId = channel.identifier
-        print(channel.identifier)
 
         navigationController?.pushViewController(conversationVC, animated: true)
         

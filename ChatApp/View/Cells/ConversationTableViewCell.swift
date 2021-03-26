@@ -109,7 +109,7 @@ class ConversationTableViewCell: UITableViewCell {
     // MARK: - Private Methods
     
     private func setupLayout() {
-        messageLabel.numberOfLines = 1
+        messageLabel.numberOfLines = 2
         disclosureRight.image = .disclosureRight
         disclosureRight.translatesAutoresizingMaskIntoConstraints = false
 
@@ -119,7 +119,7 @@ class ConversationTableViewCell: UITableViewCell {
         contentView.addSubview(messageDateLabel)
         
         NSLayoutConstraint.activate([
-            interlocutorNameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: offset),
+            interlocutorNameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: offset * 2),
             interlocutorNameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: offset * 2),
             interlocutorNameLabel.trailingAnchor.constraint(equalTo: messageDateLabel.leadingAnchor, constant: -offset),
             
@@ -133,9 +133,10 @@ class ConversationTableViewCell: UITableViewCell {
             disclosureRight.leadingAnchor.constraint(equalTo: messageDateLabel.trailingAnchor, constant: offset),
             disclosureRight.centerYAnchor.constraint(equalTo: messageDateLabel.centerYAnchor, constant: -1),
             
-            messageLabel.topAnchor.constraint(equalTo: interlocutorNameLabel.bottomAnchor, constant: 2),
+            messageLabel.topAnchor.constraint(equalTo: interlocutorNameLabel.bottomAnchor, constant: 4),
             messageLabel.leadingAnchor.constraint(equalTo: interlocutorNameLabel.leadingAnchor),
-            messageLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -offset)
+            messageLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -offset),
+            messageLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -offset * 2)
         ])
     }
 }
