@@ -21,7 +21,6 @@ extension Constants {
             }
         }
         
-        
         static var alertText: UIColor {
             if #available(iOS 13.0, *) {
                 return UIColor { (traits) -> UIColor in
@@ -100,7 +99,6 @@ extension Constants {
             }
         }
         
-        
         // MARK: - App Theme basic
         
         static let settingsIconGray = UIColor(hex: "#545458")
@@ -138,7 +136,6 @@ extension Constants {
         static let bubbleOutgoingTextDay = UIColor.white
         static let bubbleIncomingTextDay = UIColor(hex: "#060606")
         static let bubbleTextNight = UIColor.white
-        
         
         // MARK: - Profile
         

@@ -11,7 +11,7 @@ class ProfileViewController: UIViewController {
     
     // MARK: - Public properties
     
-    var profileDataUpdatedHandler: (() -> ())?
+    var profileDataUpdatedHandler: (() -> Void)?
     
     // MARK: - UI
     
@@ -53,8 +53,8 @@ class ProfileViewController: UIViewController {
     
     // MARK: - Private Properties
     
-    private let gcdDataManager: DataManager = GCDDataManager()
-    private let operationDataManager: DataManager = OperationDataManager()
+    private let gcdDataManager: AsyncManager = GCDAsyncManager()
+    private let operationDataManager: AsyncManager = OperationAsyncManager()
     
     private var user: UserViewModel?
     private var userModel: UserViewModel {
@@ -109,16 +109,13 @@ class ProfileViewController: UIViewController {
         setupUI()
         loadData()
     }
-    
-    
-    
+
     // MARK: - Private Methods
     
     private func loadData() {
         activityIndicator.startAnimating()
         let dataManager = gcdDataManager
-        //let dataManager = operationDataManager
-        
+
         dataManager.loadUserData { [weak self] userViewModel in
             guard let user = userViewModel else {
                 self?.showAlert(title: "Error", message: "Failed to load data", additionalActions:
@@ -143,7 +140,7 @@ class ProfileViewController: UIViewController {
     }
     
     private func exitEditMode() {
-        if (profileNameTextView.isUserInteractionEnabled) {
+        if profileNameTextView.isUserInteractionEnabled {
             toggleEditMode()
         }
         setSaveButtonsEnabled(false)
@@ -154,7 +151,7 @@ class ProfileViewController: UIViewController {
         operationsSaveButton.isEnabled = isEnabled
     }
     
-    private func saveButtonPressed(dataManager: DataManager) {
+    private func saveButtonPressed(dataManager: AsyncManager) {
         exitEditMode()
         activityIndicator.startAnimating()
         dataManager.saveUserData(userModel) { [weak self] (isSuccessful: Bool) in
@@ -218,7 +215,7 @@ class ProfileViewController: UIViewController {
             let navBarAppearance = UINavigationBarAppearance()
             navBarAppearance.configureWithOpaqueBackground()
             navBarAppearance.titleTextAttributes = [.foregroundColor: theme.colors.navigationBar.title]
-            navBarAppearance.largeTitleTextAttributes = [.foregroundColor:theme.colors.navigationBar.title]
+            navBarAppearance.largeTitleTextAttributes = [.foregroundColor: theme.colors.navigationBar.title]
             navBarAppearance.backgroundColor = theme.colors.navigationBar.background
             navigationController?.navigationBar.standardAppearance = navBarAppearance
             navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
@@ -246,8 +243,6 @@ class ProfileViewController: UIViewController {
                                                             action: #selector(toggleEditMode))
         navigationItem.title = Constants.LocalizationKey.myProfile.string
     }
-    
-    
     
     private func setupUI() {        
         view.addSubview(activityIndicator)
@@ -307,11 +302,11 @@ class ProfileViewController: UIViewController {
             concurrencySaveButtonsStackView.heightAnchor.constraint(equalToConstant: offset * 3),
             concurrencySaveButtonsStackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -offset),
             concurrencySaveButtonsStackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: offset * 2),
-            concurrencySaveButtonsStackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -offset * 2),
+            concurrencySaveButtonsStackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -offset * 2)
         ])
     }
     
-    private func showAlert(title: String =  Constants.LocalizationKey.error.string,
+    private func showAlert(title: String = Constants.LocalizationKey.error.string,
                            message: String = "This action is not allowed",
                            additionalActions: [UIAlertAction] = [],
                            primaryHandler: ((UIAlertAction) -> Void)? = nil) {
@@ -353,8 +348,7 @@ class ProfileViewController: UIViewController {
     
     @objc private func keyboardWillShow(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue,
-           keyboardSize.height > 0
-        {
+           keyboardSize.height > 0 {
             if profileNameTextView.isFirstResponder {
                 profileNameBottomConstraint.constant = keyboardSize.height
                 profileNameBottomConstraint.priority = .required
@@ -393,8 +387,10 @@ class ProfileViewController: UIViewController {
 
 extension ProfileViewController: ProfileLogoImageViewDelegate {
     func tappedProfileLogoImageView() {
+
         ImagePickerManager().pickImage(self) { image in
-            self.setSaveButtonsEnabled(self.nameChanged || self.descriptionChanged)
+            self.setSaveButtonsEnabled(image != nil || self.nameChanged || self.descriptionChanged)
+
             guard let image = image else { return }
             self.profileLogoImageView.setLogo(image: image)
         }

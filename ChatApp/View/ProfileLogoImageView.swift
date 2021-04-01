@@ -89,7 +89,6 @@ class ProfileLogoImageView: UIView {
         let firstNameLetter = String(wordsArr[0].prefix(1))
         initialsLabel.text = firstNameLetter
 
-        
         if wordsArr.count == 2 {
             let lastNameLetter = String(wordsArr[1].prefix(1))
             initialsLabel.text = "\(firstNameLetter)\(lastNameLetter)"

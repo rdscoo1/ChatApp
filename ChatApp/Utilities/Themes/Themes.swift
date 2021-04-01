@@ -34,7 +34,6 @@ struct Themes {
         currentThemeOption = themeOption
     }
     
-    
 }
 
 enum ThemeOptions: String, CaseIterable {
@@ -55,7 +54,7 @@ enum ThemeOptions: String, CaseIterable {
     }
     
     init(storedKey: String) {
-        self = ThemeOptions.init(rawValue: storedKey) ?? .classic
+        self = ThemeOptions(rawValue: storedKey) ?? .classic
     }
         
 }

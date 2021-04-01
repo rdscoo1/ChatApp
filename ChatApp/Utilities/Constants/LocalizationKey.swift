@@ -11,7 +11,7 @@ extension Constants {
     enum LocalizationKey: String {
         
         // Titles
-        case chat = "Chat"
+        case channels = "Channels"
         case myProfile = "My profile"
         case settings = "Settings"
         
