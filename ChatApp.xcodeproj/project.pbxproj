@@ -47,6 +47,13 @@
 		E89A64B82603F38D00A5734B /* OperationAsyncManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E89A64B72603F38D00A5734B /* OperationAsyncManager.swift */; };
 		E89A64BD260404A100A5734B /* AsyncManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E89A64BC260404A100A5734B /* AsyncManager.swift */; };
 		E89A64C2260406C500A5734B /* TextViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E89A64C1260406C500A5734B /* TextViewDelegate.swift */; };
+		E8AFB9E826178924007AB74D /* CoreDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8AFB9E726178923007AB74D /* CoreDataService.swift */; };
+		E8AFBA812617A431007AB74D /* DBMessage+Init.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8AFBA3026179D95007AB74D /* DBMessage+Init.swift */; };
+		E8AFBA822617A431007AB74D /* DBChannel+Init.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8AFBA3826179E1A007AB74D /* DBChannel+Init.swift */; };
+		E8AFBA8D2617A92C007AB74D /* DBChannel+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8AFBA892617A92B007AB74D /* DBChannel+CoreDataClass.swift */; };
+		E8AFBA8E2617A92C007AB74D /* DBMessage+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8AFBA8A2617A92C007AB74D /* DBMessage+CoreDataClass.swift */; };
+		E8AFBA8F2617A92C007AB74D /* DBMessage+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8AFBA8B2617A92C007AB74D /* DBMessage+CoreDataProperties.swift */; };
+		E8AFBA902617A92C007AB74D /* DBChannel+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8AFBA8C2617A92C007AB74D /* DBChannel+CoreDataProperties.swift */; };
 		E8CB228625F925730085AABB /* UIWindow+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8CB228525F925730085AABB /* UIWindow+Ext.swift */; };
 		E8CB22A825FAC44F0085AABB /* Themes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8CB22A725FAC44F0085AABB /* Themes.swift */; };
 		E8CB22B025FAC4CC0085AABB /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8CB22AF25FAC4CC0085AABB /* AppTheme.swift */; };
@@ -125,6 +132,13 @@
 		E89A64B72603F38D00A5734B /* OperationAsyncManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationAsyncManager.swift; sourceTree = "<group>"; };
 		E89A64BC260404A100A5734B /* AsyncManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncManager.swift; sourceTree = "<group>"; };
 		E89A64C1260406C500A5734B /* TextViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextViewDelegate.swift; sourceTree = "<group>"; };
+		E8AFB9E726178923007AB74D /* CoreDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataService.swift; sourceTree = "<group>"; };
+		E8AFBA3026179D95007AB74D /* DBMessage+Init.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBMessage+Init.swift"; sourceTree = "<group>"; };
+		E8AFBA3826179E1A007AB74D /* DBChannel+Init.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBChannel+Init.swift"; sourceTree = "<group>"; };
+		E8AFBA892617A92B007AB74D /* DBChannel+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DBChannel+CoreDataClass.swift"; sourceTree = "<group>"; };
+		E8AFBA8A2617A92C007AB74D /* DBMessage+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DBMessage+CoreDataClass.swift"; sourceTree = "<group>"; };
+		E8AFBA8B2617A92C007AB74D /* DBMessage+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DBMessage+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		E8AFBA8C2617A92C007AB74D /* DBChannel+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DBChannel+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		E8CB228525F925730085AABB /* UIWindow+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIWindow+Ext.swift"; sourceTree = "<group>"; };
 		E8CB22A725FAC44F0085AABB /* Themes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Themes.swift; sourceTree = "<group>"; };
 		E8CB22AF25FAC4CC0085AABB /* AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
@@ -234,6 +248,7 @@
 			children = (
 				E84D8D7025EA4FB900345A2C /* DataProvider.swift */,
 				E876909F260D404D006B13C0 /* FirestoreService.swift */,
+				E8AFB9E726178923007AB74D /* CoreDataService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -245,6 +260,15 @@
 				E84D8DAD25EEDB7A00345A2C /* MessageTableViewCell.swift */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		E8AFBA2F26179D79007AB74D /* InitEntity */ = {
+			isa = PBXGroup;
+			children = (
+				E8AFBA3026179D95007AB74D /* DBMessage+Init.swift */,
+				E8AFBA3826179E1A007AB74D /* DBChannel+Init.swift */,
+			);
+			path = InitEntity;
 			sourceTree = "<group>";
 		};
 		E8CB22A625FAC43A0085AABB /* Themes */ = {
@@ -335,6 +359,11 @@
 		E8E0311625DECEE80028B4DD /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
+				E8AFBA892617A92B007AB74D /* DBChannel+CoreDataClass.swift */,
+				E8AFBA8C2617A92C007AB74D /* DBChannel+CoreDataProperties.swift */,
+				E8AFBA8A2617A92C007AB74D /* DBMessage+CoreDataClass.swift */,
+				E8AFBA8B2617A92C007AB74D /* DBMessage+CoreDataProperties.swift */,
+				E8AFBA2F26179D79007AB74D /* InitEntity */,
 				E8E030E225DECC5B0028B4DD /* ChatApp.xcdatamodeld */,
 			);
 			path = CoreData;
@@ -596,6 +625,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E8AFBA812617A431007AB74D /* DBMessage+Init.swift in Sources */,
+				E8AFBA8E2617A92C007AB74D /* DBMessage+CoreDataClass.swift in Sources */,
+				E8AFBA822617A431007AB74D /* DBChannel+Init.swift in Sources */,
 				E84D8D6B25EA4D0C00345A2C /* ConversationCellModel.swift in Sources */,
 				E84D8D9E25EDA14600345A2C /* MessageBubbleView.swift in Sources */,
 				E84D8DB325EEE5A700345A2C /* MessageCellModel.swift in Sources */,
@@ -612,12 +644,15 @@
 				E87690BE260D5E9E006B13C0 /* UserData.swift in Sources */,
 				E830326225E2939300D772B9 /* HapticFeedback.swift in Sources */,
 				E8CB22C625FACDED0085AABB /* NightTheme.swift in Sources */,
+				E8AFB9E826178924007AB74D /* CoreDataService.swift in Sources */,
 				E84D8DF325F145DC00345A2C /* ConversationListSectionModel.swift in Sources */,
 				E83032AC25E539FB00D772B9 /* LocalizationKey.swift in Sources */,
 				E876909B260D400E006B13C0 /* Channel.swift in Sources */,
+				E8AFBA8D2617A92C007AB74D /* DBChannel+CoreDataClass.swift in Sources */,
 				E89A64B82603F38D00A5734B /* OperationAsyncManager.swift in Sources */,
 				E80BFB3925F7D83D0070B8EF /* ThemesViewController.swift in Sources */,
 				E87690A0260D404D006B13C0 /* FirestoreService.swift in Sources */,
+				E8AFBA902617A92C007AB74D /* DBChannel+CoreDataProperties.swift in Sources */,
 				E8CB22B025FAC4CC0085AABB /* AppTheme.swift in Sources */,
 				E8E030E425DECC5B0028B4DD /* ChatApp.xcdatamodeld in Sources */,
 				E8E0312625DEDD4A0028B4DD /* UIApplicationState+Ext.swift in Sources */,
@@ -638,6 +673,7 @@
 				E830326C25E2961900D772B9 /* UIAlertViewController+Ext.swift in Sources */,
 				E89A64AE2603F1D500A5734B /* UserViewModel.swift in Sources */,
 				E83032A125E5131D00D772B9 /* CameraAlertController.swift in Sources */,
+				E8AFBA8F2617A92C007AB74D /* DBMessage+CoreDataProperties.swift in Sources */,
 				E8CB228625F925730085AABB /* UIWindow+Ext.swift in Sources */,
 				E830325525E1E82600D772B9 /* UIColor+Ext.swift in Sources */,
 				E89A64C2260406C500A5734B /* TextViewDelegate.swift in Sources */,
@@ -751,7 +787,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -807,7 +843,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;

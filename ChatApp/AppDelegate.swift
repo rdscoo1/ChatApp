@@ -14,12 +14,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        
+
+        Themes.loadApplicationTheme()
+        CoreDataService.shared.printApplicationDocumentsDirectory()
+        CoreDataService.shared.setupObserver()
+        FirebaseApp.configure()
+
         window = UIWindow()
         window?.rootViewController = createChatNavigationController()
-        Themes.loadApplicationTheme()
         window?.makeKeyAndVisible()
-        FirebaseApp.configure()
 
         return true
     }

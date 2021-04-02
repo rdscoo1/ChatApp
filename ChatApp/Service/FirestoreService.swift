@@ -49,11 +49,13 @@ class FirestoreService {
                                       firestoreData: $0.data()) }
                 .sorted(by: { $0.lastActivity ?? Date() > $1.lastActivity ?? Date()})
 
+            CoreDataService.shared.saveChannels(channels: channels)
+
             completion(.success(channels))
         }
     }
 
-    func fetchMessagesForChannel(withId channelId: String, completion: @escaping (Result<[Message], Error>) -> Void) {
+    func subscribeOnMessagesFromChannel(withId channelId: String, completion: @escaping (Result<[Message], Error>) -> Void) {
         messagesReference = channelsCollection.document(channelId).collection("messages")
         listener = messagesReference?.addSnapshotListener { (querySnapshot, error) in
             if let error = error {
@@ -65,8 +67,10 @@ class FirestoreService {
             }
 
             let messages = documents
-                .compactMap { Message(firestoreData: $0.data()) }
+                .compactMap { Message(identifier: $0.documentID, firestoreData: $0.data()) }
                 .sorted(by: { $0.created > $1.created })
+
+            CoreDataService.shared.saveMessagesBy(id: channelId, messages: messages)
 
             completion(.success(messages))
         }
