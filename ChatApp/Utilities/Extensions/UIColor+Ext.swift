@@ -12,12 +12,12 @@ extension UIColor {
         // Check for hash and remove the hash
         let cleanedHexString = hex.hasPrefix("#") ? String(hex.dropFirst()) : hex
         
-        // String -> UInt32
-        var rgbValue = UInt32()
-        Scanner(string: cleanedHexString).scanHexInt32(&rgbValue)
+        // String -> UInt64
+        var rgbValue = UInt64()
+        Scanner(string: cleanedHexString).scanHexInt64(&rgbValue)
         
         // UInt32 -> R,G,B
-        let a, r, g, b: UInt32
+        let a, r, g, b: UInt64
         
         switch cleanedHexString.count {
         case 3: // RGB (12-bit)

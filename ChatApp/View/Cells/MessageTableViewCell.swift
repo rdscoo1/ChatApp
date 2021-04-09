@@ -114,7 +114,7 @@ class MessageTableViewCell: UITableViewCell {
 
             messageLeadingConstraint,
             messageLabel.trailingAnchor.constraint(equalTo: messageView.trailingAnchor, constant: -offset),
-            messageLabel.bottomAnchor.constraint(equalTo: messageView.bottomAnchor, constant: -8)
+            messageLabel.bottomAnchor.constraint(equalTo: messageView.bottomAnchor, constant: -offset + 4)
         ])
     }
     

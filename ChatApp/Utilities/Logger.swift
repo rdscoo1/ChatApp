@@ -23,5 +23,10 @@ final class Logger {
         
         print("\(source.rawValue) moved from \(oldState) to \(newState): \(method)")
     }
-    
+
+    public static func printLogFrom(_ source: String, _ message: String) {
+        guard isActivated else { return }
+
+        print("[\(source)]: \(message)")
+    }
 }

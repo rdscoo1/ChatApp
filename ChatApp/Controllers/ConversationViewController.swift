@@ -61,7 +61,7 @@ class ConversationViewController: UIViewController {
 
     private func subscribeOnMessagesUpdates() {
         guard let channelId = channelId else { return }
-        firestoreService.fetchMessagesForChannel(withId: channelId) { [weak self] (result) in
+        firestoreService.subscribeOnMessagesFromChannel(withId: channelId) { [weak self] (result) in
             DispatchQueue.main.async {
                 switch result {
                 case .success(let messages):
