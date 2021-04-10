@@ -12,12 +12,26 @@
 "My profile" = "My profile";
 "Settings" = "Settings";
 
+// MARK: - Basic
+
+"Cancel" = "Cancel";
+"Okay" = "Okay";
+"Error occurred" = "Error occurred";
+"Close" = "Close";
+"Save" = "Save";
+"Edit" = "Edit";
+"Success" = "Success";
+"Try again" = "Try again";
+
+// MARK: - Profile
+
+"Data saved successfully" = "Data saved successfully";
+"Failed to save data" = "Failed to save data";
+"This action is not allowed" = "This action is not allowed";
+
 // MARK: - Selecting Photo Alert
 
 "Go to settings" = "Go to settings";
-"Cancel" = "Cancel";
-"Okay" = "Okay";
-"Error" = "Error";
 "No access to camera" = "No access to camera";
 "To add photo give access to camera in device settings" = "To add photo give access to camera in device settings";
 
@@ -27,10 +41,17 @@
 "Make photo" = "Make photo";
 "Select from gallery" = "Select from gallery";
 
-// MARK: - Actions
+// MARK: - Channels
 
-"Close" = "Close";
-"Save" = "Save";
+"Create" = "Create";
+"Create new channel" = "Create new channel";
+"Enter channel name here..." = "Enter channel name here...";
+"Channel name can't be empty." = "Channel name can't be empty.";
+"Error occurred during creating new channel, try again later." = "Error occurred during creating new channel, try again later.";
+
+// MARK: - Conversation
+
+"Error occurred during sending new message, try again later." = "Error occurred during sending new message, try again later.";
 
 // MARK: - App Theme
 

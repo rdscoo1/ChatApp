@@ -16,5 +16,4 @@ class RootNavigationController: UINavigationController {
     override var childForStatusBarStyle: UIViewController? {
         return viewControllers.first
     }
-
 }

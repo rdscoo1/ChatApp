@@ -12,12 +12,26 @@
 "My profile" = "Мой профиль";
 "Settings" = "Настройки";
 
+// MARK: - Basic
+
+"Cancel" = "Отменить";
+"Okay" = "Окей";
+"Error occurred" = "Ошибка";
+"Close" = "Свернуть";
+"Save" = "Сохранить";
+"Edit" = "Редактировать";
+"Success" = "Успешно";
+"Try again" = "Попробовать ещё раз";
+
+// MARK: - Profile
+
+"Data saved successfully" = "Данные успешно сохранены";
+"Failed to save data" = "Не удалось сохранить данные";
+"This action is not allowed" = "Это действие не разрешено";
+
 // MARK: - Selecting Photo Alert
 
 "Go to settings" = "Перейти в настройки";
-"Cancel" = "Отменить";
-"Okay" = "Окей";
-"Error" = "Ошибка";
 "No access to camera" = "Нет доступа к камере";
 "To add photo give access to camera in device settings" = "Чтобы добавить фото в профиль, разрешите доступ к камере в настройках устройства";
 
@@ -27,10 +41,17 @@
 "Make photo" = "Сделать фото";
 "Select from gallery" = "Выбрать из галереи";
 
-// MARK: - Actions
+// MARK: - Channels
 
-"Close" = "Свернуть";
-"Save" = "Сохранить";
+"Create" = "Создать";
+"Create new channel" = "Создать новый канал";
+"Enter channel name here..." = "Введите название канала...";
+"Channel name can't be empty." = "Название канала не может быть пустым.";
+"Error occurred during creating new channel, try again later." = "Во время создания нового канала произошла ошибка, попробуйте позже.";
+
+// MARK: - Conversation
+
+"Error occurred during sending new message, try again later." = "Во время отправки нового сообщения произошла ошибка, попробуйте позже.";
 
 // MARK: - App Theme
 

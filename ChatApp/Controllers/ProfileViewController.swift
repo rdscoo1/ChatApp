@@ -35,19 +35,9 @@ class ProfileViewController: UIViewController {
         return textView
     }()
     
-    private let editButton = ActionButton(title: "Edit")
+    private let editButton = ActionButton(title: Constants.LocalizationKey.edit.string)
     
-    private lazy var concurrencySaveButtonsStackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.distribution = .fillEqually
-        stackView.axis = .horizontal
-        stackView.spacing = 16
-        return stackView
-    }()
-    
-    private let gcdSaveButton = ActionButton(title: "Save GCD")
-    private let operationsSaveButton = ActionButton(title: "Save Operations")
+    private let saveButton = ActionButton(title: Constants.LocalizationKey.save.string)
     
     private lazy var activityIndicator = UIActivityIndicatorView()
     
@@ -109,17 +99,17 @@ class ProfileViewController: UIViewController {
         setupUI()
         loadData()
     }
-
+    
     // MARK: - Private Methods
     
     private func loadData() {
         activityIndicator.startAnimating()
         let dataManager = gcdDataManager
-
+        
         dataManager.loadUserData { [weak self] userViewModel in
             guard let user = userViewModel else {
-                self?.showAlert(title: "Error", message: "Failed to load data", additionalActions:
-                                    [.init(title: "Try again", style: .default) { [weak self] _ in
+                self?.showAlert(title: Constants.LocalizationKey.error.string, message: Constants.LocalizationKey.failedDataSave.string, additionalActions:
+                                    [.init(title: Constants.LocalizationKey.tryAgain.string, style: .default) { [weak self] _ in
                                         self?.loadData()
                                     }]) { [weak self] _ in
                     self?.dismissVC()
@@ -147,8 +137,7 @@ class ProfileViewController: UIViewController {
     }
     
     private func setSaveButtonsEnabled(_ isEnabled: Bool) {
-        gcdSaveButton.isEnabled = isEnabled
-        operationsSaveButton.isEnabled = isEnabled
+        saveButton.isEnabled = isEnabled
     }
     
     private func saveButtonPressed(dataManager: AsyncManager) {
@@ -170,11 +159,11 @@ class ProfileViewController: UIViewController {
                     self?.originalUserImage = self?.user?.profileImage
                     self?.nameChanged = false
                     self?.descriptionChanged = false
-                    self?.showAlert(title: "Success", message: "Data saved successfully")
+                    self?.showAlert(title: Constants.LocalizationKey.success.string, message: Constants.LocalizationKey.dataSuccessSave.string)
                 }
             } else {
-                self?.showAlert(title: "Error", message: "Failed to save data", additionalActions: [
-                                    .init(title: "Try again", style: .default) { [weak self] _ in
+                self?.showAlert(title: Constants.LocalizationKey.error.string, message: Constants.LocalizationKey.failedDataSave.string, additionalActions: [
+                                    .init(title: Constants.LocalizationKey.tryAgain.string, style: .default) { [weak self] _ in
                                         self?.saveButtonPressed(dataManager: dataManager)
                                     }]) { [weak self] _ in
                     self?.setSaveButtonsEnabled(true)
@@ -208,8 +197,7 @@ class ProfileViewController: UIViewController {
         profileNameTextView.textColor = theme.colors.profile.name
         profileDescriptionTextView.textColor = theme.colors.profile.description
         editButton.backgroundColor = theme.colors.profile.saveButtonBackground
-        gcdSaveButton.backgroundColor = theme.colors.profile.saveButtonBackground
-        operationsSaveButton.backgroundColor = theme.colors.profile.saveButtonBackground
+        saveButton.backgroundColor = theme.colors.profile.saveButtonBackground
         
         if #available(iOS 13.0, *) {
             let navBarAppearance = UINavigationBarAppearance()
@@ -244,7 +232,7 @@ class ProfileViewController: UIViewController {
         navigationItem.title = Constants.LocalizationKey.myProfile.string
     }
     
-    private func setupUI() {        
+    private func setupUI() {
         view.addSubview(activityIndicator)
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -254,31 +242,27 @@ class ProfileViewController: UIViewController {
             activityIndicator.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
         
-        gcdSaveButton.isEnabled = false
-        operationsSaveButton.isEnabled = false
+        saveButton.isEnabled = false
+        saveButton.isHidden = true
         
         editButton.addTarget(self, action: #selector(toggleEditMode), for: .touchUpInside)
-        gcdSaveButton.addTarget(self, action: #selector(gcdSaveButtonPressed), for: .touchUpInside)
-        operationsSaveButton.addTarget(self, action: #selector(operationsButtonPressed), for: .touchUpInside)
+        saveButton.addTarget(self, action: #selector(gcdSaveButtonPressed), for: .touchUpInside)
     }
     
     private func configureConstraints() {
-        concurrencySaveButtonsStackView.addArrangedSubview(gcdSaveButton)
-        concurrencySaveButtonsStackView.addArrangedSubview(operationsSaveButton)
-        
         view.addSubview(profileLogoImageView)
         view.addSubview(profileNameTextView)
         view.addSubview(profileDescriptionTextView)
         view.addSubview(editButton)
-        view.addSubview(concurrencySaveButtonsStackView)
+        view.addSubview(saveButton)
         
         profileNameBottomConstraint = profileNameTextView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0)
         profileDescriptionBottomConstraint = profileDescriptionTextView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0)
         
         NSLayoutConstraint.activate([
-            profileLogoImageView.widthAnchor.constraint(equalToConstant: offset * 15),
-            profileLogoImageView.heightAnchor.constraint(equalToConstant: offset * 15),
-            profileLogoImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: offset * 3),
+            profileLogoImageView.widthAnchor.constraint(equalToConstant: offset * 14),
+            profileLogoImageView.heightAnchor.constraint(equalToConstant: offset * 14),
+            profileLogoImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: offset * 2),
             profileLogoImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             
             profileNameTextView.heightAnchor.constraint(equalToConstant: offset * 5),
@@ -297,22 +281,21 @@ class ProfileViewController: UIViewController {
             editButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: offset * 2),
             editButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -offset * 2),
             editButton.topAnchor.constraint(greaterThanOrEqualTo: profileDescriptionTextView.bottomAnchor, constant: offset * 2),
-            editButton.bottomAnchor.constraint(equalTo: concurrencySaveButtonsStackView.topAnchor, constant: -offset),
             
-            concurrencySaveButtonsStackView.heightAnchor.constraint(equalToConstant: offset * 3),
-            concurrencySaveButtonsStackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -offset),
-            concurrencySaveButtonsStackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: offset * 2),
-            concurrencySaveButtonsStackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -offset * 2)
+            saveButton.heightAnchor.constraint(equalToConstant: offset * 3),
+            saveButton.topAnchor.constraint(equalTo: editButton.bottomAnchor, constant: offset),
+            saveButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: offset * 2),
+            saveButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -offset * 2)
         ])
     }
     
     private func showAlert(title: String = Constants.LocalizationKey.error.string,
-                           message: String = "This action is not allowed",
+                           message: String = Constants.LocalizationKey.actionNotAllowed.string,
                            additionalActions: [UIAlertAction] = [],
                            primaryHandler: ((UIAlertAction) -> Void)? = nil) {
         DispatchQueue.main.async {
             let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-            alertController.addAction(.init(title: "OK", style: .cancel, handler: primaryHandler))
+            alertController.addAction(.init(title: Constants.LocalizationKey.okay.string, style: .cancel, handler: primaryHandler))
             additionalActions.forEach { alertController.addAction($0) }
             self.present(alertController, animated: true)
         }
@@ -330,11 +313,13 @@ class ProfileViewController: UIViewController {
     
     @objc private func toggleEditMode() {
         let backgroundColor = profileNameTextView.isUserInteractionEnabled ? nil : UIColor.lightGray
-        let editButtonTitle = profileNameTextView.isUserInteractionEnabled ? "Edit" : "Cancel"
+        let editButtonTitle = profileNameTextView.isUserInteractionEnabled ? Constants.LocalizationKey.edit.string : Constants.LocalizationKey.cancel.string
+        let saveButtonHiddenState = profileNameTextView.isUserInteractionEnabled ? true : false
         UIView.animate(withDuration: 0.3) {
             self.editButton.setTitle(editButtonTitle, for: .normal)
             self.profileNameTextView.backgroundColor = backgroundColor
             self.profileDescriptionTextView.backgroundColor = backgroundColor
+            self.saveButton.isHidden = saveButtonHiddenState
         }
         profileNameTextView.isUserInteractionEnabled.toggle()
         profileDescriptionTextView.isUserInteractionEnabled.toggle()
@@ -387,10 +372,10 @@ class ProfileViewController: UIViewController {
 
 extension ProfileViewController: ProfileLogoImageViewDelegate {
     func tappedProfileLogoImageView() {
-
+        
         ImagePickerManager().pickImage(self) { image in
             self.setSaveButtonsEnabled(image != nil || self.nameChanged || self.descriptionChanged)
-
+            
             guard let image = image else { return }
             self.profileLogoImageView.setLogo(image: image)
         }
