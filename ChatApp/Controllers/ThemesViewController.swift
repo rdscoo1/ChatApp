@@ -7,10 +7,6 @@
 
 import UIKit
 
-protocol ThemesPickerDelegate: class {
-    func themeDidChange(on themeOption: ThemeOptions)
-}
-
 class ThemesViewController: UIViewController {
     
     // MARK: - Private Properties
@@ -20,19 +16,7 @@ class ThemesViewController: UIViewController {
     private let stackView = UIStackView()
     
     // MARK: - Public Properties
-    
-    /*
-     Если не делать поле делегата weak, это может стать причиной memory leak,
-     например ссылка на объект этого класса хранится в поле объекта делегата,
-     а этот объект захватывает сильную ссылку на делегат.
-     */
-    weak var delegate: ThemesPickerDelegate?
-    
-    /*
-     Здесь возможна утечка если в замыкании будут сильные ссылки на объекты,
-     имеющие сильные ссылки на объект этого класса (или ссылающиеся через цепочку сильных ссылок через другие объекты)
-     Для предотвращения утечек памяти, необходимо использовать список захвата замыкания со слабыми ссылками
-     */
+
     var didTapOnThemeView: ((ThemeOptions) -> Void)?
     
     // MARK: - LifeCycle
@@ -80,7 +64,6 @@ class ThemesViewController: UIViewController {
             .filter { $0 !== view }
             .forEach { $0.isSelected = $0.themeOption == themeOption }
         
-        delegate?.themeDidChange(on: themeOption)
         didTapOnThemeView?(themeOption)
         updateTheme()
         navigationController?.isNavigationBarHidden = true
