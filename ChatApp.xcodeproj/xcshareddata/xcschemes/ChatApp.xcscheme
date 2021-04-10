@@ -73,11 +73,11 @@
       <CommandLineArguments>
          <CommandLineArgument
             argument = "-com.apple.CoreData.ConcurrencyDebug 1"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-com.apple.CoreData.SQLiteIntegrityCheck 1"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-com.apple.CoreData.MigrationDebug 1"
@@ -85,11 +85,11 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-com.apple.CoreData.SyntaxColoredLogging YES"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-com.apple.CoreData.SQLDebug 1"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
       </CommandLineArguments>
    </LaunchAction>

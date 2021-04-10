@@ -50,10 +50,6 @@
 		E8AFB9E826178924007AB74D /* CoreDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8AFB9E726178923007AB74D /* CoreDataService.swift */; };
 		E8AFBA812617A431007AB74D /* DBMessage+Init.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8AFBA3026179D95007AB74D /* DBMessage+Init.swift */; };
 		E8AFBA822617A431007AB74D /* DBChannel+Init.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8AFBA3826179E1A007AB74D /* DBChannel+Init.swift */; };
-		E8AFBA8D2617A92C007AB74D /* DBChannel+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8AFBA892617A92B007AB74D /* DBChannel+CoreDataClass.swift */; };
-		E8AFBA8E2617A92C007AB74D /* DBMessage+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8AFBA8A2617A92C007AB74D /* DBMessage+CoreDataClass.swift */; };
-		E8AFBA8F2617A92C007AB74D /* DBMessage+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8AFBA8B2617A92C007AB74D /* DBMessage+CoreDataProperties.swift */; };
-		E8AFBA902617A92C007AB74D /* DBChannel+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8AFBA8C2617A92C007AB74D /* DBChannel+CoreDataProperties.swift */; };
 		E8CB228625F925730085AABB /* UIWindow+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8CB228525F925730085AABB /* UIWindow+Ext.swift */; };
 		E8CB22A825FAC44F0085AABB /* Themes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8CB22A725FAC44F0085AABB /* Themes.swift */; };
 		E8CB22B025FAC4CC0085AABB /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8CB22AF25FAC4CC0085AABB /* AppTheme.swift */; };
@@ -68,6 +64,10 @@
 		E8E0311A25DECF950028B4DD /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E0311925DECF950028B4DD /* Logger.swift */; };
 		E8E0312625DEDD4A0028B4DD /* UIApplicationState+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E0312525DEDD4A0028B4DD /* UIApplicationState+Ext.swift */; };
 		E8E0312F25DF09940028B4DD /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E0312E25DF09940028B4DD /* Constants.swift */; };
+		E8F7DCA42621C85C00D48446 /* DBChannel+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F7DCA02621C85B00D48446 /* DBChannel+CoreDataClass.swift */; };
+		E8F7DCA52621C85C00D48446 /* DBChannel+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F7DCA12621C85B00D48446 /* DBChannel+CoreDataProperties.swift */; };
+		E8F7DCA62621C85C00D48446 /* DBMessage+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F7DCA22621C85B00D48446 /* DBMessage+CoreDataClass.swift */; };
+		E8F7DCA72621C85C00D48446 /* DBMessage+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F7DCA32621C85C00D48446 /* DBMessage+CoreDataProperties.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -135,10 +135,6 @@
 		E8AFB9E726178923007AB74D /* CoreDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataService.swift; sourceTree = "<group>"; };
 		E8AFBA3026179D95007AB74D /* DBMessage+Init.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBMessage+Init.swift"; sourceTree = "<group>"; };
 		E8AFBA3826179E1A007AB74D /* DBChannel+Init.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBChannel+Init.swift"; sourceTree = "<group>"; };
-		E8AFBA892617A92B007AB74D /* DBChannel+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DBChannel+CoreDataClass.swift"; sourceTree = "<group>"; };
-		E8AFBA8A2617A92C007AB74D /* DBMessage+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DBMessage+CoreDataClass.swift"; sourceTree = "<group>"; };
-		E8AFBA8B2617A92C007AB74D /* DBMessage+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DBMessage+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		E8AFBA8C2617A92C007AB74D /* DBChannel+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DBChannel+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		E8CB228525F925730085AABB /* UIWindow+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIWindow+Ext.swift"; sourceTree = "<group>"; };
 		E8CB22A725FAC44F0085AABB /* Themes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Themes.swift; sourceTree = "<group>"; };
 		E8CB22AF25FAC4CC0085AABB /* AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
@@ -159,6 +155,10 @@
 		E8E0311925DECF950028B4DD /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		E8E0312525DEDD4A0028B4DD /* UIApplicationState+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplicationState+Ext.swift"; sourceTree = "<group>"; };
 		E8E0312E25DF09940028B4DD /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		E8F7DCA02621C85B00D48446 /* DBChannel+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DBChannel+CoreDataClass.swift"; sourceTree = "<group>"; };
+		E8F7DCA12621C85B00D48446 /* DBChannel+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DBChannel+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		E8F7DCA22621C85B00D48446 /* DBMessage+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DBMessage+CoreDataClass.swift"; sourceTree = "<group>"; };
+		E8F7DCA32621C85C00D48446 /* DBMessage+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DBMessage+CoreDataProperties.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -359,10 +359,10 @@
 		E8E0311625DECEE80028B4DD /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
-				E8AFBA892617A92B007AB74D /* DBChannel+CoreDataClass.swift */,
-				E8AFBA8C2617A92C007AB74D /* DBChannel+CoreDataProperties.swift */,
-				E8AFBA8A2617A92C007AB74D /* DBMessage+CoreDataClass.swift */,
-				E8AFBA8B2617A92C007AB74D /* DBMessage+CoreDataProperties.swift */,
+				E8F7DCA22621C85B00D48446 /* DBMessage+CoreDataClass.swift */,
+				E8F7DCA32621C85C00D48446 /* DBMessage+CoreDataProperties.swift */,
+				E8F7DCA02621C85B00D48446 /* DBChannel+CoreDataClass.swift */,
+				E8F7DCA12621C85B00D48446 /* DBChannel+CoreDataProperties.swift */,
 				E8AFBA2F26179D79007AB74D /* InitEntity */,
 				E8E030E225DECC5B0028B4DD /* ChatApp.xcdatamodeld */,
 			);
@@ -626,7 +626,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				E8AFBA812617A431007AB74D /* DBMessage+Init.swift in Sources */,
-				E8AFBA8E2617A92C007AB74D /* DBMessage+CoreDataClass.swift in Sources */,
 				E8AFBA822617A431007AB74D /* DBChannel+Init.swift in Sources */,
 				E84D8D6B25EA4D0C00345A2C /* ConversationCellModel.swift in Sources */,
 				E84D8D9E25EDA14600345A2C /* MessageBubbleView.swift in Sources */,
@@ -648,11 +647,11 @@
 				E84D8DF325F145DC00345A2C /* ConversationListSectionModel.swift in Sources */,
 				E83032AC25E539FB00D772B9 /* LocalizationKey.swift in Sources */,
 				E876909B260D400E006B13C0 /* Channel.swift in Sources */,
-				E8AFBA8D2617A92C007AB74D /* DBChannel+CoreDataClass.swift in Sources */,
+				E8F7DCA62621C85C00D48446 /* DBMessage+CoreDataClass.swift in Sources */,
+				E8F7DCA42621C85C00D48446 /* DBChannel+CoreDataClass.swift in Sources */,
 				E89A64B82603F38D00A5734B /* OperationAsyncManager.swift in Sources */,
 				E80BFB3925F7D83D0070B8EF /* ThemesViewController.swift in Sources */,
 				E87690A0260D404D006B13C0 /* FirestoreService.swift in Sources */,
-				E8AFBA902617A92C007AB74D /* DBChannel+CoreDataProperties.swift in Sources */,
 				E8CB22B025FAC4CC0085AABB /* AppTheme.swift in Sources */,
 				E8E030E425DECC5B0028B4DD /* ChatApp.xcdatamodeld in Sources */,
 				E8E0312625DEDD4A0028B4DD /* UIApplicationState+Ext.swift in Sources */,
@@ -666,6 +665,7 @@
 				E8E0311A25DECF950028B4DD /* Logger.swift in Sources */,
 				E84D8DEB25F1422600345A2C /* Images.swift in Sources */,
 				E84D8DF825F1501900345A2C /* Date+Ext.swift in Sources */,
+				E8F7DCA52621C85C00D48446 /* DBChannel+CoreDataProperties.swift in Sources */,
 				E84D8D9125ED916A00345A2C /* ConversationViewController.swift in Sources */,
 				E89A64BD260404A100A5734B /* AsyncManager.swift in Sources */,
 				E84D8DC125F134D500345A2C /* String+Ext.swift in Sources */,
@@ -673,7 +673,6 @@
 				E830326C25E2961900D772B9 /* UIAlertViewController+Ext.swift in Sources */,
 				E89A64AE2603F1D500A5734B /* UserViewModel.swift in Sources */,
 				E83032A125E5131D00D772B9 /* CameraAlertController.swift in Sources */,
-				E8AFBA8F2617A92C007AB74D /* DBMessage+CoreDataProperties.swift in Sources */,
 				E8CB228625F925730085AABB /* UIWindow+Ext.swift in Sources */,
 				E830325525E1E82600D772B9 /* UIColor+Ext.swift in Sources */,
 				E89A64C2260406C500A5734B /* TextViewDelegate.swift in Sources */,
@@ -681,6 +680,7 @@
 				E87690A5260D43E9006B13C0 /* Message.swift in Sources */,
 				E80BFB3E25F7D9450070B8EF /* ThemeView.swift in Sources */,
 				E830324D25E1D9C500D772B9 /* ActionButton.swift in Sources */,
+				E8F7DCA72621C85C00D48446 /* DBMessage+CoreDataProperties.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

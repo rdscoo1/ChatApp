@@ -5,7 +5,7 @@
         <attribute name="lastActivity" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="lastMessage" optional="YES" attributeType="String"/>
         <attribute name="name" optional="YES" attributeType="String"/>
-        <relationship name="messages" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="DBMessage" inverseName="channel" inverseEntity="DBMessage"/>
+        <relationship name="messages" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="DBMessage" inverseName="channel" inverseEntity="DBMessage"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="identifier"/>
