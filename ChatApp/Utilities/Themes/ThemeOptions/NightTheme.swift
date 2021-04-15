@@ -43,7 +43,7 @@ struct NightTheme: AppTheme {
             description: .white,
             saveButtonBackground: Constants.Colors.buttonBackgroundDark),
         themes: .init(
-            text: .white,
+            text: .black,
             background: Constants.Colors.outgoingBubbleBackgroundNight)
     )
     

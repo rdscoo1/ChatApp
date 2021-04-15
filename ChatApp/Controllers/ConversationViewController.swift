@@ -29,6 +29,7 @@ class ConversationViewController: UIViewController {
         tableView.separatorStyle = .none
         tableView.dataSource = self
         tableView.allowsSelection = false
+        // Revert tableView to scroll chat from bottom to top
         tableView.transform = CGAffineTransform(scaleX: 1, y: -1)
         //        tableView.backgroundColor = Constants.Colors.appTheme
         return tableView
@@ -47,6 +48,7 @@ class ConversationViewController: UIViewController {
         
         setupTheme()
         setupLayout()
+        extendContentInsets()
         configureDismissKeyboard()
         subscribeOnMessagesUpdates()
     }
@@ -59,6 +61,10 @@ class ConversationViewController: UIViewController {
     
     // MARK: - Private Methods
 
+    private func extendContentInsets() {
+        tableView.contentInset = UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0)
+    }
+
     private func subscribeOnMessagesUpdates() {
         guard let channelId = channelId else { return }
         firestoreService.subscribeOnMessagesFromChannel(withId: channelId) { [weak self] (result) in
@@ -67,7 +73,7 @@ class ConversationViewController: UIViewController {
                 case .success(let messages):
                     self?.messages = messages
                     self?.tableView.reloadData()
-                    self?.scrollToBottom()
+//                    self?.scrollToBottom()
                 case .failure:
                     break
                 }
@@ -165,24 +171,20 @@ extension ConversationViewController: UITableViewDataSource {
 // MARK: - SendMessageViewDelegate
 
 extension ConversationViewController: SendMessageViewDelegate {
-
     func send(text: String) {
         DispatchQueue.main.async {
             self.resignFirstResponder()
         }
         firestoreService.sendMessage(content: text) { [weak self] result in
             DispatchQueue.main.async {
-                if case Result.failure(_) = result {
-                    let alert = UIAlertController(title: "Error",
-                                                  message: "Error during adding new message, try later.",
+                if case .failure = result {
+                    let alert = UIAlertController(title: Constants.LocalizationKey.error.string,
+                                                  message: Constants.LocalizationKey.errorDuringSendingMessage.string,
                                                   preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: "Okey", style: .cancel, handler: nil))
+                    alert.addAction(UIAlertAction(title: Constants.LocalizationKey.okay.string, style: .cancel, handler: nil))
                     self?.present(alert, animated: true, completion: nil)
-                } else {
-                    self?.scrollToBottom()
                 }
             }
-
         }
     }
 }

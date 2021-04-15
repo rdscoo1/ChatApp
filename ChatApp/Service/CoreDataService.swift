@@ -103,6 +103,7 @@ class CoreDataService {
     private func performSave(in context: NSManagedObjectContext) {
         context.performAndWait {
             do {
+                try context.obtainPermanentIDs(for: Array(context.insertedObjects))
                 try context.save()
             } catch {
                 assertionFailure(error.localizedDescription)
@@ -125,25 +126,46 @@ class CoreDataService {
         }
     }
 
+    // MARK: - Remove Channel
+
+    func removeChannelFromDB(channelId: String) {
+        let context = mainContext
+
+        if let channel = fetchRecordsForEntity("DBChannel",
+                                   inContext: context,
+                                   withPredicate: NSPredicate(format: "identifier == %@", channelId))?.first as? DBChannel {
+            context.delete(channel)
+            do {
+                try mainContext.save()
+            } catch {
+                print("deleting error -> \(error.localizedDescription)")
+            }
+        }
+    }
+
+    func removeAllChannels() {
+        CoreDataService.shared.performSave { (context) in
+            if let result = try? context.fetch(DBChannel.fetchRequest()) as? [DBChannel] {
+                result.forEach {
+                    context.delete($0)
+                }
+            }
+        }
+    }
+
     // MARK: - Fetch Records for Entity
 
     func fetchRecordsForEntity<T>(_ name: T,
-                                  withPredicate predicate: NSPredicate? = nil,
-                                  inContext context: NSManagedObjectContext) -> [NSManagedObject]? {
+                                  inContext context: NSManagedObjectContext,
+                                  withPredicate predicate: NSPredicate? = nil) -> [NSManagedObject]? {
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: String(describing: name.self))
         fetchRequest.predicate = predicate
 
-        do {
-            return try context.fetch(fetchRequest)
-        } catch {
-            print("Unable to fetch managed objects for entity \(name).")
+        if let result = try? context.fetch(fetchRequest) {
+            return result
+        } else {
+            return nil
         }
-
-        return nil
-    }
-
-    func printApplicationDocumentsDirectory() {
-        print("📂 CoreData Path 📂\n\(applicationDocumentsDirectory)")
     }
 
     // MARK: - Logging observer
@@ -190,5 +212,9 @@ class CoreDataService {
                 print("В базе ошибка \(error.localizedDescription)")
             }
         }
+    }
+
+    func printApplicationDocumentsDirectory() {
+        print("📂 CoreData Path 📂\n\(applicationDocumentsDirectory)")
     }
 }

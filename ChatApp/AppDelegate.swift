@@ -47,7 +47,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             if userViewModel == nil {
                 dataManager.saveUserData(.init(fullName: "Roman Khodukin",
                                                description: "iOS developer\nMoscow, Russia",
-                                               profileImage: nil)) { _ in vc.loadData() }
+                                               profileImage: nil)) { _ in vc.loadUserData() }
             }
         }
     }

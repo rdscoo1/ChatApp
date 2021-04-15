@@ -63,7 +63,7 @@ class ConversationTableViewCell: UITableViewCell {
     
     // MARK: - Public Methods
     
-    func configure(with model: Channel) {
+    func configure(with model: DBChannel) {
         guard let name = model.name else {
             return
         }
