@@ -6,14 +6,28 @@
 //
 
 import UIKit
+import AVFoundation
 
 class ProfileViewController: UIViewController {
     
     // MARK: - Public properties
     
+    var presentationAssembly: IPresentationAssembly?
+
+    var user: UserViewModel?
+
+    var userDataManager: IUserDataManager?
+    
     var profileDataUpdatedHandler: (() -> Void)?
     
     // MARK: - UI
+    
+    private lazy var activityIndicatorView: UIActivityIndicatorView = {
+        let activityIndicator = UIActivityIndicatorView()
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        return activityIndicator
+    }()
     
     private let profileLogoImageView = ProfileLogoImageView()
     
@@ -41,14 +55,16 @@ class ProfileViewController: UIViewController {
     
     private let saveButton = ActionButton(title: Constants.LocalizationKey.save.string)
     
-    private lazy var activityIndicator = UIActivityIndicatorView()
-    
+    private lazy var imagePickerController: UIImagePickerController = {
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.sourceType = .photoLibrary
+        imagePickerController.allowsEditing = true
+        imagePickerController.delegate = self
+        return imagePickerController
+    }()
+        
     // MARK: - Private Properties
-
-    var user: UserViewModel?
-
-    var userDataManager: IUserDataManager?
-
+    
     private var userModel: UserViewModel {
         .init(fullName: profileNameTextView.text,
               description: profileDescriptionTextView.text,
@@ -63,6 +79,7 @@ class ProfileViewController: UIViewController {
     private var originalUserImage: UIImage?
     private var nameChanged = false
     private var descriptionChanged = false
+    private var imageChanged = false
     
     // MARK: - TextView Delegates
     
@@ -105,13 +122,13 @@ class ProfileViewController: UIViewController {
     // MARK: - Private Methods
     
     private func loadData() {
-        activityIndicator.startAnimating()
+        activityIndicatorView.startAnimating()
         userDataManager?.loadProfile { [weak self] userViewModel in
             self?.user = userViewModel
             self?.originalUserImage = userViewModel.profileImage
             
             DispatchQueue.main.async {
-                self?.activityIndicator.stopAnimating()
+                self?.activityIndicatorView.stopAnimating()
                 self?.setupTextViews()
                 //                self?.setProfileImage(image: user.profileImage)
                 self?.view.layoutIfNeeded()
@@ -128,14 +145,15 @@ class ProfileViewController: UIViewController {
     
     private func setSaveButtonsEnabled(_ isEnabled: Bool) {
         saveButton.isEnabled = isEnabled
+        let saveButtonHiddenState = profileNameTextView.isUserInteractionEnabled ? true : false
     }
     
     private func saveButtonPressed() {
         exitEditMode()
-        activityIndicator.startAnimating()
+        activityIndicatorView.startAnimating()
         userDataManager?.saveProfile(userModel) { [weak self] (isSuccessful: Bool) in
             DispatchQueue.main.async {
-                self?.activityIndicator.stopAnimating()
+                self?.activityIndicatorView.stopAnimating()
             }
             if isSuccessful {
                 if let profileDataUpdatedHandler = self?.profileDataUpdatedHandler {
@@ -162,20 +180,36 @@ class ProfileViewController: UIViewController {
         }
     }
     
-    private func setupTextViews() {
-        profileNameTextView.text = user?.fullName
-        profileDescriptionTextView.text = user?.description
-        profileNameTextView.delegate = nameTextViewDelegate
-        profileDescriptionTextView.delegate = descriptionTextViewDelegate
+    private func selectedProfileImage(_ image: UIImage) {
+        setSaveButtonsEnabled(imageChanged || nameChanged || descriptionChanged)
+        setProfileImage(image: image)
+    }
+    
+    private func setProfileImage(image: UIImage?) {
+        user?.profileImage = image
+        profileLogoImageView.setLogo(image: image)
+    }
+    
+    private func presentPixabayImagePickerViewController() {
+        guard let pixabayImagePickerViewController = presentationAssembly?.pixabayImagePickerViewController(didSelectImage: { [weak self] image in
+            self?.selectedProfileImage(image)
+        }) else { return }
         
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(
-            target: self,
-            action: #selector(dismissKeyboard))
-        tap.cancelsTouchesInView = false
-        view.addGestureRecognizer(tap)
+        if let baseNavigationController = presentationAssembly?.rootNavigationViewController(pixabayImagePickerViewController) {
+            present(baseNavigationController, animated: true, completion: nil)
+        }
+    }
+    
+    private func presentImagePicker(sourceType: UIImagePickerController.SourceType) {
+        if !UIImagePickerController.isSourceTypeAvailable(sourceType) {
+            showAlert()
+            return
+        }
         
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        imagePickerController.sourceType = sourceType
+        DispatchQueue.main.async {
+            self.present(self.imagePickerController, animated: true)
+        }
     }
     
     // MARK: - Setup Theme
@@ -183,7 +217,7 @@ class ProfileViewController: UIViewController {
     private func setupTheme() {
         let theme = Themes.current
         view.backgroundColor = theme.colors.primaryBackground
-        activityIndicator.backgroundColor = theme.colors.primaryBackground
+        activityIndicatorView.backgroundColor = theme.colors.primaryBackground
         profileNameTextView.textColor = theme.colors.profile.name
         profileDescriptionTextView.textColor = theme.colors.profile.description
         editButton.backgroundColor = theme.colors.profile.saveButtonBackground
@@ -211,6 +245,22 @@ class ProfileViewController: UIViewController {
     
     // MARK: - Setting up UI
     
+    private func setupTextViews() {
+        profileNameTextView.text = user?.fullName
+        profileDescriptionTextView.text = user?.description
+        profileNameTextView.delegate = nameTextViewDelegate
+        profileDescriptionTextView.delegate = descriptionTextViewDelegate
+        
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(
+            target: self,
+            action: #selector(dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
     private func setupNavigationBar() {
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: Constants.LocalizationKey.close.string,
                                                            style: .done,
@@ -223,13 +273,12 @@ class ProfileViewController: UIViewController {
     }
     
     private func setupUI() {
-        view.addSubview(activityIndicator)
-        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(activityIndicatorView)
         NSLayoutConstraint.activate([
-            activityIndicator.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            activityIndicator.topAnchor.constraint(equalTo: view.topAnchor),
-            activityIndicator.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            activityIndicator.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            activityIndicatorView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            activityIndicatorView.topAnchor.constraint(equalTo: view.topAnchor),
+            activityIndicatorView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            activityIndicatorView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
         
         saveButton.isEnabled = false
@@ -354,16 +403,84 @@ class ProfileViewController: UIViewController {
     }
 }
 
-// MARK: - ProfileLogoImageViewDelegate Conformance
+// MARK: - UINavigationControllerDelegate, UIImagePickerControllerDelegate
+
+extension ProfileViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+
+    func imagePickerController(_ picker: UIImagePickerController,
+                               didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+        picker.dismiss(animated: true)
+        
+        guard let image = info[.editedImage] as? UIImage else {
+            showAlert()
+            return
+        }
+        
+        setProfileImage(image: image)
+        
+//        imagePickedHandler(image)
+    }
+}
 
 extension ProfileViewController: ProfileLogoImageViewDelegate {
     func tappedProfileLogoImageView() {
-        
-        ImagePickerManager().pickImage(self) { image in
-            self.setSaveButtonsEnabled(image != nil || self.nameChanged || self.descriptionChanged)
+        if user?.profileImage != nil {
+            let alertController = CameraAlertController(
+                didTapOnCamera: {
+                    if self.checkCameraPermission() {
+                        self.presentImagePicker(sourceType: .camera)
+                    } else {
+                        self.showAlert()
+                    }
+                }, didTapOnPhotoLibrary: {
+                    self.presentImagePicker(sourceType: .photoLibrary)
+                }, didTapOnLoadFromPixabay: {
+                    self.presentPixabayImagePickerViewController()
+                }, didTapOnRemove: {
+                    self.setProfileImage(image: nil)
+                    let imageChanged = self.originalUserImage != nil
+                    self.imageChanged = imageChanged
+                    self.setSaveButtonsEnabled(imageChanged || self.nameChanged || self.descriptionChanged)
+                })
+            alertController.pruneNegativeWidthConstraints()
             
-            guard let image = image else { return }
-            self.profileLogoImageView.setLogo(image: image)
+            present(alertController, animated: true, completion: nil)
+        } else {
+            let alertController = CameraAlertController(
+                didTapOnCamera: {
+                    if self.checkCameraPermission() {
+                        self.presentImagePicker(sourceType: .camera)
+                    } else {
+                        self.showAlert()
+                    }
+                }, didTapOnPhotoLibrary: {
+                    self.presentImagePicker(sourceType: .photoLibrary)
+                }, didTapOnLoadFromPixabay: {
+                    self.presentPixabayImagePickerViewController()
+                })
+            alertController.pruneNegativeWidthConstraints()
+            
+            present(alertController, animated: true, completion: nil)
+        }
+    }
+    
+    func checkCameraPermission() -> Bool {
+        switch AVCaptureDevice.authorizationStatus(for: .video) {
+        case .authorized:
+            return true
+        case .notDetermined:
+            var result: Bool = false
+            let semaphore = DispatchSemaphore(value: 0)
+            AVCaptureDevice.requestAccess(for: .video) { granted in
+                result = granted
+                semaphore.signal()
+            }
+            semaphore.wait()
+            return result
+        case .denied, .restricted:
+            return false
+        @unknown default:
+            return false
         }
     }
 }

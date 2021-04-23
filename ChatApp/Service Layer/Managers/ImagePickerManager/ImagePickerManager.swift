@@ -22,13 +22,13 @@ class ImagePickerManager: NSObject, UINavigationControllerDelegate {
     override init() {
         super.init()
         
-        alertController = CameraAlertController(
-            didTapOnCamera: ({
-                self.checkCameraPermission()
-            }),
-            didTapOnPhotoLibrary: ({
-                self.openImagePickerOfType(.photoLibrary)
-            }))
+//        alertController = CameraAlertController(
+//            didTapOnCamera: ({
+//                self.checkCameraPermission()
+//            }),
+//            didTapOnPhotoLibrary: ({
+//                self.openImagePickerOfType(.photoLibrary)
+//            }))
         
         alertController?.pruneNegativeWidthConstraints()
         picker.delegate = self

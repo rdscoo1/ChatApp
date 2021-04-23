@@ -10,6 +10,7 @@ import Foundation
 protocol ICoreAssembly {
     func coreDataManager() -> CoreDataManager
     func profileDataManager() -> IProfileDataManager
+    func networkManager() -> INetworkManager
 }
 
 class CoreAssembly: ICoreAssembly {
@@ -19,5 +20,9 @@ class CoreAssembly: ICoreAssembly {
 
     func profileDataManager() -> IProfileDataManager {
         return GCDProfileDataManager()
+    }
+    
+    func networkManager() -> INetworkManager {
+        return NetworkManager()
     }
 }
