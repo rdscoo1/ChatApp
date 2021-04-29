@@ -13,6 +13,7 @@ class CameraAlertController: UIAlertController {
     
     private var didTapOnCamera: (() -> Void)?
     private var didTapOnPhotoLibrary: (() -> Void)?
+    private var didTapOnLoadFromPixabay: (() -> Void)?
     private var didTapOnRemove: (() -> Void)?
     
     // MARK: - Initializers
@@ -25,20 +26,25 @@ class CameraAlertController: UIAlertController {
         super.init(nibName: nil, bundle: nil)
     }
     
-    convenience init(didTapOnCamera: (() -> Void)?, didTapOnPhotoLibrary: (() -> Void)?) {
+    convenience init(didTapOnCamera: (() -> Void)?,
+                     didTapOnPhotoLibrary: (() -> Void)?,
+                     didTapOnLoadFromPixabay: (() -> Void)?) {
         self.init()
         self.init(title: nil, message: nil, preferredStyle: .actionSheet)
         self.didTapOnPhotoLibrary = didTapOnPhotoLibrary
         self.didTapOnCamera = didTapOnCamera
+        self.didTapOnLoadFromPixabay = didTapOnLoadFromPixabay
     }
     
     convenience init(didTapOnCamera: (() -> Void)?,
                      didTapOnPhotoLibrary: (() -> Void)?,
+                     didTapOnLoadFromPixabay: (() -> Void)?,
                      didTapOnRemove: (() -> Void)?) {
         self.init()
         self.init(title: nil, message: nil, preferredStyle: .actionSheet)
         self.didTapOnPhotoLibrary = didTapOnPhotoLibrary
         self.didTapOnCamera = didTapOnCamera
+        self.didTapOnLoadFromPixabay = didTapOnLoadFromPixabay
         self.didTapOnRemove = didTapOnRemove
     }
     
@@ -82,9 +88,13 @@ extension CameraAlertController {
             self.didTapOnPhotoLibrary?()
         }
         
+        let loadFromPixabay = UIAlertAction(title: Constants.LocalizationKey.loadFromPixabay.string, style: .default) { _ in
+            self.didTapOnLoadFromPixabay?()
+        }
+        
         let cancelAction = UIAlertAction(title: Constants.LocalizationKey.cancel.string, style: .cancel, handler: nil)
         
-        [cameraAction, libraryAction, cancelAction].forEach {
+        [cameraAction, libraryAction, loadFromPixabay, cancelAction].forEach {
             addAction($0)
         }
     }

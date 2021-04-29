@@ -14,6 +14,7 @@ extension Constants {
         case channels = "Channels"
         case myProfile = "My profile"
         case settings = "Settings"
+        case imagesFromPixabay = "Images from Pixabay"
 
         // Profile
         case dataSuccessSave = "Data saved successfully"
@@ -26,9 +27,10 @@ extension Constants {
         case noAccessToCamera = "No access to camera"
         
         // CameraAlert Actions
-        case deletePhoto = "Delete Photo"
+        case deletePhoto = "Delete photo"
         case makePhoto = "Make photo"
         case selectFromGallery = "Select from gallery"
+        case loadFromPixabay = "Load from Pixabay"
 
         // Channels
         case create = "Create"
@@ -50,6 +52,7 @@ extension Constants {
         case close = "Close"
         case cancel = "Cancel"
         case error = "Error occurred"
+        case failedLoadingImage = "Failed to load image"
         case okay = "Okay"
         case edit = "Edit"
         case success = "Success"

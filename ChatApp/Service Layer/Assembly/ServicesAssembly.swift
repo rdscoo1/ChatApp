@@ -9,8 +9,9 @@ import CoreData
 
 protocol IServicesAssembly {
     var userDataManager: UserDataManager { get }
+    func pixabayService() -> IPixabayService
 
-    func channelsFBService() -> ChannelsFBService
+    func channelsFBService() -> IChannelsFBService
     func channelsFetchedResultsController() -> NSFetchedResultsController<DBChannel>
 
     func messagesFBService(channelId: String) -> MessagesFBService
@@ -38,7 +39,13 @@ class ServicesAssembly: IServicesAssembly {
 
     // MARK: - Methods
 
-    func channelsFBService() -> ChannelsFBService {
+    func pixabayService() -> IPixabayService {
+        let networkManager = coreAssembly.networkManager()
+        let service = PixabayService(networkManager: networkManager)
+        return service
+    }
+    
+    func channelsFBService() -> IChannelsFBService {
         let channelsFBService = ChannelsFBService(servicesAssembly: self,
                                                   coreDataManager: coreAssembly.coreDataManager())
         return channelsFBService

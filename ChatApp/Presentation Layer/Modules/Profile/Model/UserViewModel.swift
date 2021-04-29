@@ -18,6 +18,6 @@ struct UserViewModel {
         return words.count > 1 ? words[1] : nil
     }
     let description: String?
-    let profileImage: UIImage?
     
+    var profileImage: UIImage?
 }

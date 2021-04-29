@@ -11,12 +11,14 @@
 "Channels" = "Channels";
 "My profile" = "My profile";
 "Settings" = "Settings";
+"Images from Pixabay" = "Images from Pixabay";
 
 // MARK: - Basic
 
 "Cancel" = "Cancel";
 "Okay" = "Okay";
 "Error occurred" = "Error occurred";
+"Failed to load image" = "Failed to load image";
 "Close" = "Close";
 "Save" = "Save";
 "Edit" = "Edit";
@@ -40,6 +42,7 @@
 "Delete photo" = "Delete photo";
 "Make photo" = "Make photo";
 "Select from gallery" = "Select from gallery";
+"Load from Pixabay" = "Load from Pixabay";
 
 // MARK: - Channels
 

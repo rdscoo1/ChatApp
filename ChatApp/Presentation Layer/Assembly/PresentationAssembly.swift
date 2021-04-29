@@ -16,6 +16,8 @@ protocol IPresentationAssembly {
 
     func profileViewController(profileDataUpdatedHandler: @escaping () -> Void) -> ProfileViewController
 
+    func pixabayImagePickerViewController(didSelectImage: @escaping (UIImage) -> Void) -> PixabayImagePickerViewController
+    
     func settingsViewController() -> ThemesViewController
 }
 
@@ -52,7 +54,15 @@ class PresentationAssembly: IPresentationAssembly {
         let profileViewController = ProfileViewController()
         profileViewController.profileDataUpdatedHandler = profileDataUpdatedHandler
         profileViewController.userDataManager = serviceAssembly.userDataManager
+        profileViewController.presentationAssembly = self
         return profileViewController
+    }
+    
+    func pixabayImagePickerViewController(didSelectImage: @escaping (UIImage) -> Void) -> PixabayImagePickerViewController {
+        let pixabayImagePickerViewController = PixabayImagePickerViewController()
+        pixabayImagePickerViewController.pixabayService = serviceAssembly.pixabayService()
+        pixabayImagePickerViewController.didSelectImage = didSelectImage
+        return pixabayImagePickerViewController
     }
 
     func settingsViewController() -> ThemesViewController {

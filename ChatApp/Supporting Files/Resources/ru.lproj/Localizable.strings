@@ -11,12 +11,14 @@
 "Channels" = "Каналы";
 "My profile" = "Мой профиль";
 "Settings" = "Настройки";
+"Images from Pixabay" = "Картинки из Pixabay";
 
 // MARK: - Basic
 
 "Cancel" = "Отменить";
 "Okay" = "Окей";
 "Error occurred" = "Ошибка";
+"Failed to load image" = "Не удалось загрузить изображение";
 "Close" = "Свернуть";
 "Save" = "Сохранить";
 "Edit" = "Редактировать";
@@ -40,6 +42,7 @@
 "Delete photo" = "Удалить фото";
 "Make photo" = "Сделать фото";
 "Select from gallery" = "Выбрать из галереи";
+"Load from Pixabay" = "Загрузить из Pixabay";
 
 // MARK: - Channels
 
