@@ -17,4 +17,5 @@ extension UIImage {
     static let sendMessageIcon = UIImage(imageLiteralResourceName: "sendMessageIcon")
     static let placeholder = UIImage(imageLiteralResourceName: "placeholder")
     static let profilePhotoFrame = UIImage(imageLiteralResourceName: "ProfilePhotoFrame")
+    static let appLogo = UIImage(imageLiteralResourceName: "AppLogo")
 }

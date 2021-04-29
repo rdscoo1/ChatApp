@@ -21,7 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         CoreDataManager.shared.printApplicationDocumentsDirectory()
         FirebaseApp.configure()
 
-        window = UIWindow()
+        window = AnimatedUIWindow()
         let conversationListViewController = rootAssembly.presentationAssembly.conversationListViewController()
         let rootNavigationController = rootAssembly.presentationAssembly.rootNavigationViewController(conversationListViewController)
         window?.rootViewController = rootNavigationController
