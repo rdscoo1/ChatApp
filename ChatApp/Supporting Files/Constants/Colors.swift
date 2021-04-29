@@ -101,9 +101,19 @@ extension Constants {
         
         // MARK: - App Theme basic
         
+        static let blue = UIColor(hex: "#0584FE")
+        
         static let settingsIconGray = UIColor(hex: "#545458")
+        static let buttonTitleLight = UIColor.black
+        static let buttonTitleDark = UIColor.white
+        
+        static let closeButtonLightBackground = UIColor(red: 0.51, green: 0.55, blue: 0.60, alpha: 0.12)
+        static let closeButtonDarkBackground = UIColor(red: 1.00, green: 1.00, blue: 1.00, alpha: 0.20)
+        static let closeIconLightTint = UIColor(hex: "#818C99")
+        static let closeIconDarkTint = UIColor.white
         
         static let navigationBarBackgroundNight = UIColor(hex: "#1E1E1E")
+        static let primaryNightBackground = UIColor(hex: "#1E1E1E")
         
         static let titleTextLight = UIColor.black
         static let titleTextDark = UIColor.white
@@ -140,6 +150,6 @@ extension Constants {
         // MARK: - Profile
         
         static let buttonBackgroundLight = UIColor(hex: "#F6F6F6")
-        static let buttonBackgroundDark = UIColor(hex: "#1B1B1B")
+        static let buttonBackgroundDark = UIColor(red: 1.00, green: 1.00, blue: 1.00, alpha: 0.20)
     }
 }

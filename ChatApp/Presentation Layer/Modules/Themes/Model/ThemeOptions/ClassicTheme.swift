@@ -18,7 +18,9 @@ struct ClassicTheme: AppTheme {
         navigationBar: .init(
             title: .black,
             background: .white,
-            tint: Constants.Colors.settingsIconGray),
+            tint: Constants.Colors.settingsIconGray,
+            closeIconTint: Constants.Colors.closeIconLightTint,
+            closeButtonBackground: Constants.Colors.closeButtonLightBackground),
         conversationList: .init(
             table: .init(
                 sectionHeaderTitle: .black,
@@ -29,7 +31,7 @@ struct ClassicTheme: AppTheme {
                 message: Constants.Colors.subtitleTextLight,
                 receivedDate: Constants.Colors.subtitleTextLight,
                 cellSelected: .lightGray,
-                background: Constants.Colors.yellowLight)),
+                background: .white)),
         conversation: .init(
             cell: .init(
                 incoming: .init(
@@ -41,6 +43,7 @@ struct ClassicTheme: AppTheme {
         profile: .init(
             name: .black,
             description: .black,
+            buttonTitle: Constants.Colors.buttonTitleLight,
             saveButtonBackground: Constants.Colors.buttonBackgroundLight),
         themes: .init(
             text: .black,

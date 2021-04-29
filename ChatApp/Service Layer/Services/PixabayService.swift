@@ -8,9 +8,9 @@
 import Foundation
 
 protocol IPixabayService {
-    func getImageListUrls(completion: @escaping((Result<[PixabayImage], Error>) -> Void))
+    func getImageListUrls(completion: @escaping((Result<[PixabayImage], RequestError>) -> Void))
     
-    func loadImage(urlPath: String, completion: @escaping((Result<Data, Error>) -> Void))
+    func loadImage(urlPath: String, completion: @escaping((Result<Data, RequestError>) -> Void))
 }
 
 class PixabayService: IPixabayService {
@@ -23,7 +23,7 @@ class PixabayService: IPixabayService {
         self.perPage = perPage
     }
     
-    func getImageListUrls(completion: @escaping((Result<[PixabayImage], Error>) -> Void)) {
+    func getImageListUrls(completion: @escaping((Result<[PixabayImage], RequestError>) -> Void)) {
         networkManager.makeRequest(request: PixabayImageListRequest(perPage: perPage),
                                    parser: DataParser<PixabayResponse>()) { (result) in
             switch result {
@@ -37,15 +37,8 @@ class PixabayService: IPixabayService {
         }
     }
     
-    func loadImage(urlPath: String, completion: @escaping ((Result<Data, Error>) -> Void)) {
+    func loadImage(urlPath: String, completion: @escaping ((Result<Data, RequestError>) -> Void)) {
         networkManager.makeRequest(request: PixabayImageRequest(urlPath: urlPath),
-                                   parser: Parser()) { (result) in
-            switch result {
-            case .success(let data):
-                completion(.success(data))
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        }
+                                   parser: Parser(), completion: completion)
     }
 }

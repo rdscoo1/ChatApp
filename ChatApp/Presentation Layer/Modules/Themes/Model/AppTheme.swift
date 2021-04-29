@@ -26,6 +26,8 @@ struct NavigationBar {
     let title: UIColor
     let background: UIColor
     let tint: UIColor
+    let closeIconTint: UIColor
+    let closeButtonBackground: UIColor
 }
 
 struct ConversationListVC {
@@ -65,6 +67,7 @@ struct ConversationVC {
 struct ProfileVC {
     let name: UIColor
     let description: UIColor
+    let buttonTitle: UIColor
     let saveButtonBackground: UIColor
 }
 

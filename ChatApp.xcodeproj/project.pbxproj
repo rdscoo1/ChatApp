@@ -14,7 +14,7 @@
 		E830324625E1D7D800D772B9 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E830324525E1D7D800D772B9 /* ProfileViewController.swift */; };
 		E830324D25E1D9C500D772B9 /* ActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E830324C25E1D9C500D772B9 /* ActionButton.swift */; };
 		E830325525E1E82600D772B9 /* UIColor+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = E830325425E1E82600D772B9 /* UIColor+Ext.swift */; };
-		E830325A25E28BD100D772B9 /* ProfileLogoImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E830325925E28BD100D772B9 /* ProfileLogoImageView.swift */; };
+		E830325A25E28BD100D772B9 /* ProfilePhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E830325925E28BD100D772B9 /* ProfilePhotoView.swift */; };
 		E830326225E2939300D772B9 /* HapticFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = E830326125E2939300D772B9 /* HapticFeedback.swift */; };
 		E830326C25E2961900D772B9 /* UIAlertViewController+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = E830326B25E2961900D772B9 /* UIAlertViewController+Ext.swift */; };
 		E830329C25E50A5D00D772B9 /* ImagePickerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E830329B25E50A5D00D772B9 /* ImagePickerManager.swift */; };
@@ -78,6 +78,9 @@
 		E8E0E124263245170078729A /* PixabayImagePickerCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E0E123263245170078729A /* PixabayImagePickerCollectionViewDataSource.swift */; };
 		E8E0E14B263257D70078729A /* PixabayImagePickerCollectionViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E0E14A263257D70078729A /* PixabayImagePickerCollectionViewDelegate.swift */; };
 		E8E0E1502632585B0078729A /* AlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E0E14F2632585B0078729A /* AlertService.swift */; };
+		E8E0E181263366430078729A /* CloseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E0E180263366430078729A /* CloseButton.swift */; };
+		E8E0E18926337BDA0078729A /* UINavigationController+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E0E18826337BDA0078729A /* UINavigationController+Ext.swift */; };
+		E8E0E19426345A780078729A /* ProfileFramePhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E0E19326345A780078729A /* ProfileFramePhotoView.swift */; };
 		E8F7DD7526278D2300D48446 /* ConfigurableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F7DD7426278D2300D48446 /* ConfigurableView.swift */; };
 		E8F7DDB02628D5C200D48446 /* CoreAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F7DDAF2628D5C200D48446 /* CoreAssembly.swift */; };
 		E8F7DDBC2628D76F00D48446 /* MessagesFBService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F7DDBB2628D76F00D48446 /* MessagesFBService.swift */; };
@@ -121,7 +124,7 @@
 		E830324525E1D7D800D772B9 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		E830324C25E1D9C500D772B9 /* ActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionButton.swift; sourceTree = "<group>"; };
 		E830325425E1E82600D772B9 /* UIColor+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Ext.swift"; sourceTree = "<group>"; };
-		E830325925E28BD100D772B9 /* ProfileLogoImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileLogoImageView.swift; sourceTree = "<group>"; };
+		E830325925E28BD100D772B9 /* ProfilePhotoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePhotoView.swift; sourceTree = "<group>"; };
 		E830326125E2939300D772B9 /* HapticFeedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticFeedback.swift; sourceTree = "<group>"; };
 		E830326B25E2961900D772B9 /* UIAlertViewController+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertViewController+Ext.swift"; sourceTree = "<group>"; };
 		E830329B25E50A5D00D772B9 /* ImagePickerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerManager.swift; sourceTree = "<group>"; };
@@ -193,6 +196,9 @@
 		E8E0E123263245170078729A /* PixabayImagePickerCollectionViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixabayImagePickerCollectionViewDataSource.swift; sourceTree = "<group>"; };
 		E8E0E14A263257D70078729A /* PixabayImagePickerCollectionViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixabayImagePickerCollectionViewDelegate.swift; sourceTree = "<group>"; };
 		E8E0E14F2632585B0078729A /* AlertService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertService.swift; sourceTree = "<group>"; };
+		E8E0E180263366430078729A /* CloseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloseButton.swift; sourceTree = "<group>"; };
+		E8E0E18826337BDA0078729A /* UINavigationController+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Ext.swift"; sourceTree = "<group>"; };
+		E8E0E19326345A780078729A /* ProfileFramePhotoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileFramePhotoView.swift; sourceTree = "<group>"; };
 		E8F7DD7426278D2300D48446 /* ConfigurableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurableView.swift; sourceTree = "<group>"; };
 		E8F7DDAF2628D5C200D48446 /* CoreAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreAssembly.swift; sourceTree = "<group>"; };
 		E8F7DDBB2628D76F00D48446 /* MessagesFBService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesFBService.swift; sourceTree = "<group>"; };
@@ -392,6 +398,7 @@
 				E84D8DF725F1501900345A2C /* Date+Ext.swift */,
 				E8CB228525F925730085AABB /* UIWindow+Ext.swift */,
 				E8769085260D3D7E006B13C0 /* UIImage+Ext.swift */,
+				E8E0E18826337BDA0078729A /* UINavigationController+Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -441,6 +448,14 @@
 				E8E0E11E263241F60078729A /* PixabayImageCellModel.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		E8E0E17F2633662D0078729A /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				E8E0E180263366430078729A /* CloseButton.swift */,
+			);
+			path = Components;
 			sourceTree = "<group>";
 		};
 		E8F7DD5A2627897F00D48446 /* Presentation Layer */ = {
@@ -590,8 +605,9 @@
 		E8F7DD6926278A6300D48446 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				E830325925E28BD100D772B9 /* ProfileLogoImageView.swift */,
+				E830325925E28BD100D772B9 /* ProfilePhotoView.swift */,
 				E830324C25E1D9C500D772B9 /* ActionButton.swift */,
+				E8E0E19326345A780078729A /* ProfileFramePhotoView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -645,6 +661,7 @@
 		E8F7DD7226278CCF00D48446 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				E8E0E17F2633662D0078729A /* Components */,
 				E8F7DDDE2628FD0700D48446 /* RootAssembly.swift */,
 				E8E030D925DECC5B0028B4DD /* AppDelegate.swift */,
 				E8E0311525DECECD0028B4DD /* Resources */,
@@ -931,6 +948,7 @@
 			files = (
 				E8AFBA812617A431007AB74D /* DBMessage+Init.swift in Sources */,
 				E8AFBA822617A431007AB74D /* DBChannel+Init.swift in Sources */,
+				E8E0E19426345A780078729A /* ProfileFramePhotoView.swift in Sources */,
 				E8F7DDEA2629053F00D48446 /* DBChannel+CoreDataProperties.swift in Sources */,
 				E84D8D6B25EA4D0C00345A2C /* ConversationCellModel.swift in Sources */,
 				E84D8D9E25EDA14600345A2C /* MessageBubbleView.swift in Sources */,
@@ -938,9 +956,10 @@
 				E8E0E10C26323C1F0078729A /* PixabayImagePickerViewController.swift in Sources */,
 				E830329C25E50A5D00D772B9 /* ImagePickerManager.swift in Sources */,
 				E89A64B32603F27E00A5734B /* GCDProfileDataManager.swift in Sources */,
-				E830325A25E28BD100D772B9 /* ProfileLogoImageView.swift in Sources */,
+				E830325A25E28BD100D772B9 /* ProfilePhotoView.swift in Sources */,
 				E8F7DE0226291F6600D48446 /* ConversationTableViewDataSource.swift in Sources */,
 				E84D8D6125EA422500345A2C /* ConversationListViewController.swift in Sources */,
+				E8E0E18926337BDA0078729A /* UINavigationController+Ext.swift in Sources */,
 				E84D8DAE25EEDB7A00345A2C /* MessageTableViewCell.swift in Sources */,
 				E8CB22CB25FAE1A50085AABB /* RootNavigationViewController.swift in Sources */,
 				E8CB22B925FAC8040085AABB /* ClassicTheme.swift in Sources */,
@@ -986,6 +1005,7 @@
 				E8E0E1502632585B0078729A /* AlertService.swift in Sources */,
 				E8F7DDDA2628F99400D48446 /* PresentationAssembly.swift in Sources */,
 				E8E0311A25DECF950028B4DD /* Logger.swift in Sources */,
+				E8E0E181263366430078729A /* CloseButton.swift in Sources */,
 				E84D8DEB25F1422600345A2C /* Images.swift in Sources */,
 				E84D8DF825F1501900345A2C /* Date+Ext.swift in Sources */,
 				E8F7DDCC2628E53500D48446 /* ServicesAssembly.swift in Sources */,
@@ -1195,7 +1215,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = ru.tinkoff.TinkoffChat1;
+				PRODUCT_BUNDLE_IDENTIFIER = ru.tinkoff.TinkoffChat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1216,7 +1236,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = ru.tinkoff.TinkoffChat1;
+				PRODUCT_BUNDLE_IDENTIFIER = ru.tinkoff.TinkoffChat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
