@@ -13,11 +13,8 @@ class ProfileViewController: UIViewController {
     // MARK: - Public properties
     
     var presentationAssembly: IPresentationAssembly?
-
     var user: UserViewModel?
-
     var userDataManager: IUserDataManager?
-    
     var profileDataUpdatedHandler: (() -> Void)?
     
     // MARK: - UI
@@ -29,9 +26,7 @@ class ProfileViewController: UIViewController {
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
         return activityIndicator
     }()
-    
     private let profileFramePhotoView = ProfileFramePhotoView()
-    
     private lazy var profileNameTextView: UITextView = {
         let textView = UITextView()
         textView.text = "Roman Khodukin"
@@ -43,7 +38,6 @@ class ProfileViewController: UIViewController {
         textView.translatesAutoresizingMaskIntoConstraints = false
         return textView
     }()
-    
     private lazy var profileDescriptionTextView: UITextView = {
         let textView = UITextView()
         textView.text = "iOS Developer\nMoscow, Russia"
@@ -55,9 +49,7 @@ class ProfileViewController: UIViewController {
     }()
     
     private let editButton = ActionButton(title: Constants.LocalizationKey.edit.string)
-    
     private let saveButton = ActionButton(title: Constants.LocalizationKey.save.string)
-    
     private lazy var imagePickerController: UIImagePickerController = {
         let imagePickerController = UIImagePickerController()
         imagePickerController.sourceType = .photoLibrary
@@ -73,16 +65,14 @@ class ProfileViewController: UIViewController {
               description: profileDescriptionTextView.text,
               profileImage: user?.profileImage)
     }
-    
     private let offset: CGFloat = 16
-    
     private var profileNameBottomConstraint: NSLayoutConstraint!
     private var profileDescriptionBottomConstraint: NSLayoutConstraint!
-    
     private var originalUserImage: UIImage?
     private var nameChanged = false
     private var descriptionChanged = false
     private var imageChanged = false
+    private lazy var editButtonAnimation: IViewAnimation = ShakeViewAnimation(view: editButton.titleLabel)
     
     // MARK: - TextView Delegates
     
@@ -114,7 +104,6 @@ class ProfileViewController: UIViewController {
         setupNavigationBar()
         
         profileFramePhotoView.delegate = self
-//        profileLogoImageView.setPlaceholderLetters(fullName: profileNameTextView.text)
         
         setupTheme()
         configureConstraints()
@@ -140,6 +129,7 @@ class ProfileViewController: UIViewController {
     }
     
     private func exitEditMode() {
+        editButtonAnimation.stop()
         if profileNameTextView.isUserInteractionEnabled {
             toggleEditMode()
         }
@@ -373,8 +363,7 @@ class ProfileViewController: UIViewController {
     }
     
     @objc private func toggleEditMode() {
-        print(#function)
-        
+        profileNameTextView.isUserInteractionEnabled ? editButtonAnimation.stop() : editButtonAnimation.start()
         let backgroundColor = profileNameTextView.isUserInteractionEnabled ? nil : UIColor.lightGray
         let editButtonTitle = profileNameTextView.isUserInteractionEnabled ? Constants.LocalizationKey.edit.string : Constants.LocalizationKey.cancel.string
         let saveButtonHiddenState = profileNameTextView.isUserInteractionEnabled ? true : false

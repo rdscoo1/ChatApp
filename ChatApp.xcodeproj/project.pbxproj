@@ -47,6 +47,7 @@
 		E87690A5260D43E9006B13C0 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = E87690A4260D43E9006B13C0 /* Message.swift */; };
 		E87690AD260D542E006B13C0 /* SendMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E87690AC260D542E006B13C0 /* SendMessageView.swift */; };
 		E87690BE260D5E9E006B13C0 /* UserDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E87690BD260D5E9E006B13C0 /* UserDataManager.swift */; };
+		E898768D263B51130070CE93 /* ShakeViewAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E898768C263B51130070CE93 /* ShakeViewAnimation.swift */; };
 		E89A64AE2603F1D500A5734B /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E89A64AD2603F1D500A5734B /* UserViewModel.swift */; };
 		E89A64B32603F27E00A5734B /* GCDProfileDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E89A64B22603F27E00A5734B /* GCDProfileDataManager.swift */; };
 		E89A64B82603F38D00A5734B /* OperationProfileDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E89A64B72603F38D00A5734B /* OperationProfileDataManager.swift */; };
@@ -159,6 +160,7 @@
 		E87690A4260D43E9006B13C0 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		E87690AC260D542E006B13C0 /* SendMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMessageView.swift; sourceTree = "<group>"; };
 		E87690BD260D5E9E006B13C0 /* UserDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataManager.swift; sourceTree = "<group>"; };
+		E898768C263B51130070CE93 /* ShakeViewAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShakeViewAnimation.swift; sourceTree = "<group>"; };
 		E89A64AD2603F1D500A5734B /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
 		E89A64B22603F27E00A5734B /* GCDProfileDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCDProfileDataManager.swift; sourceTree = "<group>"; };
 		E89A64B72603F38D00A5734B /* OperationProfileDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationProfileDataManager.swift; sourceTree = "<group>"; };
@@ -296,6 +298,14 @@
 				E84D42B026322FF70034FA25 /* PixabayResponse.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		E898768B263B50B90070CE93 /* Animation */ = {
+			isa = PBXGroup;
+			children = (
+				E898768C263B51130070CE93 /* ShakeViewAnimation.swift */,
+			);
+			path = Animation;
 			sourceTree = "<group>";
 		};
 		E8AFBA2F26179D79007AB74D /* InitEntity */ = {
@@ -499,6 +509,7 @@
 		E8F7DD5E262789E200D48446 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				E898768B263B50B90070CE93 /* Animation */,
 				E8CB22CA25FAE1A50085AABB /* RootNavigationViewController.swift */,
 				E8F7DDF4262916F800D48446 /* FRCDelegate.swift */,
 				E8F7DD6B26278AB300D48446 /* Themes */,
@@ -1028,6 +1039,7 @@
 				E80BFB3E25F7D9450070B8EF /* ThemeView.swift in Sources */,
 				E8F7DDFD262919E800D48446 /* ConversationListTableViewDataSourceDelegate.swift in Sources */,
 				E830324D25E1D9C500D772B9 /* ActionButton.swift in Sources */,
+				E898768D263B51130070CE93 /* ShakeViewAnimation.swift in Sources */,
 				E8F7DDEB2629053F00D48446 /* DBChannel+CoreDataClass.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
