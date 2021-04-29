@@ -13,17 +13,15 @@ class FileManagement {
         FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
     }
     
-    static func writeToDisk(data: Data, fileName: String) -> (isSuccessful: Bool, url: URL?) {
+    static func writeToDisk(data: Data, fileName: String) -> (Bool) {
         guard let url = getDocumentsDirectory?.appendingPathComponent(fileName)
-            else { return (false, nil) }
+            else { return (false) }
         
-        do {
-            print(url)
-            
+        do {            
             try data.write(to: url)
-            return (true, url)
+            return (true)
         } catch {
-            return (false, nil)
+            return (false)
         }
     }
     
@@ -35,7 +33,11 @@ class FileManagement {
         return try? Data(contentsOf: url)
     }
     
-    static func read(url: URL) -> Data? {
+    static func read(fileName: String) -> Data? {        
+        guard let url = getDocumentsDirectory?.appendingPathComponent(fileName) else {
+            return nil
+        }
+        
         return try? Data(contentsOf: url)
     }
     

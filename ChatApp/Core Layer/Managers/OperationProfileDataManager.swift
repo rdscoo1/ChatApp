@@ -48,7 +48,7 @@ class OperationProfileDataManager: IProfileDataManager {
             
             var image: UIImage?
             if let profileImageUrl = user.profileImageUrl,
-               let imageData = FileManagement.read(url: profileImageUrl) {
+               let imageData = FileManagement.read(fileName: profileImageUrl) {
                 image = UIImage(data: imageData)
             }
             
@@ -70,18 +70,16 @@ class OperationProfileDataManager: IProfileDataManager {
             var imageSavedSuccessfully = false
             var dataSavedSuccessfully = false
             
-            var imageUrl: URL?
             if let imageData = userViewModel.profileImage?.pngData() {
-                (imageSavedSuccessfully, imageUrl) =
-                    FileManagement.writeToDisk(data: imageData, fileName: Constants.userImageFileName)
+                imageSavedSuccessfully = FileManagement.writeToDisk(data: imageData, fileName: Constants.userImageFileName)
             } else if userViewModel.profileImage == nil {
                 imageSavedSuccessfully = true
             }
             
-            let user = User(fullName: userViewModel.fullName, description: userViewModel.description, profileImageUrl: imageUrl)
+            let user = User(fullName: userViewModel.fullName, description: userViewModel.description, profileImageUrl: Constants.userImageFileName)
             
             if let data = try? JSONEncoder().encode(user),
-               FileManagement.writeToDisk(data: data, fileName: Constants.userDataFileName).isSuccessful {
+               FileManagement.writeToDisk(data: data, fileName: Constants.userDataFileName) == true {
                 dataSavedSuccessfully = true
             }
             

@@ -25,11 +25,12 @@ class ProfileViewController: UIViewController {
     private lazy var activityIndicatorView: UIActivityIndicatorView = {
         let activityIndicator = UIActivityIndicatorView()
         activityIndicator.hidesWhenStopped = true
+        activityIndicator.backgroundColor = Themes.current.colors.primaryBackground
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
         return activityIndicator
     }()
     
-    private let profileLogoImageView = ProfileLogoImageView()
+    private let profileFramePhotoView = ProfileFramePhotoView()
     
     private lazy var profileNameTextView: UITextView = {
         let textView = UITextView()
@@ -37,6 +38,7 @@ class ProfileViewController: UIViewController {
         textView.font = .systemFont(ofSize: 18, weight: .regular)
         textView.textAlignment = .center
         textView.bouncesZoom = true
+        textView.backgroundColor = Themes.current.colors.primaryBackground
         textView.isUserInteractionEnabled = false
         textView.translatesAutoresizingMaskIntoConstraints = false
         return textView
@@ -46,6 +48,7 @@ class ProfileViewController: UIViewController {
         let textView = UITextView()
         textView.text = "iOS Developer\nMoscow, Russia"
         textView.font = .systemFont(ofSize: 16, weight: .regular)
+        textView.backgroundColor = Themes.current.colors.primaryBackground
         textView.isUserInteractionEnabled = false
         textView.translatesAutoresizingMaskIntoConstraints = false
         return textView
@@ -86,12 +89,12 @@ class ProfileViewController: UIViewController {
     private lazy var nameTextViewDelegate = TextViewDelegate(textViewType: .nameTextView) { [weak self] in
         var textChanged = self?.user?.fullName != self?.profileNameTextView.text
         self?.nameChanged = textChanged
-        self?.setSaveButtonsEnabled(textChanged || self?.descriptionChanged ?? true)
+        self?.setSaveButtonsEnabled(textChanged || self?.imageChanged ?? true || self?.descriptionChanged ?? true)
     }
     private lazy var descriptionTextViewDelegate = TextViewDelegate(textViewType: .descriptionTextView) { [weak self] in
         var textChanged = self?.user?.description != self?.profileDescriptionTextView.text
         self?.descriptionChanged = textChanged
-        self?.setSaveButtonsEnabled(textChanged || self?.nameChanged ?? true)
+        self?.setSaveButtonsEnabled(textChanged || self?.imageChanged ?? true || self?.nameChanged ?? true)
     }
     
     // MARK: - Deinit
@@ -110,8 +113,8 @@ class ProfileViewController: UIViewController {
         super.viewDidLoad()
         setupNavigationBar()
         
-        profileLogoImageView.delegate = self
-        profileLogoImageView.setPlaceholderLetters(fullName: profileNameTextView.text)
+        profileFramePhotoView.delegate = self
+//        profileLogoImageView.setPlaceholderLetters(fullName: profileNameTextView.text)
         
         setupTheme()
         configureConstraints()
@@ -130,7 +133,7 @@ class ProfileViewController: UIViewController {
             DispatchQueue.main.async {
                 self?.activityIndicatorView.stopAnimating()
                 self?.setupTextViews()
-                //                self?.setProfileImage(image: user.profileImage)
+                self?.setProfileImage(image: self?.user?.profileImage)
                 self?.view.layoutIfNeeded()
             }
         }
@@ -145,7 +148,11 @@ class ProfileViewController: UIViewController {
     
     private func setSaveButtonsEnabled(_ isEnabled: Bool) {
         saveButton.isEnabled = isEnabled
-        let saveButtonHiddenState = profileNameTextView.isUserInteractionEnabled ? true : false
+        if isEnabled {
+            saveButton.isHidden = false
+        } else {
+            saveButton.isHidden = isEnabled
+        }
     }
     
     private func saveButtonPressed() {
@@ -161,12 +168,14 @@ class ProfileViewController: UIViewController {
                 }
                 
                 DispatchQueue.main.async {
-                    if self?.profileLogoImageView == nil {
-                        self?.profileLogoImageView.setPlaceholderLetters(fullName: self?.profileNameTextView.text)
+                    if self?.profileFramePhotoView.profilePhotoView == nil {
+                        self?.profileFramePhotoView.profilePhotoView.setPlaceholderLetters(fullName: self?.profileNameTextView.text)
                     }
                     self?.originalUserImage = self?.user?.profileImage
                     self?.nameChanged = false
                     self?.descriptionChanged = false
+                    self?.saveButton.isHidden = true
+                    self?.setSaveButtonsEnabled(false)
                     self?.showAlert(title: Constants.LocalizationKey.success.string, message: Constants.LocalizationKey.dataSuccessSave.string)
                 }
             } else {
@@ -181,13 +190,14 @@ class ProfileViewController: UIViewController {
     }
     
     private func selectedProfileImage(_ image: UIImage) {
+        imageChanged = !(originalUserImage?.isEqual(to: image) ?? false)
         setSaveButtonsEnabled(imageChanged || nameChanged || descriptionChanged)
         setProfileImage(image: image)
     }
     
     private func setProfileImage(image: UIImage?) {
         user?.profileImage = image
-        profileLogoImageView.setLogo(image: image)
+        profileFramePhotoView.setLogo(image: image, fullName: user?.fullName)
     }
     
     private func presentPixabayImagePickerViewController() {
@@ -196,7 +206,8 @@ class ProfileViewController: UIViewController {
         }) else { return }
         
         if let baseNavigationController = presentationAssembly?.rootNavigationViewController(pixabayImagePickerViewController) {
-            present(baseNavigationController, animated: true, completion: nil)
+            
+            present(baseNavigationController, animated: true)
         }
     }
     
@@ -217,11 +228,8 @@ class ProfileViewController: UIViewController {
     private func setupTheme() {
         let theme = Themes.current
         view.backgroundColor = theme.colors.primaryBackground
-        activityIndicatorView.backgroundColor = theme.colors.primaryBackground
         profileNameTextView.textColor = theme.colors.profile.name
         profileDescriptionTextView.textColor = theme.colors.profile.description
-        editButton.backgroundColor = theme.colors.profile.saveButtonBackground
-        saveButton.backgroundColor = theme.colors.profile.saveButtonBackground
         
         if #available(iOS 13.0, *) {
             let navBarAppearance = UINavigationBarAppearance()
@@ -262,14 +270,32 @@ class ProfileViewController: UIViewController {
     }
     
     private func setupNavigationBar() {
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: Constants.LocalizationKey.close.string,
-                                                           style: .done,
-                                                           target: self,
-                                                           action: #selector(dismissVC))
+        navigationItem.title = Constants.LocalizationKey.myProfile.string
+        
+        let closeButton = CloseButton()
+        closeButton.addTarget(self, action: #selector(dismissVC), for: .touchUpInside)
+        
+        let leftBarButtonView = UIView()
+        leftBarButtonView.addSubview(closeButton)
+        closeButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            closeButton.heightAnchor.constraint(equalToConstant: 32),
+            closeButton.widthAnchor.constraint(equalTo: closeButton.heightAnchor),
+            closeButton.centerYAnchor.constraint(equalTo: leftBarButtonView.centerYAnchor),
+            closeButton.leadingAnchor.constraint(equalTo: leftBarButtonView.leadingAnchor, constant: 8),
+            leftBarButtonView.heightAnchor.constraint(equalToConstant: 44),
+            leftBarButtonView.widthAnchor.constraint(equalToConstant: 44)
+        ])
+        
+        let leftBarButton = UIBarButtonItem(customView: leftBarButtonView)
+        navigationItem.leftBarButtonItem = leftBarButton
+        
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .edit,
                                                             target: self,
                                                             action: #selector(toggleEditMode))
-        navigationItem.title = Constants.LocalizationKey.myProfile.string
+        navigationController?.navigationBar.tintColor = Themes.current.colors.profile.buttonTitle
+        navigationController?.addCustomBottomLine(color: Themes.current.colors.profile.saveButtonBackground, height: 1)
     }
     
     private func setupUI() {
@@ -289,7 +315,7 @@ class ProfileViewController: UIViewController {
     }
     
     private func configureConstraints() {
-        view.addSubview(profileLogoImageView)
+        view.addSubview(profileFramePhotoView)
         view.addSubview(profileNameTextView)
         view.addSubview(profileDescriptionTextView)
         view.addSubview(editButton)
@@ -299,14 +325,14 @@ class ProfileViewController: UIViewController {
         profileDescriptionBottomConstraint = profileDescriptionTextView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0)
         
         NSLayoutConstraint.activate([
-            profileLogoImageView.widthAnchor.constraint(equalToConstant: offset * 14),
-            profileLogoImageView.heightAnchor.constraint(equalToConstant: offset * 14),
-            profileLogoImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: offset * 2),
-            profileLogoImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            profileFramePhotoView.widthAnchor.constraint(equalToConstant: offset * 14),
+            profileFramePhotoView.heightAnchor.constraint(equalToConstant: offset * 14),
+            profileFramePhotoView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: offset * 2),
+            profileFramePhotoView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             
             profileNameTextView.heightAnchor.constraint(equalToConstant: offset * 5),
             profileNameTextView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            profileNameTextView.topAnchor.constraint(equalTo: profileLogoImageView.bottomAnchor, constant: offset * 2),
+            profileNameTextView.topAnchor.constraint(equalTo: profileFramePhotoView.bottomAnchor, constant: offset * 2),
             profileNameTextView.leadingAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leadingAnchor, constant: offset),
             profileNameTextView.trailingAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -offset),
             
@@ -347,6 +373,8 @@ class ProfileViewController: UIViewController {
     }
     
     @objc private func toggleEditMode() {
+        print(#function)
+        
         let backgroundColor = profileNameTextView.isUserInteractionEnabled ? nil : UIColor.lightGray
         let editButtonTitle = profileNameTextView.isUserInteractionEnabled ? Constants.LocalizationKey.edit.string : Constants.LocalizationKey.cancel.string
         let saveButtonHiddenState = profileNameTextView.isUserInteractionEnabled ? true : false
@@ -417,46 +445,47 @@ extension ProfileViewController: UINavigationControllerDelegate, UIImagePickerCo
         }
         
         setProfileImage(image: image)
+        selectedProfileImage(image)
         
 //        imagePickedHandler(image)
     }
 }
 
-extension ProfileViewController: ProfileLogoImageViewDelegate {
+extension ProfileViewController: ProfileFramePhotoViewDelegate {
     func tappedProfileLogoImageView() {
         if user?.profileImage != nil {
             let alertController = CameraAlertController(
-                didTapOnCamera: {
-                    if self.checkCameraPermission() {
-                        self.presentImagePicker(sourceType: .camera)
+                didTapOnCamera: { [weak self] in
+                    if self?.checkCameraPermission() != nil {
+                        self?.presentImagePicker(sourceType: .camera)
                     } else {
-                        self.showAlert()
+                        self?.showAlert()
                     }
-                }, didTapOnPhotoLibrary: {
-                    self.presentImagePicker(sourceType: .photoLibrary)
-                }, didTapOnLoadFromPixabay: {
-                    self.presentPixabayImagePickerViewController()
-                }, didTapOnRemove: {
-                    self.setProfileImage(image: nil)
-                    let imageChanged = self.originalUserImage != nil
-                    self.imageChanged = imageChanged
-                    self.setSaveButtonsEnabled(imageChanged || self.nameChanged || self.descriptionChanged)
+                }, didTapOnPhotoLibrary: { [weak self] in
+                    self?.presentImagePicker(sourceType: .photoLibrary)
+                }, didTapOnLoadFromPixabay: { [weak self] in
+                    self?.presentPixabayImagePickerViewController()
+                }, didTapOnRemove: { [weak self] in
+                    self?.setProfileImage(image: nil)
+                    let imageChanged = self?.originalUserImage != nil
+                    self?.imageChanged = imageChanged
+                    self?.setSaveButtonsEnabled(imageChanged || ((self?.nameChanged) != nil) || ((self?.descriptionChanged) != nil))
                 })
             alertController.pruneNegativeWidthConstraints()
             
             present(alertController, animated: true, completion: nil)
         } else {
             let alertController = CameraAlertController(
-                didTapOnCamera: {
-                    if self.checkCameraPermission() {
-                        self.presentImagePicker(sourceType: .camera)
+                didTapOnCamera: { [weak self] in
+                    if self?.checkCameraPermission() != nil {
+                        self?.presentImagePicker(sourceType: .camera)
                     } else {
-                        self.showAlert()
+                        self?.showAlert()
                     }
-                }, didTapOnPhotoLibrary: {
-                    self.presentImagePicker(sourceType: .photoLibrary)
-                }, didTapOnLoadFromPixabay: {
-                    self.presentPixabayImagePickerViewController()
+                }, didTapOnPhotoLibrary: { [weak self] in
+                    self?.presentImagePicker(sourceType: .photoLibrary)
+                }, didTapOnLoadFromPixabay: { [weak self] in
+                    self?.presentPixabayImagePickerViewController()
                 })
             alertController.pruneNegativeWidthConstraints()
             

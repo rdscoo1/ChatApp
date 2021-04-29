@@ -33,8 +33,9 @@ class ActionButton: UIButton {
     
     private func configure() {
         translatesAutoresizingMaskIntoConstraints = false
+        backgroundColor = Themes.current.colors.profile.saveButtonBackground
         clipsToBounds = true
-        setTitleColor(Constants.Colors.buttonText, for: .normal)
+        setTitleColor(Themes.current.colors.profile.buttonTitle, for: .normal)
         setTitleColor(UIColor.lightGray, for: .disabled)
         titleLabel?.adjustsFontSizeToFitWidth = true
         titleLabel?.numberOfLines = 1

@@ -10,5 +10,5 @@ import UIKit
 struct User: Codable {
     var fullName: String
     let description: String?
-    let profileImageUrl: URL?
+    let profileImageUrl: String?
 }

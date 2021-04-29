@@ -1,5 +1,5 @@
 //
-//  ProfileLogoImageView.swift
+//  ProfilePhotoView.swift
 //  ChatApp
 //
 //  Created by Roman Khodukin on 2/21/21.
@@ -7,21 +7,21 @@
 
 import UIKit
 
-protocol ProfileLogoImageViewDelegate: AnyObject {
+protocol ProfilePhotoViewDelegate: AnyObject {
     func tappedProfileLogoImageView()
 }
 
-class ProfileLogoImageView: UIView {
+class ProfilePhotoView: UIView {
     
     // MARK: - Public properties
     
     var profileImage: UIImage? {
-        logoImageView.image
+        photoImageView.image
     }
     
     // MARK: - Private Properties
     
-    private lazy var logoImageView: UIImageView = {
+    lazy var photoImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFill
@@ -30,7 +30,7 @@ class ProfileLogoImageView: UIView {
         return imageView
     }()
     
-    private lazy var initialsLabel: UILabel = {
+    lazy var initialsLabel: UILabel = {
         let label = UILabel()
         label.textColor = .darkGray
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -43,7 +43,7 @@ class ProfileLogoImageView: UIView {
         return label
     }()
     
-    weak var delegate: ProfileLogoImageViewDelegate?
+    weak var delegate: ProfilePhotoViewDelegate?
     
     // MARK: - Initializers
     
@@ -76,9 +76,10 @@ class ProfileLogoImageView: UIView {
     
     // MARK: - Public Methods
     
-    func setLogo(image: UIImage?) {
-        logoImageView.image = image
-        initialsLabel.isHidden = true
+    func setLogo(image: UIImage?, fullName: String?) {
+        photoImageView.image = image
+        initialsLabel.isHidden = photoImageView.image != nil
+        setPlaceholderLetters(fullName: fullName)
     }
     
     func setPlaceholderLetters(fullName: String?) {
@@ -105,16 +106,16 @@ class ProfileLogoImageView: UIView {
     private func setupLayout() {        
         translatesAutoresizingMaskIntoConstraints = false
         clipsToBounds = true
-        addSubview(logoImageView)
+        addSubview(photoImageView)
         addSubview(initialsLabel)
         
         NSLayoutConstraint.activate([
             heightAnchor.constraint(equalTo: widthAnchor),
 
-            logoImageView.topAnchor.constraint(equalTo: topAnchor),
-            logoImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            logoImageView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            logoImageView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            photoImageView.topAnchor.constraint(equalTo: topAnchor),
+            photoImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            photoImageView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            photoImageView.bottomAnchor.constraint(equalTo: bottomAnchor),
             
             initialsLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
             initialsLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
@@ -125,5 +126,15 @@ class ProfileLogoImageView: UIView {
     
     @objc private func imageViewTapped(_: UITapGestureRecognizer) {
         delegate?.tappedProfileLogoImageView()
+    }
+}
+
+// MARK: - ConfigurableView
+
+extension ProfilePhotoView: ConfigurableView {
+    func configure(with model: UserViewModel) {
+        photoImageView.image = model.profileImage
+        initialsLabel.isHidden = model.profileImage != nil
+        setPlaceholderLetters(fullName: model.fullName)
     }
 }

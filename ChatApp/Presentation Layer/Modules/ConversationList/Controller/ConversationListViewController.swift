@@ -11,7 +11,7 @@ import CoreData
 class ConversationListViewController: UIViewController {
     
     // MARK: - UI
-
+    
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -22,44 +22,35 @@ class ConversationListViewController: UIViewController {
         tableView.dataSource = tableViewDataSource
         return tableView
     }()
-
-    private let profileLogoImageView = ProfileLogoImageView()
-
+    
+    private let profileLogoImageView = ProfilePhotoView()
+    
     private let createChannelButton = UIButton()
     
     private var settingsBarButton: UIBarButtonItem?
-
+    
     // MARK: - Private Properties
-
+    
     var channelsFBService: IChannelsFBService?
-
+    
     var userDataManager: IUserDataManager?
-
+    
     var presentationAssembly: IPresentationAssembly?
-
+    
     var fetchedResultsController: NSFetchedResultsController<DBChannel>?
-
-    private lazy var tableViewDataSource = ConversationListTableViewDataSourceDelegate(fetchedResultsController: fetchedResultsController!,
-                                                                               channelsFBService: channelsFBService!,
-                                                                               presentationAssembly: presentationAssembly!,
-                                                                               navigationController: navigationController!)
-
+    
+    private lazy var tableViewDataSource = ConversationListTableViewDataSourceDelegate(
+        fetchedResultsController: fetchedResultsController!,
+        channelsFBService: channelsFBService!,
+        presentationAssembly: presentationAssembly!,
+        navigationController: navigationController!)
+    
     private lazy var frcDelegate: FRCDelegate = FRCDelegate(tableView: tableView)
-
+    
     private var channels: [DBChannel]? {
         fetchedResultsController?.fetchedObjects
     }
-
-    private var user: UserViewModel? {
-        didSet {
-            if let user = self.user {
-                DispatchQueue.main.async { [weak self] in
-                    self?.profileLogoImageView.setPlaceholderLetters(fullName: user.fullName)
-                }
-            }
-        }
-    }
-
+    
     // MARK: - LifeCycle
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -71,7 +62,7 @@ class ConversationListViewController: UIViewController {
         navigationItem.title = Constants.LocalizationKey.channels.string
         navigationItem.backButtonTitle = ""
         navigationController?.navigationBar.prefersLargeTitles = true
-
+        
         configureNavBarButtons()
         setupLayout()
         setupTheme()
@@ -80,26 +71,28 @@ class ConversationListViewController: UIViewController {
     }
     
     // MARK: - Private Methods
-
+    
     private func loadChannels() {
         do {
             try fetchedResultsController?.performFetch()
         } catch {
             showErrorAlert(message: error.localizedDescription)
         }
-
+        
         fetchedResultsController?.delegate = frcDelegate
-
+        
         channelsFBService?.subscribeOnChannels { (result) in
             if case Result.failure(let error) = result {
                 print(error.localizedDescription)
             }
         }
     }
-
+    
     func loadUserData() {
         userDataManager?.loadProfile { [weak self] user in
-            self?.user = user
+            DispatchQueue.main.async {
+                self?.profileLogoImageView.configure(with: user)
+            }
         }
     }
     
@@ -111,7 +104,7 @@ class ConversationListViewController: UIViewController {
         let startChannelIconImage = UIImage.startChannelIcon.tinted(color: .white)
         createChannelButton.setImage(startChannelIconImage, for: .normal)
         createChannelButton.addTarget(self, action: #selector(createChannelButtonDidTap), for: .touchUpInside)
-
+        
         view.addSubview(tableView)
         view.addSubview(createChannelButton)
         
@@ -120,21 +113,21 @@ class ConversationListViewController: UIViewController {
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-
+            
             createChannelButton.heightAnchor.constraint(equalToConstant: 64),
             createChannelButton.widthAnchor.constraint(equalToConstant: 64),
             createChannelButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -32),
             createChannelButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32)
         ])
     }
-
+    
     @objc private func createChannelButtonDidTap() {
         let alert = UIAlertController(title: Constants.LocalizationKey.createNewChannel.string, message: "", preferredStyle: .alert)
-
+        
         alert.addTextField { (textField) in
             textField.placeholder = Constants.LocalizationKey.enterChannelName.string
         }
-
+        
         alert.addAction(UIAlertAction(title: Constants.LocalizationKey.cancel.string, style: .cancel, handler: nil))
         alert.addAction(UIAlertAction(title: Constants.LocalizationKey.create.string, style: .default, handler: { [weak self] _ in
             if let name = alert.textFields?.first?.text,
@@ -150,7 +143,7 @@ class ConversationListViewController: UIViewController {
         }))
         present(alert, animated: true)
     }
-
+    
     private func showErrorAlert(message: String) {
         let alert = UIAlertController(title: Constants.LocalizationKey.error.string, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: Constants.LocalizationKey.okay.string, style: .default, handler: nil))
@@ -159,7 +152,7 @@ class ConversationListViewController: UIViewController {
     
     private func setupTheme() {
         let theme = Themes.current
-        tableView.backgroundColor = theme.colors.navigationBar.background
+        tableView.backgroundColor = theme.colors.primaryBackground
         if #available(iOS 13.0, *) {
             let navBarAppearance = UINavigationBarAppearance()
             navBarAppearance.configureWithOpaqueBackground()
@@ -184,7 +177,7 @@ class ConversationListViewController: UIViewController {
     
     @objc private func goToThemesTapped() {
         guard let themesViewController = presentationAssembly?.settingsViewController() else { return }
-
+        
         themesViewController.didTapOnThemeView = { [weak self] themeOption in
             Themes.saveApplicationTheme(themeOption)
             self?.setupTheme()
@@ -205,7 +198,7 @@ class ConversationListViewController: UIViewController {
         let rightBarButtonView = UIView()
         rightBarButtonView.addSubview(profileLogoImageView)
         profileLogoImageView.translatesAutoresizingMaskIntoConstraints = false
-
+        
         NSLayoutConstraint.activate([
             profileLogoImageView.leadingAnchor.constraint(equalTo: rightBarButtonView.leadingAnchor),
             profileLogoImageView.topAnchor.constraint(equalTo: rightBarButtonView.topAnchor),
@@ -223,13 +216,13 @@ class ConversationListViewController: UIViewController {
             self?.loadUserData()
         }) else { return }
         profileViewController.user = profile
-
+        
         guard let rootNavController = presentationAssembly?.rootNavigationViewController(profileViewController) else {
             return
         }
         navigationController?.present(rootNavController, animated: true)
     }
-
+    
     func validateIndexPath(_ indexPath: IndexPath) -> Bool {
         if let sections = self.fetchedResultsController?.sections,
            indexPath.section < sections.count {

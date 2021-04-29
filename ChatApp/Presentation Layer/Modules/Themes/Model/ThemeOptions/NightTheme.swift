@@ -14,11 +14,13 @@ struct NightTheme: AppTheme {
     var statusBarStyle: UIStatusBarStyle { .lightContent }
     
     var colors = ThemeColors(
-        primaryBackground: .black,
+        primaryBackground: Constants.Colors.primaryNightBackground,
         navigationBar: .init(
             title: .white,
             background: Constants.Colors.navigationBarBackgroundNight,
-            tint: .white),
+            tint: .white,
+            closeIconTint: Constants.Colors.closeIconDarkTint,
+            closeButtonBackground: Constants.Colors.closeButtonDarkBackground),
         conversationList: .init(
             table: .init(
                 sectionHeaderTitle: .white,
@@ -41,6 +43,7 @@ struct NightTheme: AppTheme {
         profile: .init(
             name: .white,
             description: .white,
+            buttonTitle: Constants.Colors.buttonTitleDark,
             saveButtonBackground: Constants.Colors.buttonBackgroundDark),
         themes: .init(
             text: .black,

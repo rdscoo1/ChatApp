@@ -32,26 +32,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     private func createChatNavigationController() -> UINavigationController {
         let conversationViewController = ConversationListViewController()
-        setUserData(vc: conversationViewController)
         conversationViewController.title = Constants.LocalizationKey.channels.string
-        conversationViewController.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: ProfileLogoImageView())
+        conversationViewController.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: ProfilePhotoView())
         
         let navController = RootNavigationController(rootViewController: conversationViewController)
         navController.navigationBar.prefersLargeTitles = true
         return navController
-    }
-    
-    // MARK: - Private methods
-    
-    private func setUserData(vc: ConversationListViewController) {
-        let dataManager = GCDProfileDataManager()
-        
-        dataManager.loadUserData { userViewModel in
-            if userViewModel == nil {
-                dataManager.saveUserData(.init(fullName: "Roman Khodukin",
-                                               description: "iOS developer\nMoscow, Russia",
-                                               profileImage: nil)) { _ in vc.loadUserData() }
-            }
-        }
     }
 }

@@ -9,6 +9,8 @@ import Foundation
 
 struct Constants {
     
+    static let baseUrl = "pixabay.com" // "https://pixabay.com/api/"
+    
     enum ViewControllerState: String {
         case loading = "Loading"
         case loaded = "Loaded"

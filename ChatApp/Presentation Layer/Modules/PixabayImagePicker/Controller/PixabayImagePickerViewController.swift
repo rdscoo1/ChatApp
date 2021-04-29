@@ -14,6 +14,7 @@ class PixabayImagePickerViewController: UIViewController {
     private lazy var activityIndicatorView: UIActivityIndicatorView = {
         let activityIndicator = UIActivityIndicatorView()
         activityIndicator.hidesWhenStopped = true
+        activityIndicator.backgroundColor = Themes.current.colors.primaryBackground
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
         return activityIndicator
     }()
@@ -25,7 +26,7 @@ class PixabayImagePickerViewController: UIViewController {
                                 forCellWithReuseIdentifier: PixabayImagePickerCollectionViewCell.reuseId)
         collectionView.dataSource = collectionViewDataSource
         collectionView.delegate = collectionViewDelegate
-        collectionView.backgroundColor = .clear
+        collectionView.backgroundColor = Themes.current.colors.primaryBackground
         collectionView.showsVerticalScrollIndicator = false
         collectionView.showsHorizontalScrollIndicator = false
         return collectionView
@@ -89,6 +90,7 @@ class PixabayImagePickerViewController: UIViewController {
                 }
             case .failure(let error):
                 print(error.localizedDescription)
+                self?.activityIndicatorView.stopAnimating()
             }
         })
     }
@@ -103,7 +105,7 @@ class PixabayImagePickerViewController: UIViewController {
                                                                                                      previewUrl: nil,
                                                                                                      fullUrl: model.fullUrl),
                                                                         number: index)
-                    self?.collectionView.reloadData()
+                    self?.collectionView.reloadItems(at: [IndexPath(item: index, section: 0)])
                 }
             case .failure(let error):
                 print(error.localizedDescription)
@@ -119,8 +121,8 @@ class PixabayImagePickerViewController: UIViewController {
             return
         }
         
-        pixabayService?.loadImage(urlPath: url) { [weak self] result in
-            DispatchQueue.main.async {
+        pixabayService?.loadImage(urlPath: url) { result in
+            DispatchQueue.main.async { [weak self] in
                 switch result {
                 case .failure:
                     self?.presentErrorAlert()
@@ -154,9 +156,27 @@ class PixabayImagePickerViewController: UIViewController {
     }
     
     private func setupTheme() {
+        navigationController?.navigationBar.tintColor = Themes.current.colors.profile.buttonTitle
+        view.backgroundColor = Themes.current.colors.primaryBackground
         let theme = Themes.current
-        view.backgroundColor = theme.colors.navigationBar.background
-        activityIndicatorView.backgroundColor = theme.colors.profile.name
+        if #available(iOS 13.0, *) {
+            let navBarAppearance = UINavigationBarAppearance()
+            navBarAppearance.configureWithOpaqueBackground()
+            navBarAppearance.titleTextAttributes = [.foregroundColor: theme.colors.navigationBar.title]
+            navBarAppearance.largeTitleTextAttributes = [.foregroundColor: theme.colors.navigationBar.title]
+            navBarAppearance.backgroundColor = theme.colors.navigationBar.background
+            navigationController?.navigationBar.standardAppearance = navBarAppearance
+            navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
+        } else {
+            UINavigationBar.appearance().isTranslucent = false
+            UINavigationBar.appearance().barTintColor = theme.colors.navigationBar.background
+            UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: theme.colors.navigationBar.title]
+            UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: theme.colors.navigationBar.title]
+        }
+        
+        navigationController?.isNavigationBarHidden = true
+        navigationController?.isNavigationBarHidden = false
+        setNeedsStatusBarAppearanceUpdate()
     }
     
     private func setupLayout() {

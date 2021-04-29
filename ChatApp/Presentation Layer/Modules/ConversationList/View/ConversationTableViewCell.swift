@@ -58,7 +58,6 @@ class ConversationTableViewCell: UITableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        backgroundColor = nil
         messageLabel.font = .systemFont(ofSize: 15, weight: .regular)
     }
     
@@ -101,6 +100,8 @@ class ConversationTableViewCell: UITableViewCell {
 
 extension ConversationTableViewCell: ConfigurableView {
     func configure(with model: DBChannel) {
+        backgroundColor = Themes.current.colors.conversationList.cell.background
+        
         guard let name = model.name else {
             return
         }
