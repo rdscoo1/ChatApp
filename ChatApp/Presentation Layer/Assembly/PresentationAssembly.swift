@@ -39,6 +39,7 @@ class PresentationAssembly: IPresentationAssembly {
         conversationsListViewController.userDataManager = serviceAssembly.userDataManager
         conversationsListViewController.channelsFBService = serviceAssembly.channelsFBService()
         conversationsListViewController.fetchedResultsController = serviceAssembly.channelsFetchedResultsController()
+        conversationsListViewController.transitionDelegate = TransitionDelegate()
         return conversationsListViewController
     }
 

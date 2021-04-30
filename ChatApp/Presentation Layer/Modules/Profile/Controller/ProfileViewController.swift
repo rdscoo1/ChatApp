@@ -409,7 +409,6 @@ class ProfileViewController: UIViewController {
         profileNameBottomConstraint.priority = UILayoutPriority(rawValue: 249)
         profileDescriptionBottomConstraint.constant = 0
         profileDescriptionBottomConstraint.priority = UILayoutPriority(rawValue: 249)
-        
         UIView.animate(withDuration: 0.3) {
             self.view.layoutIfNeeded()
         }
@@ -432,11 +431,8 @@ extension ProfileViewController: UINavigationControllerDelegate, UIImagePickerCo
             showAlert()
             return
         }
-        
         setProfileImage(image: image)
         selectedProfileImage(image)
-        
-//        imagePickedHandler(image)
     }
 }
 

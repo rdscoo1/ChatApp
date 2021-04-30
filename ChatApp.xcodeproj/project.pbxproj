@@ -50,6 +50,8 @@
 		E898768D263B51130070CE93 /* ShakeViewAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E898768C263B51130070CE93 /* ShakeViewAnimation.swift */; };
 		E898768F263B70820070CE93 /* LogoEmitAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E898768E263B70820070CE93 /* LogoEmitAnimation.swift */; };
 		E8987691263B71490070CE93 /* AnimatedUIWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8987690263B71490070CE93 /* AnimatedUIWindow.swift */; };
+		E8987693263B92990070CE93 /* PresentTransitioningAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8987692263B92990070CE93 /* PresentTransitioningAnimation.swift */; };
+		E8987695263B94DF0070CE93 /* TransitionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8987694263B94DF0070CE93 /* TransitionDelegate.swift */; };
 		E89A64AE2603F1D500A5734B /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E89A64AD2603F1D500A5734B /* UserViewModel.swift */; };
 		E89A64B32603F27E00A5734B /* GCDProfileDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E89A64B22603F27E00A5734B /* GCDProfileDataManager.swift */; };
 		E89A64B82603F38D00A5734B /* OperationProfileDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E89A64B72603F38D00A5734B /* OperationProfileDataManager.swift */; };
@@ -165,6 +167,8 @@
 		E898768C263B51130070CE93 /* ShakeViewAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShakeViewAnimation.swift; sourceTree = "<group>"; };
 		E898768E263B70820070CE93 /* LogoEmitAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoEmitAnimation.swift; sourceTree = "<group>"; };
 		E8987690263B71490070CE93 /* AnimatedUIWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedUIWindow.swift; sourceTree = "<group>"; };
+		E8987692263B92990070CE93 /* PresentTransitioningAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentTransitioningAnimation.swift; sourceTree = "<group>"; };
+		E8987694263B94DF0070CE93 /* TransitionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransitionDelegate.swift; sourceTree = "<group>"; };
 		E89A64AD2603F1D500A5734B /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
 		E89A64B22603F27E00A5734B /* GCDProfileDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCDProfileDataManager.swift; sourceTree = "<group>"; };
 		E89A64B72603F38D00A5734B /* OperationProfileDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationProfileDataManager.swift; sourceTree = "<group>"; };
@@ -265,6 +269,15 @@
 			path = ImagePickerManager;
 			sourceTree = "<group>";
 		};
+		E84537CB263B990E00566E29 /* Transition */ = {
+			isa = PBXGroup;
+			children = (
+				E8987692263B92990070CE93 /* PresentTransitioningAnimation.swift */,
+				E8987694263B94DF0070CE93 /* TransitionDelegate.swift */,
+			);
+			path = Transition;
+			sourceTree = "<group>";
+		};
 		E84D428726322A2C0034FA25 /* Network */ = {
 			isa = PBXGroup;
 			children = (
@@ -307,6 +320,7 @@
 		E898768B263B50B90070CE93 /* Animation */ = {
 			isa = PBXGroup;
 			children = (
+				E84537CB263B990E00566E29 /* Transition */,
 				E898768C263B51130070CE93 /* ShakeViewAnimation.swift */,
 				E898768E263B70820070CE93 /* LogoEmitAnimation.swift */,
 				E8987690263B71490070CE93 /* AnimatedUIWindow.swift */,
@@ -986,6 +1000,7 @@
 				E83032A625E514EE00D772B9 /* Colors.swift in Sources */,
 				E84D8DFD25F1890600345A2C /* User.swift in Sources */,
 				E87690BE260D5E9E006B13C0 /* UserDataManager.swift in Sources */,
+				E8987693263B92990070CE93 /* PresentTransitioningAnimation.swift in Sources */,
 				E830326225E2939300D772B9 /* HapticFeedback.swift in Sources */,
 				E8F7DDC42628D77A00D48446 /* ChannelsFBService.swift in Sources */,
 				E8CB22C625FACDED0085AABB /* NightTheme.swift in Sources */,
@@ -1035,6 +1050,7 @@
 				E84D429826322BC40034FA25 /* HTTPMethod.swift in Sources */,
 				E89A64AE2603F1D500A5734B /* UserViewModel.swift in Sources */,
 				E83032A125E5131D00D772B9 /* CameraAlertController.swift in Sources */,
+				E8987695263B94DF0070CE93 /* TransitionDelegate.swift in Sources */,
 				E8CB228625F925730085AABB /* UIWindow+Ext.swift in Sources */,
 				E84D42B126322FF70034FA25 /* PixabayResponse.swift in Sources */,
 				E830325525E1E82600D772B9 /* UIColor+Ext.swift in Sources */,
