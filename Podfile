@@ -13,6 +13,14 @@ target 'ChatApp' do
   # ignore all warnings from all dependencies
   inhibit_all_warnings!
 
+  target 'ChatAppTests' do
+    inherit! :search_paths
+  end
+  
+  target 'ChatAppUITests' do
+    inherit! :search_paths
+  end
+
 end
 
 post_install do |installer|

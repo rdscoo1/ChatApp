@@ -198,7 +198,8 @@ class ConversationListViewController: UIViewController {
         //        profileLogoImageView.setPlaceholderLetters(fullName: "Roman Khodukin")
         profileLogoImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(profileViewTapped)))
         
-        let rightBarButtonView = UIView()
+        let rightBarButtonView = UIButton()
+        rightBarButtonView.accessibilityIdentifier = "profileLogoImageView"
         rightBarButtonView.addSubview(profileLogoImageView)
         profileLogoImageView.translatesAutoresizingMaskIntoConstraints = false
         
