@@ -17,10 +17,10 @@
 		E830325A25E28BD100D772B9 /* ProfilePhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E830325925E28BD100D772B9 /* ProfilePhotoView.swift */; };
 		E830326225E2939300D772B9 /* HapticFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = E830326125E2939300D772B9 /* HapticFeedback.swift */; };
 		E830326C25E2961900D772B9 /* UIAlertViewController+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = E830326B25E2961900D772B9 /* UIAlertViewController+Ext.swift */; };
-		E830329C25E50A5D00D772B9 /* ImagePickerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E830329B25E50A5D00D772B9 /* ImagePickerManager.swift */; };
 		E83032A125E5131D00D772B9 /* CameraAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E83032A025E5131D00D772B9 /* CameraAlertController.swift */; };
 		E83032A625E514EE00D772B9 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E83032A525E514EE00D772B9 /* Colors.swift */; };
 		E83032AC25E539FB00D772B9 /* LocalizationKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = E83032AB25E539FB00D772B9 /* LocalizationKey.swift */; };
+		E84537E0263B9D5E00566E29 /* CameraAccessManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E84537DF263B9D5E00566E29 /* CameraAccessManager.swift */; };
 		E84D428B26322B1B0034FA25 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = E84D428A26322B1B0034FA25 /* Parser.swift */; };
 		E84D429326322B7F0034FA25 /* IRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E84D429226322B7F0034FA25 /* IRequest.swift */; };
 		E84D429826322BC40034FA25 /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = E84D429726322BC40034FA25 /* HTTPMethod.swift */; };
@@ -132,10 +132,10 @@
 		E830325925E28BD100D772B9 /* ProfilePhotoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePhotoView.swift; sourceTree = "<group>"; };
 		E830326125E2939300D772B9 /* HapticFeedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticFeedback.swift; sourceTree = "<group>"; };
 		E830326B25E2961900D772B9 /* UIAlertViewController+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertViewController+Ext.swift"; sourceTree = "<group>"; };
-		E830329B25E50A5D00D772B9 /* ImagePickerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerManager.swift; sourceTree = "<group>"; };
 		E83032A025E5131D00D772B9 /* CameraAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraAlertController.swift; sourceTree = "<group>"; };
 		E83032A525E514EE00D772B9 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		E83032AB25E539FB00D772B9 /* LocalizationKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationKey.swift; sourceTree = "<group>"; };
+		E84537DF263B9D5E00566E29 /* CameraAccessManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraAccessManager.swift; sourceTree = "<group>"; };
 		E84D428A26322B1B0034FA25 /* Parser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
 		E84D429226322B7F0034FA25 /* IRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IRequest.swift; sourceTree = "<group>"; };
 		E84D429726322BC40034FA25 /* HTTPMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPMethod.swift; sourceTree = "<group>"; };
@@ -258,15 +258,6 @@
 				AC2D960DBED5F4BF3A5DB96B /* Pods-ChatApp.release.xcconfig */,
 			);
 			path = Pods;
-			sourceTree = "<group>";
-		};
-		E83032AA25E519AF00D772B9 /* ImagePickerManager */ = {
-			isa = PBXGroup;
-			children = (
-				E830329B25E50A5D00D772B9 /* ImagePickerManager.swift */,
-				E83032A025E5131D00D772B9 /* CameraAlertController.swift */,
-			);
-			path = ImagePickerManager;
 			sourceTree = "<group>";
 		};
 		E84537CB263B990E00566E29 /* Transition */ = {
@@ -531,6 +522,7 @@
 			children = (
 				E898768B263B50B90070CE93 /* Animation */,
 				E8CB22CA25FAE1A50085AABB /* RootNavigationViewController.swift */,
+				E83032A025E5131D00D772B9 /* CameraAlertController.swift */,
 				E8F7DDF4262916F800D48446 /* FRCDelegate.swift */,
 				E8F7DD6B26278AB300D48446 /* Themes */,
 				E8F7DD6726278A5800D48446 /* Profile */,
@@ -768,8 +760,8 @@
 		E8F7DE0A2629236000D48446 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				E83032AA25E519AF00D772B9 /* ImagePickerManager */,
 				E87690BD260D5E9E006B13C0 /* UserDataManager.swift */,
+				E84537DF263B9D5E00566E29 /* CameraAccessManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -855,10 +847,12 @@
 					};
 					E8E030EE25DECC5E0028B4DD = {
 						CreatedOnToolsVersion = 12.4;
+						LastSwiftMigration = 1250;
 						TestTargetID = E8E030D525DECC5B0028B4DD;
 					};
 					E8E030F925DECC5E0028B4DD = {
 						CreatedOnToolsVersion = 12.4;
+						LastSwiftMigration = 1250;
 						TestTargetID = E8E030D525DECC5B0028B4DD;
 					};
 				};
@@ -985,7 +979,6 @@
 				E84D8D9E25EDA14600345A2C /* MessageBubbleView.swift in Sources */,
 				E84D8DB325EEE5A700345A2C /* MessageCellModel.swift in Sources */,
 				E8E0E10C26323C1F0078729A /* PixabayImagePickerViewController.swift in Sources */,
-				E830329C25E50A5D00D772B9 /* ImagePickerManager.swift in Sources */,
 				E89A64B32603F27E00A5734B /* GCDProfileDataManager.swift in Sources */,
 				E830325A25E28BD100D772B9 /* ProfilePhotoView.swift in Sources */,
 				E8F7DE0226291F6600D48446 /* ConversationTableViewDataSource.swift in Sources */,
@@ -1046,6 +1039,7 @@
 				E8E0E0F62632351A0078729A /* PixabayImageListRequest.swift in Sources */,
 				E89A64BD260404A100A5734B /* IProfileDataManager.swift in Sources */,
 				E84D8DC125F134D500345A2C /* String+Ext.swift in Sources */,
+				E84537E0263B9D5E00566E29 /* CameraAccessManager.swift in Sources */,
 				E830326C25E2961900D772B9 /* UIAlertViewController+Ext.swift in Sources */,
 				E84D429826322BC40034FA25 /* HTTPMethod.swift in Sources */,
 				E89A64AE2603F1D500A5734B /* UserViewModel.swift in Sources */,
@@ -1284,8 +1278,10 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = AC7SNZV8BM;
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ChatAppTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1295,6 +1291,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.project.rkhodukin.ChatAppTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ChatApp.app/ChatApp";
@@ -1306,8 +1303,10 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = AC7SNZV8BM;
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ChatAppTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1327,8 +1326,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = AC7SNZV8BM;
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ChatAppUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1337,6 +1338,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.project.rkhodukin.ChatAppUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = ChatApp;
@@ -1347,8 +1350,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = AC7SNZV8BM;
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ChatAppUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1357,6 +1362,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.project.rkhodukin.ChatAppUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = ChatApp;

@@ -55,6 +55,7 @@ class PresentationAssembly: IPresentationAssembly {
         let profileViewController = ProfileViewController()
         profileViewController.profileDataUpdatedHandler = profileDataUpdatedHandler
         profileViewController.userDataManager = serviceAssembly.userDataManager
+        profileViewController.cameraAccessManager = serviceAssembly.cameraAccessManager
         profileViewController.presentationAssembly = self
         return profileViewController
     }

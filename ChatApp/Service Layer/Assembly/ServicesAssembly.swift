@@ -9,6 +9,8 @@ import CoreData
 
 protocol IServicesAssembly {
     var userDataManager: UserDataManager { get }
+    var cameraAccessManager: ICameraAccessManager { get }
+
     func pixabayService() -> IPixabayService
 
     func channelsFBService() -> IChannelsFBService
@@ -30,6 +32,8 @@ class ServicesAssembly: IServicesAssembly {
         let userDataManager = UserDataManager(profileDataManager: coreAssembly.profileDataManager())
         return userDataManager
     }()
+    
+    lazy var cameraAccessManager: ICameraAccessManager = CameraAccessManager()
 
     // MARK: - Init
 

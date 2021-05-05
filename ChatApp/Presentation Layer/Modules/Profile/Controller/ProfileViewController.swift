@@ -15,6 +15,7 @@ class ProfileViewController: UIViewController {
     var presentationAssembly: IPresentationAssembly?
     var user: UserViewModel?
     var userDataManager: IUserDataManager?
+    var cameraAccessManager: ICameraAccessManager?
     var profileDataUpdatedHandler: (() -> Void)?
     
     // MARK: - UI
@@ -441,10 +442,14 @@ extension ProfileViewController: ProfileFramePhotoViewDelegate {
         if user?.profileImage != nil {
             let alertController = CameraAlertController(
                 didTapOnCamera: { [weak self] in
-                    if self?.checkCameraPermission() != nil {
+                    guard let access = self?.cameraAccessManager?.checkCameraPermission(),
+                          let alertViewController = self?.cameraAccessManager?.displayAlertPushToAppSettings() else {
+                        return
+                    }
+                    if access {
                         self?.presentImagePicker(sourceType: .camera)
                     } else {
-                        self?.showAlert()
+                        self?.present(alertViewController, animated: true)
                     }
                 }, didTapOnPhotoLibrary: { [weak self] in
                     self?.presentImagePicker(sourceType: .photoLibrary)
@@ -462,10 +467,14 @@ extension ProfileViewController: ProfileFramePhotoViewDelegate {
         } else {
             let alertController = CameraAlertController(
                 didTapOnCamera: { [weak self] in
-                    if self?.checkCameraPermission() != nil {
+                    guard let access = self?.cameraAccessManager?.checkCameraPermission(),
+                          let alertViewController = self?.cameraAccessManager?.displayAlertPushToAppSettings() else {
+                        return
+                    }
+                    if access {
                         self?.presentImagePicker(sourceType: .camera)
                     } else {
-                        self?.showAlert()
+                        self?.present(alertViewController, animated: true)
                     }
                 }, didTapOnPhotoLibrary: { [weak self] in
                     self?.presentImagePicker(sourceType: .photoLibrary)
@@ -475,26 +484,6 @@ extension ProfileViewController: ProfileFramePhotoViewDelegate {
             alertController.pruneNegativeWidthConstraints()
             
             present(alertController, animated: true, completion: nil)
-        }
-    }
-    
-    func checkCameraPermission() -> Bool {
-        switch AVCaptureDevice.authorizationStatus(for: .video) {
-        case .authorized:
-            return true
-        case .notDetermined:
-            var result: Bool = false
-            let semaphore = DispatchSemaphore(value: 0)
-            AVCaptureDevice.requestAccess(for: .video) { granted in
-                result = granted
-                semaphore.signal()
-            }
-            semaphore.wait()
-            return result
-        case .denied, .restricted:
-            return false
-        @unknown default:
-            return false
         }
     }
 }
