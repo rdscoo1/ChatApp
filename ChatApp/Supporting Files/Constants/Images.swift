@@ -18,4 +18,5 @@ extension UIImage {
     static let placeholder = UIImage(imageLiteralResourceName: "placeholder")
     static let profilePhotoFrame = UIImage(imageLiteralResourceName: "ProfilePhotoFrame")
     static let appLogo = UIImage(imageLiteralResourceName: "AppLogoLaunchScreen")
+    static let pencilIcon = UIImage(imageLiteralResourceName: "PencilIcon")
 }

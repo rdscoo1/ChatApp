@@ -37,6 +37,7 @@ class ProfileViewController: UIViewController {
         textView.backgroundColor = Themes.current.colors.primaryBackground
         textView.isUserInteractionEnabled = false
         textView.accessibilityIdentifier = "profileNameTextView"
+        textView.layer.cornerRadius = 4
         textView.translatesAutoresizingMaskIntoConstraints = false
         return textView
     }()
@@ -47,6 +48,7 @@ class ProfileViewController: UIViewController {
         textView.backgroundColor = Themes.current.colors.primaryBackground
         textView.isUserInteractionEnabled = false
         textView.accessibilityIdentifier = "profileDescriptionTextView"
+        textView.layer.cornerRadius = 4
         textView.translatesAutoresizingMaskIntoConstraints = false
         return textView
     }()
@@ -325,17 +327,17 @@ class ProfileViewController: UIViewController {
             profileFramePhotoView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: offset * 2),
             profileFramePhotoView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             
-            profileNameTextView.heightAnchor.constraint(equalToConstant: offset * 5),
+            profileNameTextView.heightAnchor.constraint(equalToConstant: offset * 2 + 8),
             profileNameTextView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             profileNameTextView.topAnchor.constraint(equalTo: profileFramePhotoView.bottomAnchor, constant: offset * 2),
-            profileNameTextView.leadingAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leadingAnchor, constant: offset),
-            profileNameTextView.trailingAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -offset),
+            profileNameTextView.leadingAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leadingAnchor, constant: offset * 2),
+            profileNameTextView.trailingAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -offset * 2),
             
             profileDescriptionTextView.heightAnchor.constraint(equalToConstant: offset * 5),
             profileDescriptionTextView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             profileDescriptionTextView.topAnchor.constraint(equalTo: profileNameTextView.bottomAnchor, constant: offset * 2),
-            profileDescriptionTextView.leadingAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leadingAnchor, constant: offset),
-            profileDescriptionTextView.trailingAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -offset),
+            profileDescriptionTextView.leadingAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leadingAnchor, constant: offset * 2),
+            profileDescriptionTextView.trailingAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -offset * 2),
             
             editButton.heightAnchor.constraint(equalToConstant: offset * 3),
             editButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: offset * 2),

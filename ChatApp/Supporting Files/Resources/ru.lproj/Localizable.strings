@@ -54,6 +54,7 @@
 
 // MARK: - Conversation
 
+"Message" = "Сообщение";
 "Error occurred during sending new message, try again later." = "Во время отправки нового сообщения произошла ошибка, попробуйте позже.";
 
 // MARK: - App Theme

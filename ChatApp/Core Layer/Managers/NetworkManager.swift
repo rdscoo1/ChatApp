@@ -27,7 +27,7 @@ class NetworkManager: INetworkManager {
             completion(.failure(.invalidUrl))
             return
         }
-        
+                
         let task = session.dataTask(with: urlRequest) { (data, response, error) in
             guard error == nil else {
                 completion(.failure(.client))
