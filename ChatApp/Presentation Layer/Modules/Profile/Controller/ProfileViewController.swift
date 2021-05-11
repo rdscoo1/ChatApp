@@ -36,6 +36,7 @@ class ProfileViewController: UIViewController {
         textView.bouncesZoom = true
         textView.backgroundColor = Themes.current.colors.primaryBackground
         textView.isUserInteractionEnabled = false
+        textView.accessibilityIdentifier = "profileNameTextView"
         textView.translatesAutoresizingMaskIntoConstraints = false
         return textView
     }()
@@ -45,6 +46,7 @@ class ProfileViewController: UIViewController {
         textView.font = .systemFont(ofSize: 16, weight: .regular)
         textView.backgroundColor = Themes.current.colors.primaryBackground
         textView.isUserInteractionEnabled = false
+        textView.accessibilityIdentifier = "profileDescriptionTextView"
         textView.translatesAutoresizingMaskIntoConstraints = false
         return textView
     }()
@@ -301,6 +303,8 @@ class ProfileViewController: UIViewController {
         saveButton.isEnabled = false
         saveButton.isHidden = true
         
+        editButton.accessibilityIdentifier = "editButton"
+        saveButton.accessibilityIdentifier = "saveButton"
         editButton.addTarget(self, action: #selector(toggleEditMode), for: .touchUpInside)
         saveButton.addTarget(self, action: #selector(didTapSaveButton), for: .touchUpInside)
     }
