@@ -26,9 +26,10 @@ class ConversationListViewController: UIViewController {
     private let profileLogoImageView = ProfilePhotoView()
     
     private let createChannelButton = UIButton()
-    
+        
     private var settingsBarButton: UIBarButtonItem?
-    
+    var profileBarButton: UIBarButtonItem?
+
     // MARK: - Private Properties
     
     var channelsFBService: IChannelsFBService?
@@ -36,6 +37,8 @@ class ConversationListViewController: UIViewController {
     var userDataManager: IUserDataManager?
     
     var presentationAssembly: IPresentationAssembly?
+    
+    var transitionDelegate: UIViewControllerTransitioningDelegate?
     
     var fetchedResultsController: NSFetchedResultsController<DBChannel>?
     
@@ -206,8 +209,8 @@ class ConversationListViewController: UIViewController {
             profileLogoImageView.bottomAnchor.constraint(equalTo: rightBarButtonView.bottomAnchor, constant: -4)
         ])
         
-        let rightBarButton = UIBarButtonItem(customView: rightBarButtonView)
-        navigationItem.rightBarButtonItem = rightBarButton
+        profileBarButton = UIBarButtonItem(customView: rightBarButtonView)
+        navigationItem.rightBarButtonItem = profileBarButton
     }
     
     @objc private func profileViewTapped() {
@@ -220,6 +223,9 @@ class ConversationListViewController: UIViewController {
         guard let rootNavController = presentationAssembly?.rootNavigationViewController(profileViewController) else {
             return
         }
+        
+        rootNavController.transitioningDelegate = transitionDelegate
+        rootNavController.modalPresentationStyle = .custom
         navigationController?.present(rootNavController, animated: true)
     }
     

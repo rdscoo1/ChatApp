@@ -13,11 +13,9 @@ class ProfileViewController: UIViewController {
     // MARK: - Public properties
     
     var presentationAssembly: IPresentationAssembly?
-
     var user: UserViewModel?
-
     var userDataManager: IUserDataManager?
-    
+    var cameraAccessManager: ICameraAccessManager?
     var profileDataUpdatedHandler: (() -> Void)?
     
     // MARK: - UI
@@ -29,9 +27,7 @@ class ProfileViewController: UIViewController {
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
         return activityIndicator
     }()
-    
     private let profileFramePhotoView = ProfileFramePhotoView()
-    
     private lazy var profileNameTextView: UITextView = {
         let textView = UITextView()
         textView.text = "Roman Khodukin"
@@ -43,7 +39,6 @@ class ProfileViewController: UIViewController {
         textView.translatesAutoresizingMaskIntoConstraints = false
         return textView
     }()
-    
     private lazy var profileDescriptionTextView: UITextView = {
         let textView = UITextView()
         textView.text = "iOS Developer\nMoscow, Russia"
@@ -55,9 +50,7 @@ class ProfileViewController: UIViewController {
     }()
     
     private let editButton = ActionButton(title: Constants.LocalizationKey.edit.string)
-    
     private let saveButton = ActionButton(title: Constants.LocalizationKey.save.string)
-    
     private lazy var imagePickerController: UIImagePickerController = {
         let imagePickerController = UIImagePickerController()
         imagePickerController.sourceType = .photoLibrary
@@ -73,16 +66,14 @@ class ProfileViewController: UIViewController {
               description: profileDescriptionTextView.text,
               profileImage: user?.profileImage)
     }
-    
     private let offset: CGFloat = 16
-    
     private var profileNameBottomConstraint: NSLayoutConstraint!
     private var profileDescriptionBottomConstraint: NSLayoutConstraint!
-    
     private var originalUserImage: UIImage?
     private var nameChanged = false
     private var descriptionChanged = false
     private var imageChanged = false
+    private lazy var editButtonAnimation: IViewAnimation = ShakeViewAnimation(view: editButton.titleLabel)
     
     // MARK: - TextView Delegates
     
@@ -114,7 +105,6 @@ class ProfileViewController: UIViewController {
         setupNavigationBar()
         
         profileFramePhotoView.delegate = self
-//        profileLogoImageView.setPlaceholderLetters(fullName: profileNameTextView.text)
         
         setupTheme()
         configureConstraints()
@@ -140,6 +130,7 @@ class ProfileViewController: UIViewController {
     }
     
     private func exitEditMode() {
+        editButtonAnimation.stop()
         if profileNameTextView.isUserInteractionEnabled {
             toggleEditMode()
         }
@@ -373,8 +364,7 @@ class ProfileViewController: UIViewController {
     }
     
     @objc private func toggleEditMode() {
-        print(#function)
-        
+        profileNameTextView.isUserInteractionEnabled ? editButtonAnimation.stop() : editButtonAnimation.start()
         let backgroundColor = profileNameTextView.isUserInteractionEnabled ? nil : UIColor.lightGray
         let editButtonTitle = profileNameTextView.isUserInteractionEnabled ? Constants.LocalizationKey.edit.string : Constants.LocalizationKey.cancel.string
         let saveButtonHiddenState = profileNameTextView.isUserInteractionEnabled ? true : false
@@ -420,7 +410,6 @@ class ProfileViewController: UIViewController {
         profileNameBottomConstraint.priority = UILayoutPriority(rawValue: 249)
         profileDescriptionBottomConstraint.constant = 0
         profileDescriptionBottomConstraint.priority = UILayoutPriority(rawValue: 249)
-        
         UIView.animate(withDuration: 0.3) {
             self.view.layoutIfNeeded()
         }
@@ -443,11 +432,8 @@ extension ProfileViewController: UINavigationControllerDelegate, UIImagePickerCo
             showAlert()
             return
         }
-        
         setProfileImage(image: image)
         selectedProfileImage(image)
-        
-//        imagePickedHandler(image)
     }
 }
 
@@ -456,10 +442,14 @@ extension ProfileViewController: ProfileFramePhotoViewDelegate {
         if user?.profileImage != nil {
             let alertController = CameraAlertController(
                 didTapOnCamera: { [weak self] in
-                    if self?.checkCameraPermission() != nil {
+                    guard let access = self?.cameraAccessManager?.checkCameraPermission(),
+                          let alertViewController = self?.cameraAccessManager?.displayAlertPushToAppSettings() else {
+                        return
+                    }
+                    if access {
                         self?.presentImagePicker(sourceType: .camera)
                     } else {
-                        self?.showAlert()
+                        self?.present(alertViewController, animated: true)
                     }
                 }, didTapOnPhotoLibrary: { [weak self] in
                     self?.presentImagePicker(sourceType: .photoLibrary)
@@ -477,10 +467,14 @@ extension ProfileViewController: ProfileFramePhotoViewDelegate {
         } else {
             let alertController = CameraAlertController(
                 didTapOnCamera: { [weak self] in
-                    if self?.checkCameraPermission() != nil {
+                    guard let access = self?.cameraAccessManager?.checkCameraPermission(),
+                          let alertViewController = self?.cameraAccessManager?.displayAlertPushToAppSettings() else {
+                        return
+                    }
+                    if access {
                         self?.presentImagePicker(sourceType: .camera)
                     } else {
-                        self?.showAlert()
+                        self?.present(alertViewController, animated: true)
                     }
                 }, didTapOnPhotoLibrary: { [weak self] in
                     self?.presentImagePicker(sourceType: .photoLibrary)
@@ -490,26 +484,6 @@ extension ProfileViewController: ProfileFramePhotoViewDelegate {
             alertController.pruneNegativeWidthConstraints()
             
             present(alertController, animated: true, completion: nil)
-        }
-    }
-    
-    func checkCameraPermission() -> Bool {
-        switch AVCaptureDevice.authorizationStatus(for: .video) {
-        case .authorized:
-            return true
-        case .notDetermined:
-            var result: Bool = false
-            let semaphore = DispatchSemaphore(value: 0)
-            AVCaptureDevice.requestAccess(for: .video) { granted in
-                result = granted
-                semaphore.signal()
-            }
-            semaphore.wait()
-            return result
-        case .denied, .restricted:
-            return false
-        @unknown default:
-            return false
         }
     }
 }

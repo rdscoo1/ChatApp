@@ -39,6 +39,7 @@ class PresentationAssembly: IPresentationAssembly {
         conversationsListViewController.userDataManager = serviceAssembly.userDataManager
         conversationsListViewController.channelsFBService = serviceAssembly.channelsFBService()
         conversationsListViewController.fetchedResultsController = serviceAssembly.channelsFetchedResultsController()
+        conversationsListViewController.transitionDelegate = TransitionDelegate()
         return conversationsListViewController
     }
 
@@ -54,6 +55,7 @@ class PresentationAssembly: IPresentationAssembly {
         let profileViewController = ProfileViewController()
         profileViewController.profileDataUpdatedHandler = profileDataUpdatedHandler
         profileViewController.userDataManager = serviceAssembly.userDataManager
+        profileViewController.cameraAccessManager = serviceAssembly.cameraAccessManager
         profileViewController.presentationAssembly = self
         return profileViewController
     }
