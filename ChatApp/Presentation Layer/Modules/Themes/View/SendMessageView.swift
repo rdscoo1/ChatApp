@@ -93,9 +93,9 @@ class SendMessageView: UIView {
             inputTextView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -padding),
             sendButton.leadingAnchor.constraint(equalTo: inputTextView.trailingAnchor, constant: padding * 2),
             sendButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -padding * 2),
-            sendButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -padding),
-            sendButton.heightAnchor.constraint(equalToConstant: 6)
-            sendButton.widthAnchor.constraint(equalTo: sendButton.heightAnchor),
+            sendButton.centerYAnchor.constraint(equalTo: inputTextView.centerYAnchor),
+            sendButton.heightAnchor.constraint(equalToConstant: 30),
+            sendButton.widthAnchor.constraint(equalToConstant: 32)
         ])
     }
 

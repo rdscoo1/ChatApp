@@ -433,11 +433,11 @@ extension ProfileViewController: UINavigationControllerDelegate, UIImagePickerCo
     func imagePickerController(_ picker: UIImagePickerController,
                                didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         picker.dismiss(animated: true)
-        
         guard let image = info[.editedImage] as? UIImage else {
             showAlert()
             return
         }
+        
         setProfileImage(image: image)
         selectedProfileImage(image)
     }
@@ -445,51 +445,33 @@ extension ProfileViewController: UINavigationControllerDelegate, UIImagePickerCo
 
 extension ProfileViewController: ProfileFramePhotoViewDelegate {
     func tappedProfileLogoImageView() {
+        let alertController = CameraAlertController(
+                didTapOnCamera: { [weak self] in
+                    guard let access = self?.cameraAccessManager?.checkCameraPermission(),
+                          let alertViewController = self?.cameraAccessManager?.displayAlertPushToAppSettings() else {
+                        return
+                    }
+                    if access {
+                        self?.presentImagePicker(sourceType: .camera)
+                    } else {
+                        self?.present(alertViewController, animated: true)
+                    }
+                }, didTapOnPhotoLibrary: { [weak self] in
+                    self?.presentImagePicker(sourceType: .photoLibrary)
+                }, didTapOnLoadFromPixabay: { [weak self] in
+                    self?.presentPixabayImagePickerViewController()
+                })
+            alertController.pruneNegativeWidthConstraints()
+            
+            present(alertController, animated: true, completion: nil)
+        
         if user?.profileImage != nil {
-            let alertController = CameraAlertController(
-                didTapOnCamera: { [weak self] in
-                    guard let access = self?.cameraAccessManager?.checkCameraPermission(),
-                          let alertViewController = self?.cameraAccessManager?.displayAlertPushToAppSettings() else {
-                        return
-                    }
-                    if access {
-                        self?.presentImagePicker(sourceType: .camera)
-                    } else {
-                        self?.present(alertViewController, animated: true)
-                    }
-                }, didTapOnPhotoLibrary: { [weak self] in
-                    self?.presentImagePicker(sourceType: .photoLibrary)
-                }, didTapOnLoadFromPixabay: { [weak self] in
-                    self?.presentPixabayImagePickerViewController()
-                }, didTapOnRemove: { [weak self] in
-                    self?.setProfileImage(image: nil)
-                    let imageChanged = self?.originalUserImage != nil
-                    self?.imageChanged = imageChanged
-                    self?.setSaveButtonsEnabled(imageChanged || ((self?.nameChanged) != nil) || ((self?.descriptionChanged) != nil))
-                })
-            alertController.pruneNegativeWidthConstraints()
-            
-            present(alertController, animated: true, completion: nil)
-        } else {
-            let alertController = CameraAlertController(
-                didTapOnCamera: { [weak self] in
-                    guard let access = self?.cameraAccessManager?.checkCameraPermission(),
-                          let alertViewController = self?.cameraAccessManager?.displayAlertPushToAppSettings() else {
-                        return
-                    }
-                    if access {
-                        self?.presentImagePicker(sourceType: .camera)
-                    } else {
-                        self?.present(alertViewController, animated: true)
-                    }
-                }, didTapOnPhotoLibrary: { [weak self] in
-                    self?.presentImagePicker(sourceType: .photoLibrary)
-                }, didTapOnLoadFromPixabay: { [weak self] in
-                    self?.presentPixabayImagePickerViewController()
-                })
-            alertController.pruneNegativeWidthConstraints()
-            
-            present(alertController, animated: true, completion: nil)
+            alertController.addRemoveAction { [weak self] in
+                self?.setProfileImage(image: nil)
+                let imageChanged = self?.originalUserImage != nil
+                self?.imageChanged = imageChanged
+                self?.setSaveButtonsEnabled(imageChanged || ((self?.nameChanged) != nil) || ((self?.descriptionChanged) != nil))
+            }
         }
     }
 }
