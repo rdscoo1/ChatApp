@@ -21,12 +21,12 @@ class ConversationListTableViewDataSourceDelegate: NSObject, UITableViewDataSour
     var navigationController: UINavigationController
     var presentationAssembly: IPresentationAssembly
     var fetchedResultsController: NSFetchedResultsController<DBChannel>
-    var channelsFBService: IChannelsFBService
+    var channelsFBService: IChannelsService
 
     // MARK: - Init
 
     init(fetchedResultsController: NSFetchedResultsController<DBChannel>,
-         channelsFBService: IChannelsFBService,
+         channelsFBService: IChannelsService,
          presentationAssembly: IPresentationAssembly,
          navigationController: UINavigationController) {
         self.fetchedResultsController = fetchedResultsController

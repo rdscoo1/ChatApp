@@ -1,5 +1,5 @@
 //
-//  ChannelsFBService.swift
+//  ChannelsService.swift
 //  ChatApp
 //
 //  Created by Roman Khodukin on 4/15/21.
@@ -8,13 +8,13 @@
 import Firebase
 import CoreData
 
-protocol IChannelsFBService {
+protocol IChannelsService {
     func subscribeOnChannels(completion: @escaping (Result<Bool, Error>) -> Void)
     func createChannel(withName name: String, completion: @escaping (Result<String, Error>) -> Void)
     func removeChannel(withId identifier: String)
 }
 
-class ChannelsFBService: IChannelsFBService {
+class ChannelsService: IChannelsService {
 
     // MARK: - Private Properties
 

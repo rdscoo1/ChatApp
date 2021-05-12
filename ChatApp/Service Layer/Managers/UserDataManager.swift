@@ -18,19 +18,21 @@ class UserDataManager: IUserDataManager {
 
     static var shared: IUserDataManager = UserDataManager()
 
-    init(profileDataManager: IProfileDataManager = GCDProfileDataManager()) {
-        self.profileDataManager = profileDataManager
-    }
-
     // MARK: - Private Properties
 
-    private let profileDataManager: IProfileDataManager
+    private let userStorageManager: IUserStorageManager
 
     private static var keyIdentifier = "userId"
 
     private var id: String?
 
     private(set) var profile: UserViewModel?
+    
+    // MARK: - Init
+    
+    init(userStorageManager: IUserStorageManager = GCDProfileDataManager()) {
+        self.userStorageManager = userStorageManager
+    }
 
     // MARK: - Public Properties
 
@@ -49,11 +51,11 @@ class UserDataManager: IUserDataManager {
     }
 
     func saveProfile(_ profile: UserViewModel, completion: @escaping (Bool) -> Void) {
-        profileDataManager.saveUserData(profile, completion: completion)
+        userStorageManager.saveUserData(profile, completion: completion)
     }
 
     func loadProfile(completion: @escaping (UserViewModel) -> Void) {
-        profileDataManager.loadUserData { profile in
+        userStorageManager.loadUserData { profile in
             if let profile = profile {
                 self.profile = profile
                 completion(profile)
@@ -61,7 +63,7 @@ class UserDataManager: IUserDataManager {
                 let initialProfile = UserViewModel(fullName: "Roman Khodukin",
                                                    description: "iOS developer\nMoscow, Russia",
                                                    profileImage: nil)
-                self.profileDataManager.saveUserData(initialProfile) { _ in
+                self.userStorageManager.saveUserData(initialProfile) { _ in
                     self.profile = initialProfile
                     completion(initialProfile)
                 }

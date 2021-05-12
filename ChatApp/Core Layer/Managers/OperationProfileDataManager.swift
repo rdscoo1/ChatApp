@@ -7,7 +7,7 @@
 
 import UIKit
 
-class OperationProfileDataManager: IProfileDataManager {
+class OperationProfileDataManager: IUserStorageManager {
     
     // MARK: - Private properties
     
@@ -17,7 +17,7 @@ class OperationProfileDataManager: IProfileDataManager {
         return queue
     }()
     
-    // MARK: - IProfileDataManager methods
+    // MARK: - IUserStorageManager methods
     
     func loadUserData(completion: @escaping (UserViewModel?) -> Void) {
         let operation = LoadUserDataOperation(completion: completion)

@@ -15,7 +15,7 @@
 		E80BFB3925F7D83D0070B8EF /* ThemesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E80BFB3825F7D83D0070B8EF /* ThemesViewController.swift */; };
 		E80BFB3E25F7D9450070B8EF /* ThemeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E80BFB3D25F7D9450070B8EF /* ThemeView.swift */; };
 		E818D5DD2600BC7E001AB36E /* FileManagement.swift in Sources */ = {isa = PBXBuildFile; fileRef = E818D5DC2600BC7E001AB36E /* FileManagement.swift */; };
-		E82990052644B6CE00D0C7E3 /* ProfileDataManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E82990042644B6CE00D0C7E3 /* ProfileDataManagerMock.swift */; };
+		E82990052644B6CE00D0C7E3 /* UserStorageManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E82990042644B6CE00D0C7E3 /* UserStorageManagerMock.swift */; };
 		E82990082644BC0600D0C7E3 /* UserDataManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E82990072644BC0600D0C7E3 /* UserDataManagerMock.swift */; };
 		E830324625E1D7D800D772B9 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E830324525E1D7D800D772B9 /* ProfileViewController.swift */; };
 		E830324D25E1D9C500D772B9 /* ActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E830324C25E1D9C500D772B9 /* ActionButton.swift */; };
@@ -64,7 +64,7 @@
 		E89A64AE2603F1D500A5734B /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E89A64AD2603F1D500A5734B /* UserViewModel.swift */; };
 		E89A64B32603F27E00A5734B /* GCDProfileDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E89A64B22603F27E00A5734B /* GCDProfileDataManager.swift */; };
 		E89A64B82603F38D00A5734B /* OperationProfileDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E89A64B72603F38D00A5734B /* OperationProfileDataManager.swift */; };
-		E89A64BD260404A100A5734B /* IProfileDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E89A64BC260404A100A5734B /* IProfileDataManager.swift */; };
+		E89A64BD260404A100A5734B /* IUserStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E89A64BC260404A100A5734B /* IUserStorageManager.swift */; };
 		E89A64C2260406C500A5734B /* TextViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E89A64C1260406C500A5734B /* TextViewDelegate.swift */; };
 		E8AFB9E826178924007AB74D /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8AFB9E726178923007AB74D /* CoreDataManager.swift */; };
 		E8AFBA812617A431007AB74D /* DBMessage+Init.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8AFBA3026179D95007AB74D /* DBMessage+Init.swift */; };
@@ -97,8 +97,8 @@
 		E8E0E19426345A780078729A /* ProfileFramePhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E0E19326345A780078729A /* ProfileFramePhotoView.swift */; };
 		E8F7DD7526278D2300D48446 /* ConfigurableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F7DD7426278D2300D48446 /* ConfigurableView.swift */; };
 		E8F7DDB02628D5C200D48446 /* CoreAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F7DDAF2628D5C200D48446 /* CoreAssembly.swift */; };
-		E8F7DDBC2628D76F00D48446 /* MessagesFBService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F7DDBB2628D76F00D48446 /* MessagesFBService.swift */; };
-		E8F7DDC42628D77A00D48446 /* ChannelsFBService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F7DDC32628D77A00D48446 /* ChannelsFBService.swift */; };
+		E8F7DDBC2628D76F00D48446 /* MessagesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F7DDBB2628D76F00D48446 /* MessagesService.swift */; };
+		E8F7DDC42628D77A00D48446 /* ChannelsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F7DDC32628D77A00D48446 /* ChannelsService.swift */; };
 		E8F7DDCC2628E53500D48446 /* ServicesAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F7DDCB2628E53500D48446 /* ServicesAssembly.swift */; };
 		E8F7DDDA2628F99400D48446 /* PresentationAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F7DDD92628F99400D48446 /* PresentationAssembly.swift */; };
 		E8F7DDDF2628FD0700D48446 /* RootAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F7DDDE2628FD0700D48446 /* RootAssembly.swift */; };
@@ -142,7 +142,7 @@
 		E80BFB3825F7D83D0070B8EF /* ThemesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemesViewController.swift; sourceTree = "<group>"; };
 		E80BFB3D25F7D9450070B8EF /* ThemeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeView.swift; sourceTree = "<group>"; };
 		E818D5DC2600BC7E001AB36E /* FileManagement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManagement.swift; sourceTree = "<group>"; };
-		E82990042644B6CE00D0C7E3 /* ProfileDataManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDataManagerMock.swift; sourceTree = "<group>"; };
+		E82990042644B6CE00D0C7E3 /* UserStorageManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStorageManagerMock.swift; sourceTree = "<group>"; };
 		E82990072644BC0600D0C7E3 /* UserDataManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataManagerMock.swift; sourceTree = "<group>"; };
 		E830324525E1D7D800D772B9 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		E830324C25E1D9C500D772B9 /* ActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionButton.swift; sourceTree = "<group>"; };
@@ -194,7 +194,7 @@
 		E89A64AD2603F1D500A5734B /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
 		E89A64B22603F27E00A5734B /* GCDProfileDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCDProfileDataManager.swift; sourceTree = "<group>"; };
 		E89A64B72603F38D00A5734B /* OperationProfileDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationProfileDataManager.swift; sourceTree = "<group>"; };
-		E89A64BC260404A100A5734B /* IProfileDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IProfileDataManager.swift; sourceTree = "<group>"; };
+		E89A64BC260404A100A5734B /* IUserStorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IUserStorageManager.swift; sourceTree = "<group>"; };
 		E89A64C1260406C500A5734B /* TextViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextViewDelegate.swift; sourceTree = "<group>"; };
 		E8AFB9E726178923007AB74D /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		E8AFBA3026179D95007AB74D /* DBMessage+Init.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBMessage+Init.swift"; sourceTree = "<group>"; };
@@ -233,8 +233,8 @@
 		E8E0E19326345A780078729A /* ProfileFramePhotoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileFramePhotoView.swift; sourceTree = "<group>"; };
 		E8F7DD7426278D2300D48446 /* ConfigurableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurableView.swift; sourceTree = "<group>"; };
 		E8F7DDAF2628D5C200D48446 /* CoreAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreAssembly.swift; sourceTree = "<group>"; };
-		E8F7DDBB2628D76F00D48446 /* MessagesFBService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesFBService.swift; sourceTree = "<group>"; };
-		E8F7DDC32628D77A00D48446 /* ChannelsFBService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelsFBService.swift; sourceTree = "<group>"; };
+		E8F7DDBB2628D76F00D48446 /* MessagesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesService.swift; sourceTree = "<group>"; };
+		E8F7DDC32628D77A00D48446 /* ChannelsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelsService.swift; sourceTree = "<group>"; };
 		E8F7DDCB2628E53500D48446 /* ServicesAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesAssembly.swift; sourceTree = "<group>"; };
 		E8F7DDD92628F99400D48446 /* PresentationAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentationAssembly.swift; sourceTree = "<group>"; };
 		E8F7DDDE2628FD0700D48446 /* RootAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootAssembly.swift; sourceTree = "<group>"; };
@@ -301,7 +301,7 @@
 		E82990062644BBEA00D0C7E3 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
-				E82990042644B6CE00D0C7E3 /* ProfileDataManagerMock.swift */,
+				E82990042644B6CE00D0C7E3 /* UserStorageManagerMock.swift */,
 				E82990072644BC0600D0C7E3 /* UserDataManagerMock.swift */,
 			);
 			path = Profile;
@@ -779,8 +779,8 @@
 		E8F7DD862627942E00D48446 /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				E8F7DDBB2628D76F00D48446 /* MessagesFBService.swift */,
-				E8F7DDC32628D77A00D48446 /* ChannelsFBService.swift */,
+				E8F7DDBB2628D76F00D48446 /* MessagesService.swift */,
+				E8F7DDC32628D77A00D48446 /* ChannelsService.swift */,
 				E8E0E0FF2632382F0078729A /* PixabayService.swift */,
 			);
 			path = Services;
@@ -813,7 +813,7 @@
 				E818D5DC2600BC7E001AB36E /* FileManagement.swift */,
 				E89A64B22603F27E00A5734B /* GCDProfileDataManager.swift */,
 				E89A64B72603F38D00A5734B /* OperationProfileDataManager.swift */,
-				E89A64BC260404A100A5734B /* IProfileDataManager.swift */,
+				E89A64BC260404A100A5734B /* IUserStorageManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -1104,7 +1104,7 @@
 				E87690BE260D5E9E006B13C0 /* UserDataManager.swift in Sources */,
 				E8987693263B92990070CE93 /* PresentTransitioningAnimation.swift in Sources */,
 				E830326225E2939300D772B9 /* HapticFeedback.swift in Sources */,
-				E8F7DDC42628D77A00D48446 /* ChannelsFBService.swift in Sources */,
+				E8F7DDC42628D77A00D48446 /* ChannelsService.swift in Sources */,
 				E8CB22C625FACDED0085AABB /* NightTheme.swift in Sources */,
 				E898768F263B70820070CE93 /* LogoEmitAnimation.swift in Sources */,
 				E8E0E124263245170078729A /* PixabayImagePickerCollectionViewDataSource.swift in Sources */,
@@ -1115,7 +1115,7 @@
 				E876909B260D400E006B13C0 /* Channel.swift in Sources */,
 				E8E0E14B263257D70078729A /* PixabayImagePickerCollectionViewDelegate.swift in Sources */,
 				E84D42AB26322F360034FA25 /* DataParser.swift in Sources */,
-				E8F7DDBC2628D76F00D48446 /* MessagesFBService.swift in Sources */,
+				E8F7DDBC2628D76F00D48446 /* MessagesService.swift in Sources */,
 				E8F7DDDF2628FD0700D48446 /* RootAssembly.swift in Sources */,
 				E89A64B82603F38D00A5734B /* OperationProfileDataManager.swift in Sources */,
 				E80BFB3925F7D83D0070B8EF /* ThemesViewController.swift in Sources */,
@@ -1146,7 +1146,7 @@
 				E8F7DDCC2628E53500D48446 /* ServicesAssembly.swift in Sources */,
 				E84D8D9125ED916A00345A2C /* ConversationViewController.swift in Sources */,
 				E8E0E0F62632351A0078729A /* PixabayImageListRequest.swift in Sources */,
-				E89A64BD260404A100A5734B /* IProfileDataManager.swift in Sources */,
+				E89A64BD260404A100A5734B /* IUserStorageManager.swift in Sources */,
 				E84D8DC125F134D500345A2C /* String+Ext.swift in Sources */,
 				E84537E0263B9D5E00566E29 /* CameraAccessManager.swift in Sources */,
 				E830326C25E2961900D772B9 /* UIAlertViewController+Ext.swift in Sources */,
@@ -1178,7 +1178,7 @@
 				E84B3D452644F8D800196D6D /* NetworkTests.swift in Sources */,
 				E85072F92644C0E300DEB675 /* UserDataManagerTests.swift in Sources */,
 				E808358926432ECB00EF7F9B /* ChatAppTests.swift in Sources */,
-				E82990052644B6CE00D0C7E3 /* ProfileDataManagerMock.swift in Sources */,
+				E82990052644B6CE00D0C7E3 /* UserStorageManagerMock.swift in Sources */,
 				E82990082644BC0600D0C7E3 /* UserDataManagerMock.swift in Sources */,
 				E84B3D432644F82200196D6D /* ParserMock.swift in Sources */,
 			);

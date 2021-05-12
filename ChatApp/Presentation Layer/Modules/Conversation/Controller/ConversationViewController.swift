@@ -21,7 +21,7 @@ class ConversationViewController: UIViewController {
         fetchedResultsController?.fetchedObjects
     }
 
-    var messageService: IMessagesFBService?
+    var messageService: IMessagesService?
 
     var fetchedResultsController: NSFetchedResultsController<DBMessage>?
 
