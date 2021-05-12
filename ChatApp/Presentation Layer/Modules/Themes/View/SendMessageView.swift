@@ -23,9 +23,13 @@ class SendMessageView: UIView {
         let textView = UITextView()
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.textContainerInset = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
+        textView.backgroundColor = Themes.current.colors.conversation.sendMessage.background
         textView.delegate = self
         textView.isScrollEnabled = false
         textView.font = .systemFont(ofSize: 14)
+        textView.text = Constants.LocalizationKey.message.string
+        textView.textColor = UIColor.lightGray
+        textView.selectedTextRange = textView.textRange(from: textView.beginningOfDocument, to: textView.beginningOfDocument)
         return textView
     }()
 
@@ -64,9 +68,7 @@ class SendMessageView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
 
-        inputTextView.layer.cornerRadius = 16
-        inputTextView.layer.borderColor = UIColor.lightGray.cgColor
-        inputTextView.layer.borderWidth = 1
+        inputTextView.layer.cornerRadius = 18
     }
 
     // MARK: - Private methods
@@ -86,14 +88,14 @@ class SendMessageView: UIView {
 
         NSLayoutConstraint.activate([
             textViewHeightConstraint,
-            inputTextView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: padding),
+            inputTextView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: padding * 2),
             inputTextView.topAnchor.constraint(equalTo: topAnchor, constant: padding),
             inputTextView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -padding),
-            sendButton.leadingAnchor.constraint(equalTo: inputTextView.trailingAnchor, constant: padding),
-            sendButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -padding),
-            sendButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -padding),
-            sendButton.widthAnchor.constraint(equalTo: sendButton.heightAnchor, multiplier: 1),
-            sendButton.heightAnchor.constraint(equalToConstant: defaultTextViewHeight)
+            sendButton.leadingAnchor.constraint(equalTo: inputTextView.trailingAnchor, constant: padding * 2),
+            sendButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -padding * 2),
+            sendButton.centerYAnchor.constraint(equalTo: inputTextView.centerYAnchor),
+            sendButton.heightAnchor.constraint(equalToConstant: 30),
+            sendButton.widthAnchor.constraint(equalToConstant: 32)
         ])
     }
 
@@ -110,6 +112,42 @@ class SendMessageView: UIView {
 // MARK: - UITextViewDelegate
 
 extension SendMessageView: UITextViewDelegate {
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        // Combine the textView text and the replacement text to
+            // create the updated text string
+            let currentText: String = textView.text
+            let updatedText = (currentText as NSString).replacingCharacters(in: range, with: text)
+
+            // If updated text view will be empty, add the placeholder
+            // and set the cursor to the beginning of the text view
+            if updatedText.isEmpty {
+
+                textView.text = Constants.LocalizationKey.message.string
+                textView.textColor = UIColor.lightGray
+
+                textView.selectedTextRange = textView.textRange(from: textView.beginningOfDocument, to: textView.beginningOfDocument)
+            }
+
+            // Else if the text view's placeholder is showing and the
+            // length of the replacement string is greater than 0, set
+            // the text color to black then set its text to the
+            // replacement string
+             else if textView.textColor == UIColor.lightGray && !text.isEmpty {
+                textView.textColor = Themes.current.colors.conversation.sendMessage.text
+                textView.text = text
+            }
+
+            // For every other case, the text should change with the usual
+            // behavior...
+            else {
+                return true
+            }
+
+            // ...otherwise return false since the updates have already
+            // been made
+            return false
+    }
+    
     func textViewDidChange(_ textView: UITextView) {
         sendButton.isEnabled = !(textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
         let size = textView.sizeThatFits(.init(width: textView.bounds.width, height: maxTextViewHeight))
@@ -121,5 +159,13 @@ extension SendMessageView: UITextViewDelegate {
             textView.isScrollEnabled = false
         }
         textView.layoutIfNeeded()
+    }
+    
+    func textViewDidChangeSelection(_ textView: UITextView) {
+        if window != nil {
+            if textView.textColor == UIColor.lightGray {
+                textView.selectedTextRange = textView.textRange(from: textView.beginningOfDocument, to: textView.beginningOfDocument)
+            }
+        }
     }
 }

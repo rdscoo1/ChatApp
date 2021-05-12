@@ -39,7 +39,9 @@ struct NightTheme: AppTheme {
                     background: Constants.Colors.incomingBubbleBackgroundNight),
                 outgoing: .init(
                     text: Constants.Colors.bubbleTextNight,
-                    background: Constants.Colors.outgoingBubbleBackgroundNight))),
+                    background: Constants.Colors.outgoingBubbleBackgroundNight)),
+            sendMessage: .init(text: UIColor.white,
+                               background: UIColor(red: 1, green: 1, blue: 1, alpha: 0.2))),
         profile: .init(
             name: .white,
             description: .white,

@@ -3,7 +3,7 @@ platform :ios, '12.0'
 
 target 'ChatApp' do
   # Comment the next line if you don't want to use dynamic frameworks
-  # use_frameworks!
+  use_frameworks!
 
   # Pods for ChatApp
 
@@ -12,6 +12,14 @@ target 'ChatApp' do
 
   # ignore all warnings from all dependencies
   inhibit_all_warnings!
+
+  target 'ChatAppTests' do
+    inherit! :search_paths
+  end
+  
+  target 'ChatAppUITests' do
+    inherit! :search_paths
+  end
 
 end
 

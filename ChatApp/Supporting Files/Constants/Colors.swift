@@ -131,7 +131,7 @@ extension Constants {
         
         static let themesVCBackground = UIColor(hex: "#193661")
         
-        // MARK: - Message Bubbles
+        // MARK: - Conversation
         
         static let incomingBubbleBackgroundClassic = UIColor(hex: "#DFDFDF")
         static let outgoingBubbleBackgroundClassic = UIColor(hex: "#DCF7C5")
@@ -146,6 +146,8 @@ extension Constants {
         static let bubbleOutgoingTextDay = UIColor.white
         static let bubbleIncomingTextDay = UIColor(hex: "#060606")
         static let bubbleTextNight = UIColor.white
+        
+        static let sendMessagePlaceholder = UIColor(red: 0.60, green: 0.60, blue: 0.60, alpha: 1.00)
         
         // MARK: - Profile
         

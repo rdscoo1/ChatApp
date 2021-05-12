@@ -52,13 +52,19 @@ struct ConversationListVC {
 
 struct ConversationVC {
     let cell: CellTheme
-    
+    let sendMessage: SendMessage
+
     struct CellTheme {
         let incoming: MessageTheme
         let outgoing: MessageTheme
     }
     
     struct MessageTheme {
+        let text: UIColor
+        let background: UIColor
+    }
+    
+    struct SendMessage {
         let text: UIColor
         let background: UIColor
     }

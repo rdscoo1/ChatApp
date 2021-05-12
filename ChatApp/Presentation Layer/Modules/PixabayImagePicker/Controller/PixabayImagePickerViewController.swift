@@ -89,8 +89,10 @@ class PixabayImagePickerViewController: UIViewController {
                     self?.activityIndicatorView.stopAnimating()
                 }
             case .failure(let error):
-                print(error.localizedDescription)
-                self?.activityIndicatorView.stopAnimating()
+                DispatchQueue.main.async {
+                    print(error.localizedDescription)
+                    self?.activityIndicatorView.stopAnimating()
+                }
             }
         })
     }
