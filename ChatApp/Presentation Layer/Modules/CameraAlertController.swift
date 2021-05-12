@@ -67,14 +67,11 @@ extension CameraAlertController {
     private func configure() {
         view.tintColor = Constants.Colors.alertText
         addMainActions()
-        if didTapOnRemove != nil {
-            addRemoveAction()
-        }
     }
     
-    private func addRemoveAction() {
+    func addRemoveAction(didTapOnRemove: @escaping () -> Void) {
         let removeAction = UIAlertAction(title: Constants.LocalizationKey.deletePhoto.string, style: .destructive) { _ in
-            self.didTapOnRemove?()
+            didTapOnRemove()
         }
         addAction(removeAction)
     }

@@ -40,6 +40,7 @@ extension Constants {
         case errorDuringChannelCreation = "Error occurred during creating new channel, try again later."
 
         // Conversation
+        case message = "Message"
         case errorDuringSendingMessage = "Error occurred during sending new message, try again later."
 
         // App theme title

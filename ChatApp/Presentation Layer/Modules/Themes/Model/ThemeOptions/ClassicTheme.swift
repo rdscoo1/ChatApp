@@ -39,7 +39,9 @@ struct ClassicTheme: AppTheme {
                     background: Constants.Colors.incomingBubbleBackgroundClassic),
                 outgoing: .init(
                     text: Constants.Colors.bubbleTextClassic,
-                    background: Constants.Colors.outgoingBubbleBackgroundClassic))),
+                    background: Constants.Colors.outgoingBubbleBackgroundClassic)),
+            sendMessage: .init(text: UIColor.black,
+                               background: UIColor(red: 0, green: 0, blue: 0, alpha: 0.05))),
         profile: .init(
             name: .black,
             description: .black,

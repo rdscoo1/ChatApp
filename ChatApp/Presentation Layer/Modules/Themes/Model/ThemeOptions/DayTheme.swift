@@ -39,7 +39,9 @@ struct DayTheme: AppTheme {
                     background: Constants.Colors.incomingBubbleBackgroundDay),
                 outgoing: .init(
                     text: Constants.Colors.bubbleOutgoingTextDay,
-                    background: Constants.Colors.outgoingBubbleBackgroundDay))),
+                    background: Constants.Colors.outgoingBubbleBackgroundDay)),
+            sendMessage: .init(text: UIColor.black,
+                               background: UIColor(red: 0, green: 0, blue: 0, alpha: 0.05))),
         profile: .init(
             name: .black,
             description: .black,

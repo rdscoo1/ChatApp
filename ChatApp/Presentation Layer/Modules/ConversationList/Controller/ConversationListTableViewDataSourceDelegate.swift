@@ -100,6 +100,7 @@ extension ConversationListTableViewDataSourceDelegate: UITableViewDelegate {
         }
 
         let conversationVC = presentationAssembly.conversationViewController(channelId: identifier)
+        conversationVC.conversationTitle = channel.name
         navigationController.pushViewController(conversationVC, animated: true)
 
         tableView.deselectRow(at: indexPath, animated: true)
