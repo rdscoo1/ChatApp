@@ -47,7 +47,7 @@ class ChannelsService: IChannelsService {
             if let snapshot = querySnapshot {
                 DispatchQueue.global(qos: .default).async {
 
-                    CoreDataManager.shared.performSave { context in
+                    self.coreDataManager.performSave { context in
 
                         snapshot.documentChanges.forEach { diff in
                             switch diff.type {
@@ -86,9 +86,9 @@ class ChannelsService: IChannelsService {
 
     func removeChannel(withId identifier: String) {
         deleteChannel(withId: identifier) { isSuccess in
-            CoreDataManager.shared.performSave { context in
+            self.coreDataManager.performSave { context in
                 guard isSuccess,
-                      let channel = CoreDataManager.shared
+                      let channel = self.coreDataManager
                         .fetchRecordsForEntity("DBChannel",
                                                inContext: context,
                                                withPredicate: NSPredicate(format: "identifier == %@", identifier))?.first as? DBChannel
@@ -100,7 +100,7 @@ class ChannelsService: IChannelsService {
     }
 
     private func deleteChannel(withId identifier: String, completion: @escaping (Bool) -> Void) {
-        let messageService = servicesAssembly.messagesFBService(channelId: identifier)
+        let messageService = servicesAssembly.messagesService(channelId: identifier)
 
         channelsCollection.document(identifier).collection("messages").getDocuments { (querySnapshot, error) in
             if error != nil {

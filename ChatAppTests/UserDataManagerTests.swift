@@ -10,16 +10,18 @@ import XCTest
 
 class UserDataManagerTests: XCTestCase {
 
-    func testCallingMethods() throws {
+    func testProfileIsSuccessfullyLoaded() throws {
         
         // Arrange
     
         let expectation = self.expectation(description: "Load user data")
         
-        let userDataManagerMock = UserDataManagerMock()
-        let profileDataManagerMock = UserStorageManagerMock()
-        let userDataManager = UserDataManager(profileDataManager: profileDataManagerMock)
-        let newProfile = User(fullName: "New Test FullName", description: "New Test Description", profileImageUrl: "newTestImage.png")
+        let userStorageManagerMock = UserStorageManagerMock()
+        let userDataManager = UserDataManager(userStorageManager: userStorageManagerMock)
+        let userData = UserViewModel(fullName: "Test User",
+                            description: "iOS developer",
+                            profileImage: nil)
+        userStorageManagerMock.userViewModel = userData
         var receivedUser: UserViewModel?
         
         // Act
@@ -33,8 +35,33 @@ class UserDataManagerTests: XCTestCase {
         
         // Assert
         
-//        XCTAssertEqual(receivedUser, userDataManagerMock.defaultProfile)
-        XCTAssertEqual(profileDataManagerMock.readFromDiskCount, 1)
+        XCTAssert(receivedUser == userStorageManagerMock.userViewModel)
+        XCTAssertEqual(userStorageManagerMock.readFromDiskCount, 1)
+    }
+    
+    func testProfileIsSuccessfullySaved() throws {
+        
+        // Arrange
+        
+        let expectation = self.expectation(description: "Save user data")
+        
+        let userStorageManagerMock = UserStorageManagerMock()
+        let userDataManager = UserDataManager(userStorageManager: userStorageManagerMock)
+        let defaultProfile = UserViewModel(fullName: "Test User", description: "iOS Developer", profileImage: nil)
+        var isSavedSuccessfully = false
+        
+        // Act
+        
+        userDataManager.saveProfile(defaultProfile) { isSaved in
+            isSavedSuccessfully = isSaved
+            expectation.fulfill()
+        }
+        waitForExpectations(timeout: 5, handler: nil)
+        
+        // Assert
+        
+        XCTAssertEqual(userStorageManagerMock.isUserProfileSaved, isSavedSuccessfully)
+        XCTAssertEqual(userStorageManagerMock.writeToDiskCount, 1)
     }
 
 }

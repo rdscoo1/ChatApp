@@ -13,10 +13,10 @@ protocol IServicesAssembly {
 
     func pixabayService() -> IPixabayService
 
-    func channelsFBService() -> IChannelsService
+    func channelsService() -> IChannelsService
     func channelsFetchedResultsController() -> NSFetchedResultsController<DBChannel>
 
-    func messagesFBService(channelId: String) -> MessagesService
+    func messagesService(channelId: String) -> MessagesService
     func messagesFetchedResultsController(channelId: String) -> NSFetchedResultsController<DBMessage>
 }
 
@@ -49,7 +49,7 @@ class ServicesAssembly: IServicesAssembly {
         return service
     }
     
-    func channelsFBService() -> IChannelsService {
+    func channelsService() -> IChannelsService {
         let channelsFBService = ChannelsService(servicesAssembly: self,
                                                   coreDataManager: coreAssembly.coreDataManager())
         return channelsFBService
@@ -68,7 +68,7 @@ class ServicesAssembly: IServicesAssembly {
         return controller
     }
     
-    func messagesFBService(channelId: String) -> MessagesService {
+    func messagesService(channelId: String) -> MessagesService {
         let messagesFBService = MessagesService(channelId: channelId,
                                                   userDataManager: userDataManager,
                                                   coreDataManager: coreAssembly.coreDataManager())

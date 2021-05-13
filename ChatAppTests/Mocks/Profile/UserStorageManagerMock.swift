@@ -14,12 +14,12 @@ class UserStorageManagerMock: IUserStorageManager {
     
     private(set) var writeToDiskCount = 0
     private(set) var readFromDiskCount = 0
-    private(set) var isUserProfileSaved = false
     
     // MARK: - Properties
     
     var userViewModel: UserViewModel?
-    var returnedUserViewModel: UserViewModel?
+    private(set) var isUserProfileSaved = false
+    private(set) var returnedUserViewModel: UserViewModel?
     
     // MARK: - IProfileDataManage Conformance
     

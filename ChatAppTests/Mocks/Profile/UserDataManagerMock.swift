@@ -10,30 +10,28 @@ import Foundation
 
 class UserDataManagerMock: IUserDataManager {
     
-    // MARK: - Counters
+    // MARK: - Methods call counters
     
     private(set) var saveProfileCount = 0
     private(set) var loadProfileCount = 0
-    private(set) var saveProfileImageCount = 0
-    private(set) var loadProfileImageCount = 0
     private(set) var getProfileIdCount = 0
     private(set) var getProfileCount = 0
     
     // MARK: - Public Properties
     
-    var idetifierReturn = "testId"
+    var identifierReturn = "testId"
     var isUserDataSaved = false
-    var userId = ""
     
     // MARK: - Gettable Properties
     
-    private(set) var returnedImageFileName: String?
     private(set) var returnedUser: UserViewModel?
     private(set) var defaultProfile = UserViewModel(fullName: "Test User", description: "iOS Developer", profileImage: nil)
     
+    // MARK: - IUserDataManager Conformance
+    
     var identifier: String {
         getProfileIdCount += 1
-        return idetifierReturn
+        return identifierReturn
     }
     
     var profile: UserViewModel? {

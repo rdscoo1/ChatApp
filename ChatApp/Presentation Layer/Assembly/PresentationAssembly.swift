@@ -37,7 +37,7 @@ class PresentationAssembly: IPresentationAssembly {
         let conversationsListViewController = ConversationListViewController()
         conversationsListViewController.presentationAssembly = self
         conversationsListViewController.userDataManager = serviceAssembly.userDataManager
-        conversationsListViewController.channelsFBService = serviceAssembly.channelsFBService()
+        conversationsListViewController.channelsFBService = serviceAssembly.channelsService()
         conversationsListViewController.fetchedResultsController = serviceAssembly.channelsFetchedResultsController()
         conversationsListViewController.transitionDelegate = TransitionDelegate()
         return conversationsListViewController
@@ -46,7 +46,7 @@ class PresentationAssembly: IPresentationAssembly {
     func conversationViewController(channelId: String) -> ConversationViewController {
         let conversationViewController = ConversationViewController()
         conversationViewController.channelId = channelId
-        conversationViewController.messageService = serviceAssembly.messagesFBService(channelId: channelId)
+        conversationViewController.messageService = serviceAssembly.messagesService(channelId: channelId)
         conversationViewController.fetchedResultsController = serviceAssembly.messagesFetchedResultsController(channelId: channelId)
         return conversationViewController
     }
