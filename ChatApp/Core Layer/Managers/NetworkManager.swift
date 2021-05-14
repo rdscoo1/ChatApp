@@ -22,8 +22,6 @@ class NetworkManager: INetworkManager {
     func makeRequest<Model, Parser>(request: IRequest,
                                     parser: Parser,
                                     completion: @escaping(Result<Model, RequestError>) -> Void) where Model == Parser.Model, Parser: IParser {
-                
-        print(request.urlRequest)
         
         guard let urlRequest = request.urlRequest else {
             completion(.failure(.invalidUrl))
