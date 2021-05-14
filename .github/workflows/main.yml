@@ -28,15 +28,8 @@ jobs:
         with:
           ruby-version: 2.7.3
           bundler-cache: true
-
-    # Setting dependencies and building app without tests
-      - name: Build for testing
-        run: bundle exec fastlane build_for_testing
-  
-    # Run tests on built app
-      - name: Run tests without building
-        run: bundle exec fastlane run_tests_without_building
-      
+          
     # Both build app and run tests
       - name: Build and run tests
+        env: DISCORD_NOTIFIER_WEBHOOK_URL: ${{ secrets.DISCORD_NOTIFIER_WEBHOOK_URL }}
         run: bundle exec fastlane build_and_run_tests
