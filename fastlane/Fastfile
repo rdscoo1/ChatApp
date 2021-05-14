@@ -5,6 +5,7 @@ platform :ios do
     lane :build_for_testing do
       cocoapods
       scan(
+        scheme: "ChatApp",
         clean: true,
         devices: ["iPhone 12 Pro"]
       )
@@ -14,7 +15,8 @@ platform :ios do
     lane :run_tests_without_building do
       cocoapods
       scan(
-        test_without_building: true
+        scheme: "ChatApp",
+        devices: ["iPhone 12 Pro"]
       )
     end
   
