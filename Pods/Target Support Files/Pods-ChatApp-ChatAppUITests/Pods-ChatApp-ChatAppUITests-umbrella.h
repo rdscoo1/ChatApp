@@ -11,6 +11,6 @@
 #endif
 
 
-FOUNDATION_EXPORT double Pods_ChatAppUITestsVersionNumber;
-FOUNDATION_EXPORT const unsigned char Pods_ChatAppUITestsVersionString[];
+FOUNDATION_EXPORT double Pods_ChatApp_ChatAppUITestsVersionNumber;
+FOUNDATION_EXPORT const unsigned char Pods_ChatApp_ChatAppUITestsVersionString[];
 

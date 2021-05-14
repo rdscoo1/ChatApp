@@ -1,0 +1,56 @@
+default_platform :ios
+app_name = "ChatApp"
+repo_url = "https://github.com/rdscoo1/ChatApp/"
+author_name = "Roman Khodukin"
+icon_url = "https://github.com/rdscoo1/ChatApp/blob/main/ChatApp/Supporting%20Files/Resources/Assets.xcassets/LaunchScreen/AppLogoLaunchScreen.imageset/AppLogo.pdf"
+
+platform :ios do
+    desc "Setting dependencies and building app without tests"
+    lane :build_for_testing do
+      cocoapods
+      scan(
+        scheme: "ChatApp",
+        clean: true,
+        devices: ["iPhone 12 Pro"]
+      )
+    end
+  
+    desc "Run tests on built app"
+    lane :run_tests_without_building do
+      cocoapods
+      scan(
+        scheme: "ChatApp",
+        devices: ["iPhone 12 Pro"]
+      )
+    end
+  
+    desc "Both build app and run tests"
+    lane :build_and_run_tests do
+      begin
+        build_lane()
+      rescue => exception
+          on_error(exception)
+      end
+    end
+
+    def build_lane
+      build_for_testing
+      run_tests_without_building
+      discord_notifier(
+        webhook_url: ENV['DISCORD_NOTIFIER_WEBHOOK_URL'],
+        title: "Build report of ChatApp",
+        thumbnail_url: "https://cdn3.iconfinder.com/data/icons/flat-actions-icons-9/792/Tick_Mark_Dark-512.png",
+        description: "Success"
+      )
+    end
+  
+  def on_error(exception)
+    discord_notifier(
+      webhook_url: ENV['DISCORD_NOTIFIER_WEBHOOK_URL'],
+      title: "Build report of ChatApp",
+      thumbnail_url: "https://www.freeiconspng.com/uploads/error-icon-4.png",
+      description: "Error"
+    )
+  end
+
+end

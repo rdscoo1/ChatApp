@@ -27,7 +27,7 @@
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Данное приложение запрашивает доступ к вашей фото библиотеке.</string>
 	<key>PixabayAPIKey</key>
-	<string>21290392-5a89607365e034b78100b00a9</string>
+	<string>$(PIXABAY_API_KEY)</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>
