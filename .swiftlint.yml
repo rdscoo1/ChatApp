@@ -1,5 +1,6 @@
 excluded:
   - Pods
+  - vendor
   - .git
 
 disabled_rules:
