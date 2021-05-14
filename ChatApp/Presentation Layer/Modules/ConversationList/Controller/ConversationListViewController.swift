@@ -32,7 +32,7 @@ class ConversationListViewController: UIViewController {
 
     // MARK: - Private Properties
     
-    var channelsFBService: IChannelsFBService?
+    var channelsFBService: IChannelsService?
     
     var userDataManager: IUserDataManager?
     

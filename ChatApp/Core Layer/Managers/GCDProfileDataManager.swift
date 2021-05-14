@@ -7,9 +7,9 @@
 
 import UIKit
 
-class GCDProfileDataManager: IProfileDataManager {
+class GCDProfileDataManager: IUserStorageManager {
 
-    // MARK: - IProfileDataManager methods
+    // MARK: - IUserStorageManager methods
     
     func loadUserData(completion: @escaping (UserViewModel?) -> Void) {
         DispatchQueue.global(qos: .utility).async {

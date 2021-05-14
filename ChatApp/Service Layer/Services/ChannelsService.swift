@@ -1,5 +1,5 @@
 //
-//  ChannelsFBService.swift
+//  ChannelsService.swift
 //  ChatApp
 //
 //  Created by Roman Khodukin on 4/15/21.
@@ -8,13 +8,13 @@
 import Firebase
 import CoreData
 
-protocol IChannelsFBService {
+protocol IChannelsService {
     func subscribeOnChannels(completion: @escaping (Result<Bool, Error>) -> Void)
     func createChannel(withName name: String, completion: @escaping (Result<String, Error>) -> Void)
     func removeChannel(withId identifier: String)
 }
 
-class ChannelsFBService: IChannelsFBService {
+class ChannelsService: IChannelsService {
 
     // MARK: - Private Properties
 
@@ -47,7 +47,7 @@ class ChannelsFBService: IChannelsFBService {
             if let snapshot = querySnapshot {
                 DispatchQueue.global(qos: .default).async {
 
-                    CoreDataManager.shared.performSave { context in
+                    self.coreDataManager.performSave { context in
 
                         snapshot.documentChanges.forEach { diff in
                             switch diff.type {
@@ -86,9 +86,9 @@ class ChannelsFBService: IChannelsFBService {
 
     func removeChannel(withId identifier: String) {
         deleteChannel(withId: identifier) { isSuccess in
-            CoreDataManager.shared.performSave { context in
+            self.coreDataManager.performSave { context in
                 guard isSuccess,
-                      let channel = CoreDataManager.shared
+                      let channel = self.coreDataManager
                         .fetchRecordsForEntity("DBChannel",
                                                inContext: context,
                                                withPredicate: NSPredicate(format: "identifier == %@", identifier))?.first as? DBChannel
@@ -100,7 +100,7 @@ class ChannelsFBService: IChannelsFBService {
     }
 
     private func deleteChannel(withId identifier: String, completion: @escaping (Bool) -> Void) {
-        let messageService = servicesAssembly.messagesFBService(channelId: identifier)
+        let messageService = servicesAssembly.messagesService(channelId: identifier)
 
         channelsCollection.document(identifier).collection("messages").getDocuments { (querySnapshot, error) in
             if error != nil {

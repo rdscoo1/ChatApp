@@ -21,3 +21,10 @@ struct UserViewModel {
     
     var profileImage: UIImage?
 }
+
+extension UserViewModel: Equatable {
+    
+    public static func == (lhs: UserViewModel, rhs: UserViewModel) -> Bool {
+        return lhs.fullName == rhs.fullName && lhs.description == rhs.description && lhs.profileImage === rhs.profileImage
+    }
+}

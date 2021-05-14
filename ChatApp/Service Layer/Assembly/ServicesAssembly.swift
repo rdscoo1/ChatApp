@@ -13,10 +13,10 @@ protocol IServicesAssembly {
 
     func pixabayService() -> IPixabayService
 
-    func channelsFBService() -> IChannelsFBService
+    func channelsService() -> IChannelsService
     func channelsFetchedResultsController() -> NSFetchedResultsController<DBChannel>
 
-    func messagesFBService(channelId: String) -> MessagesFBService
+    func messagesService(channelId: String) -> MessagesService
     func messagesFetchedResultsController(channelId: String) -> NSFetchedResultsController<DBMessage>
 }
 
@@ -29,7 +29,7 @@ class ServicesAssembly: IServicesAssembly {
     // MARK: - Public Property
 
     lazy var userDataManager: UserDataManager = {
-        let userDataManager = UserDataManager(profileDataManager: coreAssembly.profileDataManager())
+        let userDataManager = UserDataManager(userStorageManager: coreAssembly.userStorageManager())
         return userDataManager
     }()
     
@@ -49,8 +49,8 @@ class ServicesAssembly: IServicesAssembly {
         return service
     }
     
-    func channelsFBService() -> IChannelsFBService {
-        let channelsFBService = ChannelsFBService(servicesAssembly: self,
+    func channelsService() -> IChannelsService {
+        let channelsFBService = ChannelsService(servicesAssembly: self,
                                                   coreDataManager: coreAssembly.coreDataManager())
         return channelsFBService
     }
@@ -68,8 +68,8 @@ class ServicesAssembly: IServicesAssembly {
         return controller
     }
     
-    func messagesFBService(channelId: String) -> MessagesFBService {
-        let messagesFBService = MessagesFBService(channelId: channelId,
+    func messagesService(channelId: String) -> MessagesService {
+        let messagesFBService = MessagesService(channelId: channelId,
                                                   userDataManager: userDataManager,
                                                   coreDataManager: coreAssembly.coreDataManager())
         return messagesFBService

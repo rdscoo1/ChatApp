@@ -9,7 +9,7 @@ import Foundation
 
 protocol ICoreAssembly {
     func coreDataManager() -> CoreDataManager
-    func profileDataManager() -> IProfileDataManager
+    func userStorageManager() -> IUserStorageManager
     func networkManager() -> INetworkManager
 }
 
@@ -18,7 +18,7 @@ class CoreAssembly: ICoreAssembly {
         return CoreDataManager.shared
     }
 
-    func profileDataManager() -> IProfileDataManager {
+    func userStorageManager() -> IUserStorageManager {
         return GCDProfileDataManager()
     }
     

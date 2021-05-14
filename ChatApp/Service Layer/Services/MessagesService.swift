@@ -1,5 +1,5 @@
 //
-//  MessagesFBService.swift
+//  MessagesService.swift
 //  ChatApp
 //
 //  Created by Roman Khodukin on 4/15/21.
@@ -8,13 +8,13 @@
 import Firebase
 import CoreData
 
-protocol IMessagesFBService {
+protocol IMessagesService {
     func subscribeOnMessagesFromChannel(withId channelId: String, completion: @escaping (Result<Bool, Error>) -> Void)
     func sendMessage(content: String, completion: @escaping (Result<String, Error>) -> Void)
     func deleteMessage(withId identifier: String, completion: @escaping (Error?) -> Void)
 }
 
-class MessagesFBService: IMessagesFBService {
+class MessagesService: IMessagesService {
 
     // MARK: - Private Properties
 

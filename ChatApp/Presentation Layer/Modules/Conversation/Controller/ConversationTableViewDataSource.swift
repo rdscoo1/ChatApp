@@ -19,11 +19,11 @@ class ConversationTableViewDataSource: NSObject, UITableViewDataSource {
     // MARK: - Public Property
 
     var fetchedResultsController: NSFetchedResultsController<DBMessage>
-    var messagesFBService: IMessagesFBService
+    var messagesFBService: IMessagesService
 
     // MARK: - Init
 
-    init(fetchedResultsController: NSFetchedResultsController<DBMessage>, messagesFBService: IMessagesFBService) {
+    init(fetchedResultsController: NSFetchedResultsController<DBMessage>, messagesFBService: IMessagesService) {
         self.fetchedResultsController = fetchedResultsController
         self.messagesFBService = messagesFBService
     }
