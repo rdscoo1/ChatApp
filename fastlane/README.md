@@ -31,11 +31,6 @@ Run tests on built app
 fastlane ios build_and_run_tests
 ```
 Both build app and run tests
-### ios discord_notification
-```
-fastlane ios discord_notification
-```
-Discord Notification
 
 ----
 

@@ -210,6 +210,8 @@
 		E8AFBA3026179D95007AB74D /* DBMessage+Init.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBMessage+Init.swift"; sourceTree = "<group>"; };
 		E8AFBA3826179E1A007AB74D /* DBChannel+Init.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBChannel+Init.swift"; sourceTree = "<group>"; };
 		E8BC0B36264E01640022F418 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
+		E8BC0B37264E3CCE0022F418 /* SharedRelease.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = SharedRelease.xcconfig; sourceTree = "<group>"; };
+		E8BC0B38264E3CDE0022F418 /* SharedDebug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = SharedDebug.xcconfig; sourceTree = "<group>"; };
 		E8CB228525F925730085AABB /* UIWindow+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIWindow+Ext.swift"; sourceTree = "<group>"; };
 		E8CB22A725FAC44F0085AABB /* Themes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Themes.swift; sourceTree = "<group>"; };
 		E8CB22AF25FAC4CC0085AABB /* AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
@@ -779,6 +781,8 @@
 		E8F7DD7226278CCF00D48446 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				E8BC0B38264E3CDE0022F418 /* SharedDebug.xcconfig */,
+				E8BC0B37264E3CCE0022F418 /* SharedRelease.xcconfig */,
 				E8E0E17F2633662D0078729A /* Components */,
 				E8F7DDDE2628FD0700D48446 /* RootAssembly.swift */,
 				E8E030D925DECC5B0028B4DD /* AppDelegate.swift */,
@@ -1287,7 +1291,7 @@
 /* Begin XCBuildConfiguration section */
 		E8E0310125DECC5E0028B4DD /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E8BC0B36264E01640022F418 /* Config.xcconfig */;
+			baseConfigurationReference = E8BC0B38264E3CDE0022F418 /* SharedDebug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
@@ -1351,7 +1355,7 @@
 		};
 		E8E0310225DECC5E0028B4DD /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E8BC0B36264E01640022F418 /* Config.xcconfig */;
+			baseConfigurationReference = E8BC0B37264E3CCE0022F418 /* SharedRelease.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;

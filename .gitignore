@@ -5,7 +5,7 @@
 .LSOverride
 
 ## Config Files
-*.xcconfig
+*Config.xcconfig
 
 # Icon must end with two \r
 Icon
