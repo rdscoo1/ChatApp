@@ -31,7 +31,7 @@ class PixabayImageListRequest: IRequest {
         urlComponents.queryItems?.append(.init(name: "key", value: PixabayImageListRequest.apiKey))
         urlComponents.queryItems?.append(.init(name: "image_type", value: imageType))
         urlComponents.queryItems?.append(.init(name: "per_page", value: "\(perPage)"))
-        
+                
         guard let url = urlComponents.url else {
             return nil
         }

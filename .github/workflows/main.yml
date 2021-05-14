@@ -1,0 +1,42 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+# Controls when the action will run. 
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+  push:
+    branches: [ feature/ci-cd-support ]
+  pull_request:
+    branches: [ feature/ci-cd-support ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: macOS-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.7
+          bundler-cache: true
+
+    # Setting dependencies and building app without tests
+      - name: Build for testing
+        run: bundle exec fastlane build_for_testing
+  
+    # Run tests on built app
+      - name: Run tests without building
+        run: bundle exec fastlane run_tests_without_building
+      
+    # Both build app and run tests
+      - name: Build and run tests
+        run: bundle exec fastlane build_and_run_tests
