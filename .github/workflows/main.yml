@@ -31,5 +31,6 @@ jobs:
           
     # Both build app and run tests
       - name: Build and run tests
-        env: DISCORD_NOTIFIER_WEBHOOK_URL: ${{ secrets.DISCORD_NOTIFIER_WEBHOOK_URL }}
+        env:
+          DISCORD_NOTIFIER_WEBHOOK_URL: ${{ secrets.DISCORD_NOTIFIER_WEBHOOK_URL }}
         run: bundle exec fastlane build_and_run_tests
