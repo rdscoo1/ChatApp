@@ -31,7 +31,7 @@ struct NightTheme: AppTheme {
                 message: Constants.Colors.subtitleTextDark,
                 receivedDate: Constants.Colors.subtitleTextDark,
                 cellSelected: .darkGray,
-                background: Constants.Colors.yellowDark)),
+                background: Constants.Colors.primaryNightBackground)),
         conversation: .init(
             cell: .init(
                 incoming: .init(

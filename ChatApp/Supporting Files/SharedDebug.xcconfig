@@ -1,0 +1,12 @@
+//
+//  SharedDebug.xcconfig
+//  ChatApp
+//
+//  Created by Roman Khodukin on 14.05.2021.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+#include "Pods/Target Support Files/Pods-ChatApp/Pods-ChatApp.debug.xcconfig"
+#include "./Config.xcconfig"

@@ -18,7 +18,6 @@ target 'ChatApp' do
   end
   
   target 'ChatAppUITests' do
-    inherit! :search_paths
   end
 
 end
